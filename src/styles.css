@@ -1,0 +1,28 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand: #146ef5;
+  --color-brand-dark: #1366e2;
+  --color-ink: #080808;
+  --color-slate: #5a5a5a;
+  --color-ash: #d8d8d8;
+  --color-mist: #f0f0f0;
+  --color-onyx: #171717;
+  --font-sans: Inter, "Helvetica Neue", Arial, sans-serif;
+}
+
+html { scroll-padding-top: 56px; color-scheme: light; }
+body { font-family: var(--font-sans); color: var(--color-ink); background: #fff; -webkit-font-smoothing: antialiased; }
+
+@layer components {
+  .btn { @apply inline-block rounded bg-brand px-4 py-3 text-sm font-medium text-white transition-colors hover:bg-brand-dark; }
+  .btn-ghost { @apply inline-block rounded border border-ash bg-white px-4 py-3 text-sm font-medium text-ink transition-colors hover:bg-mist; }
+  .wrap { @apply mx-auto max-w-[1280px] px-5 md:px-12; }
+  .h-display { @apply font-semibold leading-[1.02] tracking-[-0.04em]; }
+  .lead { @apply text-xl leading-snug text-slate; }
+  .arrow-row { @apply flex items-center justify-between gap-4 border-b border-ash py-4 text-[15px]; }
+}
+
+@keyframes marquee { to { transform: translateX(-50%); } }
+.marquee { animation: marquee 32s linear infinite; }
+@media (prefers-reduced-motion: reduce) { .marquee { animation: none; } }

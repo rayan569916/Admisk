@@ -1,0 +1,773 @@
+<!-- Hero Section -->
+<section class="relative isolate min-h-[100svh] overflow-hidden bg-[#f8f5ef]
+           md:min-h-[850px]">
+    <!-- Responsive Background -->
+    <picture class="absolute inset-0 -z-20 block">
+        <source media="(max-width: 767px)" srcset="home_sm.png" />
+
+        <img src="home_md.png" alt="" class="h-full w-full object-cover object-center
+                   max-md:object-[62%_center]" />
+    </picture>
+
+    <!-- Text readability overlay -->
+    <div class="absolute inset-0 -z-10
+               bg-gradient-to-r
+               from-[#fffdf8]/95
+               via-[#fffaf0]/80
+               via-45%
+               to-transparent
+               md:from-[#fffdf8]/95
+               md:via-[#fffaf0]/65
+               md:via-45%
+               md:to-transparent"></div>
+
+    <!-- Bottom gradient -->
+    <div class="absolute inset-0 -z-10
+               bg-gradient-to-t
+               from-[#f7f4ee]/70
+               via-[#f7f4ee]/10
+               to-white/10
+               md:from-[#f7f4ee]/30
+               md:via-transparent"></div>
+
+    <div class="wrap relative flex min-h-[100svh] flex-col
+               px-5 pt-24
+               sm:px-8
+               md:min-h-[850px] md:px-0 md:pt-24">
+        <!-- Main Hero Content -->
+        <div class="grid flex-1 grid-cols-1 gap-6
+                   md:grid-cols-[1.4fr_0.6fr] md:gap-8">
+            <!-- Left Content -->
+            <div class="max-w-[760px]">
+                <p class="mb-4 text-[10px] font-bold uppercase
+                           tracking-[0.17em] text-[#a9854b]
+                           sm:text-xs md:mb-5 md:text-sm
+                           md:tracking-[0.2em]">
+                    A Cross-Border Business Holding Group
+                </p>
+
+                <h1 class="h-display max-w-[760px] text-left
+                           text-[clamp(2.65rem,9vw,3.6rem)]
+                           leading-[0.99] tracking-[-0.045em]
+                           text-[#102d59]
+                           md:text-[76px] lg:text-[88px]">
+                    Building Value
+                    <br />
+                    <span class="text-[#a78043]">
+                        Across Borders.
+                    </span>
+                </h1>
+
+                <p class="mt-4 max-w-[650px] text-left
+                           text-sm leading-[1.65] text-slate-600
+                           sm:mt-5 sm:text-base
+                           md:mt-6 md:text-xl md:leading-[1.55]">
+                    Strategic investment, expert advisory, workforce
+                    solutions, training, hospitality and international
+                    trade — connecting opportunities across markets.
+                </p>
+            </div>
+
+            <!-- Right Tagline: Desktop Only -->
+            <!-- <div class="hidden justify-end pt-2 md:flex">
+                <div class="h-fit border-l-2 border-[#b28b4d] pl-7 pr-4">
+                    <p
+                        class="max-w-[190px] text-sm font-semibold
+                               uppercase leading-[1.9] tracking-wide
+                               text-[#334766]"
+                    >
+                        People<br />
+                        Markets<br />
+                        Opportunities<br />
+                        A Stronger<br />
+                        Tomorrow
+                    </p>
+                </div>
+            </div> -->
+        </div>
+
+        <!-- Division Cards -->
+        <div class="mt-8 grid grid-cols-1 gap-3 pb-8
+                   sm:mt-10 sm:grid-cols-3 sm:gap-4 sm:pb-12
+                   md:mt-0 md:pb-16">
+            @for (c of cards; track c.title) {
+            <a [routerLink]="c.link" class="group relative flex min-h-[104px]
+                           items-center justify-between gap-3
+                           overflow-hidden rounded-xl
+                           border border-white/80
+                           bg-[#fffdf8]/85 px-4 py-3
+                           shadow-[0_8px_24px_rgba(16,45,89,0.07)]
+                           backdrop-blur-md
+                           transition duration-300
+                           hover:bg-white/95
+                           sm:h-36 sm:min-h-0 sm:items-center
+                           sm:rounded-lg sm:px-5
+                           md:px-6">
+                <!-- Card Text -->
+                <div class="relative z-10 min-w-0 flex-1 sm:pr-1">
+                    <h3 class="text-base font-semibold
+                                   tracking-tight text-[#102d59]
+                                   sm:text-[17px] md:text-[19px]">
+                        {{ c.title }}
+                    </h3>
+
+                    <p class="mt-1 max-w-[220px]
+                                   text-xs leading-relaxed
+                                   text-slate-600
+                                   sm:text-xs md:text-sm">
+                        {{ c.text }}
+                    </p>
+                </div>
+
+                <!-- Image -->
+                <div class="relative h-[76px] w-[76px] shrink-0
+                               overflow-hidden rounded-lg
+                               bg-[#f3e9d7]
+                               sm:absolute sm:bottom-0 sm:right-0
+                               sm:h-[110px] sm:w-[110px]
+                               sm:rounded-tl-lg sm:rounded-br-none
+                               sm:bg-white/90 sm:shadow-lg">
+                    <img [src]="c.link" [alt]="c.title" loading="lazy" class="h-full w-full object-cover
+                                   transition duration-500
+                                   group-hover:scale-105" />
+                </div>
+            </a>
+            }
+        </div>
+    </div>
+</section>
+
+<!-- Global Connectivity Strip -->
+<section class="connectivity-strip relative isolate
+           h-[300px] overflow-hidden bg-[#102d59] text-white
+           sm:h-[340px] md:h-[400px] lg:h-[440px]">
+    <!-- Background Video -->
+    <video #v class="absolute inset-0 -z-20 h-full w-full object-cover" src="videos/cover.mp4"
+        [poster]="media.heroPoster" autoplay muted loop playsinline preload="metadata"></video>
+
+    <!-- Cinematic Overlay -->
+    <div class="absolute inset-0 -z-10
+               bg-gradient-to-r
+               from-[#08182e]/85
+               via-[#102d59]/55
+               to-[#102d59]/30"></div>
+
+    <!-- Bottom Contrast -->
+    <div class="absolute inset-0 -z-10
+               bg-gradient-to-t
+               from-[#08182e]/80
+               via-transparent
+               to-[#08182e]/25"></div>
+
+    <!-- Decorative Gold Accent -->
+    <div class="absolute left-0 top-0 h-full w-[3px]
+               bg-gradient-to-b
+               from-transparent via-[#c6a164] to-transparent"></div>
+
+    <!-- Video Controls -->
+    <button type="button" class="absolute right-4 top-4 z-30
+               flex h-9 w-9 items-center justify-center
+               rounded-full border border-white/30
+               bg-[#102d59]/60 text-white
+               shadow-lg backdrop-blur-md
+               transition hover:bg-[#102d59]/90
+               focus-visible:outline-none
+               focus-visible:ring-2 focus-visible:ring-[#c6a164]" (click)="toggle(v)"
+        [attr.aria-label]="playing() ? 'Pause background video' : 'Play background video'"
+        [attr.aria-pressed]="playing()">
+        <span class="text-sm" aria-hidden="true">
+            {{ playing() ? 'Ⅱ' : '▶' }}
+        </span>
+    </button>
+
+    <!-- Content -->
+    <div class="relative flex h-full flex-col justify-between
+               py-9 sm:py-10 md:py-12">
+        <!-- Intro -->
+        <div class="px-5 sm:px-8 md:px-12 lg:px-16">
+            <p class="text-[9px] font-semibold uppercase
+                       tracking-[0.28em] text-[#d8b77e]
+                       sm:text-[10px] md:text-xs">
+                Our International Network
+            </p>
+
+            <div class="mt-2 flex items-center gap-3">
+                <h2 class="text-xl font-medium tracking-tight
+                           text-white sm:text-2xl md:text-3xl">
+                    Connected without borders.
+                </h2>
+
+                <span class="hidden h-px max-w-24 flex-1
+                           bg-gradient-to-r from-[#c6a164]/80
+                           to-transparent sm:block"></span>
+            </div>
+        </div>
+
+        <!-- Upper Marquee: Regions -->
+        <div class="marquee-row group flex items-center
+                   border-y border-white/15
+                   bg-white/[0.04] py-3
+                   backdrop-blur-[2px] sm:py-4" aria-label="Markets and regions">
+            <div class="marquee-label hidden shrink-0
+                       items-center gap-2 pl-5 pr-5
+                       sm:flex md:pl-8 md:pr-7">
+                <span class="h-1.5 w-1.5 rounded-full bg-[#c6a164]"></span>
+
+                <span class="text-[9px] font-semibold uppercase
+                           tracking-[0.2em] text-white/65">
+                    Markets
+                </span>
+            </div>
+
+            <div class="min-w-0 flex-1 overflow-hidden">
+                <div class="marquee-track marquee-forward">
+                    @for (copy of [0, 1]; track copy) {
+                    <div class="marquee-group flex shrink-0
+                                   items-center gap-5 pr-5
+                                   sm:gap-8 sm:pr-8 md:gap-10 md:pr-10"
+                        [attr.aria-hidden]="copy === 1 ? 'true' : null">
+                        @for (r of regions; track r) {
+                        <span class="marquee-item whitespace-nowrap
+                                           text-sm font-medium
+                                           tracking-wide text-white/90
+                                           sm:text-base md:text-lg">
+                            {{ r }}
+                        </span>
+
+                        <span class="h-1 w-1 shrink-0 rotate-45
+                                           bg-[#c6a164]" aria-hidden="true"></span>
+                        }
+                    </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- Lower Marquee: Offices -->
+        <div class="marquee-row group flex items-center
+                   border-y border-white/15
+                   bg-[#08182e]/20 py-3
+                   backdrop-blur-[2px] sm:py-4" aria-label="Office locations">
+            <div class="marquee-label hidden shrink-0
+                       items-center gap-2 pl-5 pr-5
+                       sm:flex md:pl-8 md:pr-7">
+                <span class="h-1.5 w-1.5 rounded-full bg-[#c6a164]"></span>
+
+                <span class="text-[9px] font-semibold uppercase
+                           tracking-[0.2em] text-white/65">
+                    Our Presence
+                </span>
+            </div>
+
+            <div class="min-w-0 flex-1 overflow-hidden">
+                <div class="marquee-track marquee-reverse">
+                    @for (copy of [0, 1]; track copy) {
+                    <div class="marquee-group flex shrink-0
+                                   items-center gap-5 pr-5
+                                   sm:gap-8 sm:pr-8 md:gap-10 md:pr-10"
+                        [attr.aria-hidden]="copy === 1 ? 'true' : null">
+                        @for (o of offices; track o.key) {
+                        <span class="marquee-item whitespace-nowrap
+                                           text-sm font-medium
+                                           tracking-wide text-white/90
+                                           sm:text-base md:text-lg">
+                            {{ o.city }}
+                        </span>
+
+                        <span class="h-1 w-1 shrink-0 rotate-45
+                                           bg-[#c6a164]" aria-hidden="true"></span>
+                        }
+                    </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="flex items-center justify-between gap-4
+                   px-5 sm:px-8 md:px-12 lg:px-16">
+            <p class="text-[9px] font-medium uppercase
+                       tracking-[0.16em] text-white/60
+                       sm:text-[10px] md:text-xs">
+                People. Markets. Opportunities.
+            </p>
+
+            <div class="flex items-center gap-2">
+                <span class="h-px w-5 bg-[#c6a164]/80 sm:w-8"></span>
+
+                <span class="text-[9px] font-semibold uppercase
+                           tracking-[0.15em] text-[#d8b77e]
+                           sm:text-[10px]">
+                    Global Reach
+                </span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ADMISK — Business Divisions -->
+<section class="wrap py-20 sm:py-24 md:py-32">
+
+    <!-- Heading -->
+    <div class="mx-auto max-w-3xl text-center">
+        <!-- <span class="inline-flex items-center gap-2 rounded-full
+                   border border-[#a78043]/25 bg-[#a78043]/5
+                   px-4 py-2 text-[10px] font-semibold uppercase
+                   tracking-[0.22em] text-[#a78043] sm:text-xs">
+            <span class="h-1.5 w-1.5 rounded-full bg-[#a78043]"></span>
+            One Group. Global Possibilities.
+        </span> -->
+
+        <h2 class="h-display mt-6 text-3xl leading-tight
+                   tracking-tight text-[#102d59]
+                   sm:text-4xl md:text-[56px]">
+            ADMISK is the cross-border holding group for
+            <span class="text-[#a78043]">ambitious businesses.</span>
+        </h2>
+    </div>
+
+
+    <!-- Desktop Grid -->
+    <div class="mt-14 hidden gap-7 sm:grid sm:grid-cols-2 lg:grid-cols-3">
+
+        @for (c of imageCards; track c.title; let i = $index) {
+
+        <a [routerLink]="c.link" class="business-card group relative overflow-hidden
+                   rounded-2xl border border-[#102d59]/10
+                   bg-white transition-all duration-500
+                   hover:-translate-y-2
+                   hover:border-[#a78043]/40
+                   hover:shadow-[0_24px_60px_rgba(16,45,89,0.12)]" [style.--card-index]="i">
+
+            <!-- Image -->
+            <div class="relative aspect-[4/4.5] overflow-hidden bg-[#f2ede4]">
+
+                <img [src]="c.img" [alt]="c.title" loading="lazy" class="h-full w-full object-cover
+                           transition-transform duration-700
+                           group-hover:scale-105" />
+
+                <!-- Image Overlay -->
+                <div class="absolute inset-0
+                           bg-gradient-to-t
+                           from-[#08182e]/80
+                           via-[#08182e]/10
+                           to-transparent"></div>
+
+                <!-- Card Number -->
+                <span class="absolute left-5 top-5
+                           flex h-10 w-10 items-center justify-center
+                           rounded-full border border-white/30
+                           bg-white/15 text-xs font-semibold
+                           text-white backdrop-blur-md">
+                    {{ (i + 1).toString().padStart(2, '0') }}
+                </span>
+
+                <!-- Title -->
+                <div class="absolute inset-x-0 bottom-0 p-6">
+                    <span class="mb-3 block h-[2px] w-8
+                               bg-[#d8b77e]
+                               transition-all duration-500
+                               group-hover:w-16"></span>
+
+                    <h3 class="h-display text-2xl text-white md:text-3xl">
+                        {{ c.title }}
+                    </h3>
+                </div>
+            </div>
+
+            <!-- Description -->
+            <div class="p-6">
+                <p class="text-sm leading-7 text-slate-600">
+                    {{ c.text }}
+                </p>
+
+                <div class="mt-6 flex items-center justify-between
+                           text-sm font-semibold text-[#102d59]">
+                    <span>{{ c.cta }}</span>
+
+                    <span class="flex h-9 w-9 items-center justify-center
+                               rounded-full border border-[#a78043]/40
+                               text-[#a78043] transition-all duration-300
+                               group-hover:translate-x-1
+                               group-hover:bg-[#a78043]
+                               group-hover:text-white" aria-hidden="true">
+                        ↗
+                    </span>
+                </div>
+            </div>
+
+            <!-- Animated Gold Border -->
+            <span class="card-accent absolute bottom-0 left-0
+                       h-[3px] w-0 bg-[#a78043]"></span>
+
+        </a>
+
+        }
+
+    </div>
+
+
+    <!-- Mobile Carousel -->
+    <div class="mt-10 sm:hidden" (mouseenter)="pauseMobileCarousel()" (mouseleave)="resumeMobileCarousel()"
+        (focusin)="pauseMobileCarousel()" (focusout)="resumeMobileCarousel()">
+
+        @if (activeImageCard; as c) {
+
+        <a [routerLink]="c.link" class="mobile-business-card group block overflow-hidden
+                   rounded-2xl border border-[#102d59]/10
+                   bg-white shadow-[0_15px_45px_rgba(16,45,89,0.09)]" [class.card-enter]="!prefersReducedMotion"
+            [attr.aria-label]="c.title + ': ' + c.cta">
+
+            <!-- Image -->
+            <div class="relative aspect-[5/4] overflow-hidden bg-[#f2ede4]">
+
+                <img [src]="c.img" [alt]="c.title" [attr.loading]="mobileCardIndex === 0 ? 'eager' : 'lazy'"
+                    class="h-full w-full object-cover" />
+
+                <div class="absolute inset-0
+                           bg-gradient-to-t
+                           from-[#08182e]/80
+                           via-[#08182e]/10
+                           to-transparent"></div>
+
+                <!-- Counter -->
+                <span class="absolute right-4 top-4
+                           rounded-full border border-white/30
+                           bg-[#102d59]/50 px-3 py-1.5
+                           text-[10px] font-semibold
+                           tracking-widest text-white backdrop-blur-md">
+                    {{ (mobileCardIndex + 1).toString().padStart(2, '0') }}
+                    /
+                    {{ imageCards.length.toString().padStart(2, '0') }}
+                </span>
+
+                <!-- Image Title -->
+                <div class="absolute inset-x-0 bottom-0 p-5">
+                    <span class="mb-3 block h-[2px] w-10 bg-[#d8b77e]"></span>
+
+                    <h3 class="h-display text-3xl text-white">
+                        {{ c.title }}
+                    </h3>
+                </div>
+
+            </div>
+
+            <!-- Description -->
+            <div class="p-5">
+                <p class="text-sm leading-7 text-slate-600">
+                    {{ c.text }}
+                </p>
+
+                <div class="mt-5 flex items-center justify-between
+                           text-sm font-semibold text-[#102d59]">
+                    <span>{{ c.cta }}</span>
+                    <span class="text-lg text-[#a78043]" aria-hidden="true">↗</span>
+                </div>
+            </div>
+
+            <div class="h-[3px] w-full bg-[#a78043]"></div>
+
+        </a>
+
+        }
+
+
+        <!-- Manual Navigation -->
+        <div class="mt-6 flex items-center justify-between">
+
+            <div class="flex gap-2">
+                <button type="button" (click)="previousImageCard()" class="flex h-11 w-11 items-center justify-center
+                           rounded-full border border-[#102d59]/15
+                           bg-white text-[#102d59]
+                           transition hover:border-[#a78043]
+                           active:scale-95" aria-label="Previous card">
+                    ←
+                </button>
+
+                <button type="button" (click)="nextImageCard()" class="flex h-11 w-11 items-center justify-center
+                           rounded-full border border-[#102d59]/15
+                           bg-white text-[#102d59]
+                           transition hover:border-[#a78043]
+                           active:scale-95" aria-label="Next card">
+                    →
+                </button>
+            </div>
+
+            <!-- Pagination -->
+            <div class="flex items-center gap-2">
+                @for (c of imageCards; track c.title; let i = $index) {
+                <button type="button" (click)="goToImageCard(i)" class="h-2 rounded-full transition-all duration-300"
+                    [class.w-8]="mobileCardIndex === i" [class.w-2]="mobileCardIndex !== i"
+                    [class.bg-[#a78043]]="mobileCardIndex === i" [class.bg-[#102d59]/20]="mobileCardIndex !== i"
+                    [attr.aria-label]="'Show ' + c.title"
+                    [attr.aria-current]="mobileCardIndex === i ? 'true' : null"></button>
+                }
+            </div>
+
+        </div>
+
+        <!-- Auto-rotation status -->
+        <p class="mt-4 text-center text-[10px] tracking-wide text-slate-500">
+            Explore our divisions
+        </p>
+
+    </div>
+
+</section>
+
+<!-- Paragraph -->
+<section class="wrap pt-24 md:pt-32">
+    <div class="max-w-xl text-xl leading-snug tracking-tight md:ml-[33%] md:text-2xl">
+        <p>Cross-border business is harder than it looks: the right people, the right partners and the right paperwork,
+            in the right country. ADMISK is the group that coordinates all of it under one accountable team.</p>
+        <a routerLink="/about" class="btn mt-8">Meet the group ↗</a>
+    </div>
+</section>
+
+<!-- Stats carousel -->
+<section class="pt-24 md:pt-32">
+    <div class="wrap flex items-end justify-between gap-6">
+        <h2 class="h-display text-3xl md:text-5xl">
+            One group.<br>
+            Six divisions moving business forward
+        </h2>
+
+        <div class="flex shrink-0 gap-2.5">
+            <button
+                type="button"
+                class="flex size-9 items-center justify-center rounded-full bg-ash"
+                (click)="previousStatsCard()"
+                aria-label="Previous stats card">
+                ←
+            </button>
+
+            <button
+                type="button"
+                class="flex size-9 items-center justify-center rounded-full bg-ink text-white"
+                (click)="nextStatsCard()"
+                aria-label="Next stats card">
+                →
+            </button>
+        </div>
+    </div>
+
+    <div
+        #sc
+        class="stats-carousel mt-12 flex gap-4 overflow-x-auto px-5 pb-3 md:px-12"
+        (mouseenter)="pauseStatsCarousel()"
+        (mouseleave)="resumeStatsCarousel()"
+        (touchstart)="pauseStatsCarousel()"
+        (touchend)="resumeStatsCarousel()">
+
+        @for (s of stats; track s.n; let i = $index) {
+            <article
+                class="stats-card group relative flex h-[440px] w-full shrink-0 flex-col overflow-hidden rounded-xl text-white md:h-[520px] md:w-[400px]"
+                [class.stats-card-active]="statsCardIndex === i">
+
+                <!-- Full-card background image -->
+                <img
+                    [src]="s.path"
+                    [alt]="s.tag"
+                    class="absolute inset-0 size-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    loading="lazy">
+
+                <!-- Dark overlay -->
+                <div
+                    class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10">
+                </div>
+
+                <!-- Gold accent -->
+                <div class="absolute left-0 top-0 h-1 w-full bg-[#a78043]"></div>
+
+                <!-- Content -->
+                <div class="relative z-10 flex h-full flex-col p-6 md:p-8">
+                    <div class="mb-auto">
+                        <span class="inline-flex rounded-full border border-white/30 bg-black/20 px-3 py-1.5 text-xs font-medium backdrop-blur-sm">
+                            {{ s.tag }}
+                        </span>
+                    </div>
+
+                    <div>
+                        <div class="text-6xl font-semibold tracking-tight md:text-7xl">
+                            {{ s.n }}
+                        </div>
+
+                        <div class="mt-2 text-lg font-medium md:text-xl">
+                            {{ s.label }}
+                        </div>
+
+                        <p class="mb-6 mt-4 max-w-sm text-sm leading-relaxed text-white/85 md:text-[15px]">
+                            {{ s.text }}
+                        </p>
+
+                        <div class="border-t border-white/25 pt-4 text-sm font-semibold tracking-wide">
+                            {{ company.legal }}
+                        </div>
+                    </div>
+                </div>
+            </article>
+        }
+    </div>
+
+    <!-- Mobile pagination -->
+    <div class="mt-4 flex justify-center gap-2 md:hidden">
+        @for (s of stats; track s.n; let i = $index) {
+            <button
+                type="button"
+                class="h-1.5 rounded-full transition-all duration-300"
+                [class.w-7]="statsCardIndex === i"
+                [class.w-2]="statsCardIndex !== i"
+                [class.bg-[#a78043]]="statsCardIndex === i"
+                [class.bg-gray-300]="statsCardIndex !== i"
+                (click)="goToStatsCard(i)"
+                [attr.aria-label]="'Go to stats card ' + (i + 1)">
+            </button>
+        }
+    </div>
+
+    <p class="mt-8 px-5 text-center text-sm leading-relaxed md:mt-10">
+        Let’s talk about what your business could be doing across borders.
+        <a
+            routerLink="/contact"
+            class="font-medium underline underline-offset-4">
+            Talk to our team →
+        </a>
+    </p>
+</section>
+
+<!-- Gradient headline + journey panel -->
+<section class="wrap pt-24 md:pt-32">
+    <div class="grid items-start gap-8 md:grid-cols-[1fr_1.6fr] md:gap-12">
+        <h2 class="h-display text-4xl md:text-[56px]"><span
+                class="bg-gradient-to-r from-brand to-[#7a5af8] bg-clip-text text-transparent">From</span> enquiry
+            to<br><span class="bg-gradient-to-r from-brand to-[#7a5af8] bg-clip-text text-transparent">ex</span>pansion,
+            faster</h2>
+        <p class="mt-2 max-w-lg">ADMISK’s six divisions work alongside your team: assessing the opportunity, finding the
+            people, training them and moving the goods, with one accountable group and clear approvals.
+            <a routerLink="/solutions" class="mt-5 block underline">Discover how it works →</a>
+        </p>
+    </div>
+<div class="relative mt-14 h-[460px] overflow-hidden rounded-xl bg-gradient-to-br from-[#a9a9e8] via-[#8fb0f5] to-[#bcbcc8] md:h-[600px]">
+  <img [src]="media.panel" alt="" loading="lazy"
+       class="absolute inset-0 size-full object-cover opacity-30 mix-blend-multiply">
+  <div class="absolute -right-24 -top-24 size-72 rounded-full bg-white/30 blur-3xl"></div>
+
+  <!-- Journey timeline -->
+  <div class="absolute left-[4%] top-10 z-20 hidden w-64 rounded-xl bg-[#1f1f1f] p-5 text-white shadow-2xl md:block">
+    <div class="mb-4 flex items-center justify-between">
+      <b class="text-[13px]">Client journey</b>
+      <span class="rounded bg-white/10 px-2 py-0.5 text-[11px] text-[#bbb]">5 steps</span>
+    </div>
+    <div class="relative">
+      <span class="absolute bottom-4 left-[13px] top-4 w-px bg-[#444]"></span>
+      @for (j of journey; track j.t; let i = $index) {
+        <button type="button" (click)="step.set(i)" (mouseenter)="step.set(i)"
+                class="relative flex w-full items-center gap-3 rounded-lg px-1 py-2 text-left text-[13px] transition hover:bg-white/5"
+                [class]="step() === i ? 'text-white' : 'text-[#9a9a9a]'">
+          <span class="z-10 flex size-[26px] shrink-0 items-center justify-center rounded-full text-[11px] font-semibold transition"
+                [class]="step() === i ? 'bg-brand text-white ring-4 ring-brand/30' : 'border border-[#555] bg-[#1f1f1f]'">{{ i + 1 }}</span>
+          {{ j.t }}
+        </button>
+      }
+    </div>
+  </div>
+
+  <!-- Browser window -->
+  <div class="absolute -bottom-5 -right-2 left-[6%] top-24 overflow-hidden rounded-tl-xl bg-white shadow-2xl md:left-[24%] md:top-20">
+    <div class="flex h-9 items-center gap-1.5 bg-mist px-3">
+      <span class="size-2 rounded-full bg-[#ff5f57]"></span>
+      <span class="size-2 rounded-full bg-[#febc2e]"></span>
+      <span class="size-2 rounded-full bg-[#28c840]"></span>
+      <span class="mx-auto h-5 w-48 rounded bg-white text-center text-[11px] leading-5 text-slate">admisk.com/solutions</span>
+    </div>
+
+    <div class="grid gap-8 p-6 md:grid-cols-[1.1fr_1fr] md:p-10">
+      <div class="flex flex-col">
+        <span class="mb-3 inline-flex w-fit items-center gap-2 rounded bg-[#e3eeff] px-2.5 py-1 text-xs font-semibold text-brand">
+          Step {{ step() + 1 }} · {{ journey[step()].t }}
+        </span>
+        <h3 class="h-display text-3xl md:text-[40px]">Unify your business<br>across borders</h3>
+        <p class="mt-3 max-w-sm text-sm text-slate">{{ journey[step()].d }}</p>
+        <div class="mt-6 flex flex-wrap gap-3">
+          <a routerLink="/solutions" class="btn !py-2.5">See how it works</a>
+          <a routerLink="/contact" class="btn-ghost !py-2.5">Talk to us</a>
+        </div>
+        <p class="mt-auto pt-6 text-xs text-slate">One group. Three countries. One point of contact.</p>
+      </div>
+
+      <!-- Map -->
+      <div class="relative hidden overflow-hidden rounded-lg bg-mist md:block">
+        <svg viewBox="0 0 400 300" class="size-full">
+          <defs>
+            <pattern id="dots" width="14" height="14" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1.2" fill="#cfcfcf"/></pattern>
+          </defs>
+          <rect width="400" height="300" fill="url(#dots)"/>
+          <path d="M300 60Q230 120 170 170Q150 190 130 230" fill="none" stroke="#146ef5" stroke-width="2.5" stroke-dasharray="6 6">
+            <animate attributeName="stroke-dashoffset" from="24" to="0" dur="1.2s" repeatCount="indefinite"/>
+          </path>
+          <g>
+            <circle cx="300" cy="60" r="14" fill="#146ef5" opacity=".2"><animate attributeName="r" values="10;22;10" dur="2.4s" repeatCount="indefinite"/></circle>
+            <circle cx="300" cy="60" r="8" fill="#146ef5"/>
+            <circle cx="170" cy="170" r="6" fill="#080808"/>
+            <circle cx="130" cy="230" r="6" fill="#080808"/>
+          </g>
+          <g font-size="12" font-weight="600">
+            <rect x="214" y="30" width="72" height="24" rx="12" fill="#fff"/><text x="250" y="46" text-anchor="middle">Riyadh</text>
+            <rect x="182" y="156" width="74" height="24" rx="12" fill="#fff"/><text x="219" y="172" text-anchor="middle">Nairobi</text>
+            <rect x="142" y="216" width="76" height="24" rx="12" fill="#fff"/><text x="180" y="232" text-anchor="middle">Kampala</text>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating chip -->
+  <div class="absolute bottom-8 left-[5%] z-20 hidden items-center gap-2.5 rounded-full bg-white py-2 pl-3 pr-4 text-[13px] font-medium shadow-xl md:flex">
+    <span class="relative flex size-2.5"><span class="absolute inline-flex size-full animate-ping rounded-full bg-brand opacity-60"></span><span class="relative size-2.5 rounded-full bg-brand"></span></span>
+    3 offices · 5 regions connected
+  </div>
+</div>
+</section>
+
+<!-- Division grid -->
+<section class="wrap pt-24 md:pt-32">
+    <h2 class="h-display max-w-3xl text-4xl md:text-5xl">One accountable group. Six specialized divisions.</h2>
+    <div class="mt-10 grid gap-4 md:grid-cols-3">
+        @for (d of divisions; track d.slug) {
+        <a [routerLink]="['/divisions', d.slug]"
+            class="group flex flex-col overflow-hidden rounded-lg border border-ash bg-white transition hover:shadow-xl">
+            <img [src]="media.division[d.slug]" [alt]="d.title" loading="lazy" class="h-40 w-full bg-mist object-cover">
+            <div class="flex flex-1 flex-col gap-3 p-6">
+                <span class="text-brand"><app-icon [name]="d.icon" /></span>
+                <h3 class="text-xl font-semibold tracking-tight">{{ d.title }}</h3>
+                <p class="text-sm text-slate">{{ d.short }}</p>
+                <span class="mt-auto pt-2 text-sm font-medium">Explore division →</span>
+            </div>
+        </a>
+        }
+    </div>
+</section>
+
+<!-- Audience selector -->
+<section class="wrap pt-24 md:pt-32">
+    <h2 class="h-display text-4xl md:text-[56px]">Everything
+        <select class="mx-1 h-12 cursor-pointer rounded border border-ash bg-white px-3 align-middle md:h-16"
+            aria-label="Audience" (change)="aud.set(+$any($event.target).value)">
+            @for (a of audiences; track a.label; let i = $index) { <option [value]="i">{{ a.label }}</option> }
+        </select><br>need from ADMISK
+    </h2>
+    <div class="mt-14 grid gap-10 md:grid-cols-[1fr_1.7fr_1.5fr] md:gap-12">
+        <div class="text-slate">{{ current().tag }}</div>
+        <div>
+            <p class="max-w-md">{{ current().intro }}</p>
+            <div class="mt-7 border-t border-ash">
+                @for (i of current().items; track i) { <div class="arrow-row">{{ i }}<span class="text-slate">→</span>
+                </div> }
+            </div>
+        </div>
+        <img [src]="media.audience" alt="" loading="lazy"
+            class="h-[420px] w-full rounded-lg bg-mist object-cover md:h-[520px]">
+    </div>
+</section>
+
+<app-cta />
