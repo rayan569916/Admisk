@@ -27,10 +27,31 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Locate Angular production build
+        id: locate
+        shell: bash
+        run: |
+          if [ -f "dist/admisk-website/browser/index.html" ]; then
+            echo "path=dist/admisk-website/browser" >> "$GITHUB_OUTPUT"
+          elif [ -f "dist/admisk/index.html" ]; then
+            echo "path=dist/admisk" >> "$GITHUB_OUTPUT"
+          elif [ -f "dist/browser/index.html" ]; then
+            echo "path=dist/browser" >> "$GITHUB_OUTPUT"
+          elif [ -f "dist/index.html" ]; then
+            echo "path=dist" >> "$GITHUB_OUTPUT"
+          else
+            echo "ERROR: Angular index.html was not found in the expected dist directories."
+            echo "Available index.html files:"
+            find . -name index.html -not -path './.git/*' -print
+            exit 1
+          fi
+
+          echo "Using build directory: $(cat "$GITHUB_OUTPUT" | cut -d= -f2-)"
+
       - name: Upload website
         uses: actions/upload-pages-artifact@v3
         with:
-          path: dist/admisk/browser
+          path: ${{ steps.locate.outputs.path }}
 
       - name: Deploy to GitHub Pages
         id: deployment
