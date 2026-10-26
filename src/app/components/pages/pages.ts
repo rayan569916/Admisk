@@ -10,7 +10,7 @@ import {
   ViewChild
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { ABOUT_FAQ, ADVISORY_STATS, AUDIENCES, COMPANY, DIVISIONS, HUB, JOURNEY, LEADERSHIP, OFFICES, PRACTICES, PRINCIPLES, ROADMAP, SECTORS, SERVE, STATS, VALUES, VISION, WHY } from '../../content';
+import { ABOUT_FAQ, ADVISORY_STATS, AUDIENCES, COMPANY, DIVISIONS, HUB, JOURNEY, LEADERSHIP, OFFICES, PRACTICES, PRINCIPLES, ROADMAP, SECTOR_IMAGES, SECTORS, SERVE, STATS, VALUE_IMAGES, VALUES, VISION, WHY } from '../../content';
 import { MEDIA } from '../../media';
 import { Cta, Icon, PageHead } from '../../ui';
 interface Person { name: string; role: string; group: string; bio: string; photo?: string; featured?: boolean; }
@@ -682,28 +682,60 @@ export class Home implements OnInit, OnDestroy {
     </p>
   </div>
 
-  <!-- Compact values grid -->
-  <div class="mt-6 grid grid-cols-2 gap-3 lg:grid-cols-4">
-    @for (v of values; track v; let i = $index) {
+
+<!-- CORE VALUES -->
+<div class="mt-6 grid grid-cols-2 gap-3 lg:grid-cols-4">
+  @for (v of values; track v; let i = $index) {
+    <article
+      class="group relative isolate flex min-h-[76px] items-center justify-between gap-3 overflow-hidden rounded-2xl border border-white/10 bg-[#102236] p-4 transition duration-300 hover:-translate-y-0.5 hover:border-[#146ef5]/60 sm:p-5"
+    >
+
+      <!-- Background image -->
+      <img
+        [src]="valueImages[i]"
+        alt=""
+        aria-hidden="true"
+        loading="lazy"
+        decoding="async"
+        class="absolute inset-0 -z-20 size-full object-cover transition duration-500 group-hover:scale-105"
+      />
+
+      <!-- Dark overlay -->
       <div
-        class="group flex items-center justify-between gap-3 rounded-2xl bg-mist p-4 transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#093a56] hover:text-white sm:p-5"
-      >
-        <div class="flex min-w-0 items-center gap-3">
-          <span class="shrink-0 text-[11px] font-medium tracking-wider text-slate/70 transition-colors group-hover:text-white/60">
-            0{{ i + 1 }}
-          </span>
+        class="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-br from-[#061321]/95 via-[#07182a]/80 to-[#07182a]/45 transition duration-300 group-hover:from-[#061321]/85 group-hover:via-[#07182a]/65"
+      ></div>
 
-          <h3 class="text-sm font-semibold leading-snug tracking-tight sm:text-base">
-            {{ v }}
-          </h3>
-        </div>
+      <!-- Blue accent -->
+      <div
+        class="pointer-events-none absolute inset-y-0 left-0 w-[3px] bg-[#146ef5] opacity-70 transition-all duration-300 group-hover:w-1 group-hover:opacity-100"
+      ></div>
 
-        <span class="shrink-0 text-sm text-[#093a56] transition-transform duration-300 group-hover:rotate-45 group-hover:text-white">
-          ↗
+      <!-- Value name -->
+      <div class="flex min-w-0 items-center gap-3">
+        <span
+          class="flex size-8 shrink-0 items-center justify-center rounded-lg border border-white/20 bg-white/10 text-[10px] font-semibold tracking-wider text-white/80 backdrop-blur-sm transition duration-300 group-hover:bg-white/20 group-hover:text-white"
+        >
+          {{ (i + 1).toString().padStart(2, '0') }}
         </span>
+
+        <h3
+          class="min-w-0 text-sm font-semibold leading-snug tracking-tight text-white transition-colors duration-300 group-hover:text-[#c8ddff] sm:text-base"
+        >
+          {{ v }}
+        </h3>
       </div>
-    }
-  </div>
+
+      <!-- Arrow -->
+      <span
+        class="flex size-7 shrink-0 items-center justify-center rounded-full border border-white/20 bg-white/10 text-sm text-white transition duration-300 group-hover:rotate-45 group-hover:border-[#146ef5] group-hover:bg-[#146ef5]"
+        aria-hidden="true"
+      >
+        ↗
+      </span>
+
+    </article>
+  }
+</div>
 
 </section>
 <!-- Integrated Advisory -->
@@ -1118,33 +1150,97 @@ export class Home implements OnInit, OnDestroy {
     </div>
 
 
-    <!-- Sector cards -->
-    <div class="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+<!-- SECTOR DIRECTORY -->
+<div class="mt-16 md:mt-24">
 
-      @for (sector of sectors; track sector; let i = $index) {
-        <article
-          class="group relative flex min-h-[76px] items-center gap-4 overflow-hidden rounded-2xl border border-[#e5e5e5] bg-white p-4 transition-all duration-300 hover:border-[#146ef5]/40 hover:bg-[#f7faff] sm:p-5"
-        >
+  <!-- Heading -->
+  <div class="flex flex-col gap-5 border-b border-[#d8d8d8] pb-6 sm:flex-row sm:items-end sm:justify-between">
+    <div>
+      <p class="text-[10px] font-semibold uppercase tracking-[0.15em] text-[#146ef5]">
+        Explore our expertise
+      </p>
 
-          <!-- Number badge -->
-          <div class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-[#f1f5fa] text-xs font-semibold text-[#093a56] transition-all duration-300 group-hover:bg-[#093a56] group-hover:text-white">
-            {{ (i + 1).toString().padStart(2, '0') }}
-          </div>
+      <h3 class="h-display mt-3 text-3xl font-semibold leading-tight tracking-[-0.045em] sm:text-4xl md:text-5xl">
+        Industries we understand.
+      </h3>
 
-          <!-- Sector name -->
-          <h4 class="min-w-0 flex-1 text-sm font-medium leading-6 text-[#222] transition-colors duration-300 group-hover:text-[#146ef5]">
-            {{ sector }}
-          </h4>
-
-          <!-- Arrow -->
-          <span class="flex size-8 shrink-0 items-center justify-center rounded-full text-base text-[#146ef5] transition-all duration-300 group-hover:bg-[#146ef5] group-hover:text-white">
-            ↗
-          </span>
-
-        </article>
-      }
-
+      <p class="mt-3 max-w-md text-sm leading-6 text-[#5a5a5a]">
+        A cross-sector outlook that helps us see opportunities from different perspectives.
+      </p>
     </div>
+
+    <div class="flex items-center gap-3 self-start rounded-2xl bg-[#f3f6fa] px-4 py-3 sm:self-auto">
+      <span class="text-3xl font-semibold tracking-tight text-[#093a56]">
+        {{ sectors.length.toString().padStart(2, '0') }}
+      </span>
+
+      <span class="max-w-16 text-[9px] font-semibold uppercase leading-4 tracking-[0.12em] text-[#5a5a5a]">
+        Listed sectors
+      </span>
+    </div>
+  </div>
+
+  <!-- Sector cards -->
+  <div class="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+
+    @for (sector of sectors; track sector; let i = $index) {
+      <article
+        class="group relative isolate flex min-h-[76px] items-center gap-4 overflow-hidden rounded-2xl border border-[#e5e5e5] bg-[#102236] p-4 transition duration-300 hover:border-[#146ef5]/60 sm:p-5"
+      >
+
+        <!-- Background image -->
+        <img
+          [src]="sectorImages[i]"
+          [alt]="''"
+          aria-hidden="true"
+          loading="lazy"
+          decoding="async"
+          class="absolute inset-0 -z-20 size-full object-cover transition duration-500 group-hover:scale-105"
+        />
+
+        <!-- Dark overlay for readability -->
+        <div
+          class="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-r from-[#061321]/95 via-[#07182a]/75 to-[#07182a]/35 transition duration-300 group-hover:from-[#061321]/90 group-hover:via-[#07182a]/65"
+        ></div>
+
+        <!-- Subtle blue accent -->
+        <div
+          class="pointer-events-none absolute inset-y-0 left-0 w-[3px] bg-[#146ef5] opacity-70 transition-all duration-300 group-hover:w-1 group-hover:opacity-100"
+        ></div>
+
+        <!-- Number badge -->
+        <div
+          class="flex size-10 shrink-0 items-center justify-center rounded-xl border border-white/20 bg-white/10 text-xs font-semibold text-white backdrop-blur-sm transition duration-300 group-hover:border-white/40 group-hover:bg-white/20"
+        >
+          {{ (i + 1).toString().padStart(2, '0') }}
+        </div>
+
+        <!-- Sector name -->
+        <h4
+          class="relative min-w-0 flex-1 text-sm font-semibold leading-5 text-white transition-colors duration-300 group-hover:text-[#c8ddff]"
+        >
+          {{ sector }}
+        </h4>
+
+        <!-- Arrow -->
+        <span
+          class="flex size-8 shrink-0 items-center justify-center rounded-full border border-white/25 bg-white/10 text-base text-white backdrop-blur-sm transition duration-300 group-hover:border-[#146ef5] group-hover:bg-[#146ef5] group-hover:text-white"
+          aria-hidden="true"
+        >
+          ↗
+        </span>
+
+      </article>
+    }
+
+  </div>
+
+  <p class="mt-4 text-[10px] leading-5 text-[#777]">
+    Sector examples are based on those listed in the company profile.
+  </p>
+
+</div>
+
 
     <p class="mt-4 text-[10px] leading-5 text-[#777]">
       Sector examples are based on those listed in the company profile.
@@ -1403,10 +1499,14 @@ export class Home implements OnInit, OnDestroy {
 export class About {
   media: Record<string, string> = MEDIA as unknown as Record<string, string>;
   teamImage = MEDIA.team;
-  values = VALUES; divisions = DIVISIONS; offices = OFFICES;
+values = VALUES;
+valueImages = VALUE_IMAGES;
+  divisions = DIVISIONS; 
+  offices = OFFICES;
   leadership = LEADERSHIP;
   practices = PRACTICES;
   sectors = SECTORS;
+  sectorImages = SECTOR_IMAGES;
   advisoryStats = ADVISORY_STATS; aboutFaq = ABOUT_FAQ;
   advisoryApproach = [
     { title: 'Diagnose', text: 'Review the commercial objective, financial position and relevant legal context together before recommending a path.' },
@@ -1830,26 +1930,143 @@ export class Leadership {
   }
 }
 
+
 /* ───────────── DIVISIONS ───────────── */
 @Component({
   selector: 'app-divisions',
   imports: [RouterLink, PageHead, Icon, Cta],
   template: `
-    <app-page-head crumb="Home / Divisions" title="Six divisions, one accountable holding group." lead="Each division has deep expertise. All are coordinated under one parent company with central governance." />
-    <section class="wrap mt-16 grid gap-4 md:grid-cols-2">
-      @for (d of divisions; track d.slug) {
-        <article class="rounded-lg border border-ash p-7">
-          <div class="flex items-center gap-4"><span class="flex size-14 items-center justify-center rounded-lg bg-mist text-brand"><app-icon [name]="d.icon" /></span><h2 class="text-2xl font-semibold tracking-tight">{{ d.title }}</h2></div>
-          <p class="mt-4 text-slate">{{ d.intro }}</p>
-          <div class="mt-5 border-t border-ash">@for (s of d.services; track s) { <div class="arrow-row !py-3 text-sm">{{ s }}<span class="text-slate">→</span></div> }</div>
-          <a [routerLink]="['/divisions', d.slug]" class="mt-5 inline-block text-sm font-medium hover:underline">View division →</a>
-        </article>
-      }
+    <app-page-head
+      crumb="Home / Divisions"
+      title="Six divisions. One connected vision."
+      [accent]="['connected vision.']"
+      lead="Specialist expertise across investment, consultancy, workforce solutions, training, hospitality and trade—coordinated under one accountable holding group."
+    />
+
+    <section class="wrap mt-12 pb-12 sm:mt-16 sm:pb-16">
+
+      <!-- SECTION INTRO -->
+      <div class="mb-8 flex flex-col gap-4 sm:mb-10 md:flex-row md:items-end md:justify-between">
+        <div class="max-w-2xl">
+          <p class="text-xs font-semibold uppercase tracking-[0.2em] text-brand">
+            Our business divisions
+          </p>
+          <h2 class="mt-3 text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
+            Expertise built around your goals.
+          </h2>
+        </div>
+
+        <p class="max-w-md text-sm leading-6 text-slate">
+          Explore each division to discover its capabilities, services and how it can support your business.
+        </p>
+      </div>
+
+      <!-- DIVISION IMAGE GRID -->
+      <div class="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+
+        @for (d of divisions; track d.slug; let i = $index) {
+          <article
+            class="group relative isolate flex min-h-[390px] flex-col overflow-hidden rounded-2xl bg-[#093a56] shadow-sm transition duration-500 hover:-translate-y-1 hover:shadow-xl sm:min-h-[420px]"
+          >
+
+            <!-- BACKGROUND IMAGE -->
+            <img
+              [src]="d.path"
+              [alt]="d.title"
+              loading="lazy"
+              decoding="async"
+              class="absolute inset-0 -z-30 size-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+            >
+
+            <!-- FALLBACK-FRIENDLY OVERLAYS -->
+            <div class="absolute inset-0 -z-20 bg-[#071d2b]/40"></div>
+
+            <div
+              class="absolute inset-0 -z-10 bg-gradient-to-t from-[#061a28] via-[#071d2b]/65 to-[#071d2b]/10 transition-opacity duration-300 group-hover:from-[#061a28]/95 group-hover:via-[#071d2b]/70"
+            ></div>
+
+            <!-- TOP ROW -->
+            <div class="flex items-start justify-between gap-3 p-5 sm:p-6">
+
+              <span class="flex size-12 items-center justify-center rounded-xl border border-white/20 bg-white/10 text-white shadow-lg backdrop-blur-md transition duration-300 group-hover:border-white/40 group-hover:bg-white/20">
+                <app-icon [name]="d.icon" />
+              </span>
+
+              <span class="rounded-full border border-white/20 bg-black/20 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.15em] text-white/90 backdrop-blur-md">
+                Division {{ (i + 1).toString().padStart(2, '0') }}
+              </span>
+            </div>
+
+            <!-- CARD CONTENT -->
+            <div class="mt-auto p-5 pt-16 sm:p-6 sm:pt-20">
+
+              <h2 class="max-w-sm text-2xl font-semibold leading-tight tracking-tight text-white sm:text-[26px]">
+                {{ d.title }}
+              </h2>
+
+              <!-- <p class="mt-3 max-w-md text-sm leading-6 text-white/75">
+                {{ d.short }}
+              </p> -->
+
+              <!-- SERVICE PREVIEW -->
+              <!-- <div class="mt-5 flex flex-wrap gap-2">
+                @for (s of d.services.slice(0, 2); track s) {
+                  <span class="rounded-full border border-white/15 bg-white/10 px-3 py-1.5 text-[11px] font-medium text-white/90 backdrop-blur-sm">
+                    {{ s }}
+                  </span>
+                }
+
+                @if (d.services.length > 2) {
+                  <span class="rounded-full border border-white/15 bg-white/10 px-3 py-1.5 text-[11px] font-medium text-white/75 backdrop-blur-sm">
+                    +{{ d.services.length - 2 }} more
+                  </span>
+                }
+              </div> -->
+
+              <!-- DIVIDER -->
+              <div class="my-5 h-px bg-white/20"></div>
+
+              <!-- FOOTER LINK -->
+              <a
+                [routerLink]="['/divisions', d.slug]"
+                class="group/link flex min-h-10 items-center justify-between gap-3 text-sm font-semibold text-white"
+                [attr.aria-label]="'Explore ' + d.title"
+              >
+                <span class="transition-colors group-hover/link:text-white/75">
+                  Explore division
+                </span>
+
+                <span class="flex size-9 items-center justify-center rounded-full border border-white/30 bg-white/10 transition duration-300 group-hover/link:translate-x-1 group-hover/link:bg-white group-hover/link:text-[#093a56]">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    class="size-4"
+                  >
+                    <path d="M5 12h14M13 6l6 6-6 6"></path>
+                  </svg>
+                </span>
+              </a>
+
+            </div>
+          </article>
+        }
+
+      </div>
     </section>
-    <app-cta title="Not sure which division fits?" text="Start with any one. We coordinate the rest." />
+
+    <!-- GROUP CTA -->
+    <app-cta
+      title="Not sure which division fits?"
+      text="Start with any one. We coordinate the rest."
+    />
   `,
 })
-export class Divisions { divisions = DIVISIONS; }
+export class Divisions {
+  divisions = DIVISIONS;
+}
+
 
 @Component({
   selector: 'app-division-detail',
@@ -2076,22 +2293,283 @@ export class Vision {
   selector: 'app-why',
   imports: [PageHead, Cta],
   template: `
-<app-page-head crumb="Home / Why ADMISK"
-  title="Why partner with ADMISK."
-  [accent]="['Why', 'ADMISK']"
-  lead="One accountable group, with clear responsibilities, transparent terms and documented approvals." />    <section class="wrap mt-16 grid gap-4 md:grid-cols-3">@for (w of why; track w.t) { <div class="rounded-lg border border-ash p-7"><h3 class="text-xl font-semibold tracking-tight">{{ w.t }}</h3><p class="mt-3 text-sm text-slate">{{ w.d }}</p></div> }</section>
-    <section class="wrap mt-20">
-      <h2 class="h-display text-3xl md:text-4xl">Partner operating principles</h2>
-      <div class="mt-8 grid gap-x-12 md:grid-cols-2">@for (p of principles; track p) { <div class="arrow-row">{{ p }}</div> }</div>
+    <app-page-head
+      crumb="Home / Why ADMISK"
+      title="Why partner with ADMISK."
+      [accent]="['Why', 'ADMISK']"
+      lead="One accountable group, with clear responsibilities, transparent terms and documented approvals."
+    />
+
+    <!-- DIFFERENTIATORS -->
+    <section class="wrap py-14 sm:py-18 md:py-24">
+
+      <!-- Section introduction -->
+      <div class="grid gap-6 border-b border-[#d8d8d8] pb-8 md:grid-cols-[1fr_0.65fr] md:items-end md:gap-12">
+        <div>
+          <p class="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#146ef5] sm:text-xs">
+            The ADMISK advantage
+          </p>
+
+          <h2 class="h-display mt-3 max-w-2xl text-3xl leading-tight tracking-[-0.045em] sm:text-4xl md:text-5xl">
+            Built around how business should work.
+          </h2>
+        </div>
+
+        <p class="max-w-lg text-sm leading-7 text-[#5a5a5a] md:justify-self-end">
+          Strong partnerships depend on clarity, accountability and the ability to bring the right expertise together when it matters.
+        </p>
+      </div>
+
+      <!-- Premium asymmetric grid -->
+      <div class="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+
+        @for (w of why; track w.t; let i = $index) {
+          <article
+            class="group relative isolate flex min-h-52 flex-col overflow-hidden rounded-2xl border border-[#e3e7ec] bg-white p-5 transition duration-300 hover:-translate-y-1 hover:border-[#146ef5]/40 hover:shadow-xl sm:min-h-60 sm:p-7"
+            [class.lg:col-span-2]="i === 0"
+            [class.lg:bg-[#093a56]]="i === 0"
+            [class.lg:text-white]="i === 0"
+          >
+
+            <!-- Decorative background element -->
+            <div
+              class="pointer-events-none absolute -right-10 -top-12 -z-10 size-36 rounded-full border border-[#146ef5]/10 transition duration-500 group-hover:scale-125"
+              [class.border-white/10]="i === 0"
+            ></div>
+
+            <div class="flex items-start justify-between gap-4">
+              <span
+                class="flex size-10 items-center justify-center rounded-xl bg-[#f0f5fc] text-xs font-semibold tracking-wide text-[#093a56] transition duration-300 group-hover:bg-[#146ef5] group-hover:text-white"
+                [class.bg-white/10]="i === 0"
+                [class.text-white]="i === 0"
+              >
+                {{ (i + 1).toString().padStart(2, '0') }}
+              </span>
+
+              <span
+                class="flex size-8 items-center justify-center rounded-full border border-[#e5e9ef] text-sm text-[#146ef5] transition duration-300 group-hover:rotate-45 group-hover:border-[#146ef5] group-hover:bg-[#146ef5] group-hover:text-white"
+                [class.border-white/20]="i === 0"
+                [class.text-white]="i === 0"
+                aria-hidden="true"
+              >
+                ↗
+              </span>
+            </div>
+
+            <div class="mt-auto pt-9 sm:pt-12">
+              <h3
+                class="text-xl font-semibold tracking-tight text-[#151b26] sm:text-2xl"
+                [class.text-white]="i === 0"
+              >
+                {{ w.t }}
+              </h3>
+
+              <p
+                class="mt-3 max-w-xl text-sm leading-6 text-[#68717e]"
+                [class.text-white/70]="i === 0"
+              >
+                {{ w.d }}
+              </p>
+            </div>
+
+            <!-- Bottom accent -->
+            <div
+              class="absolute inset-x-0 bottom-0 h-[3px] origin-left scale-x-0 bg-[#146ef5] transition-transform duration-300 group-hover:scale-x-100"
+            ></div>
+          </article>
+        }
+
+        <!-- Supporting statement card -->
+        <article class="relative flex min-h-52 flex-col justify-between overflow-hidden rounded-2xl bg-[#f1f5fa] p-5 sm:min-h-60 sm:p-7">
+          <div class="pointer-events-none absolute -bottom-12 -right-10 size-40 rounded-full bg-[#146ef5]/10 blur-2xl"></div>
+
+          <div class="relative flex size-10 items-center justify-center rounded-xl bg-white text-[#146ef5] shadow-sm">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.6"
+              class="size-5"
+              aria-hidden="true"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 3 19 6v5c0 4.5-3 7.5-7 10-4-2.5-7-5.5-7-10V6l7-3Z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" d="m9 12 2 2 4-4"/>
+            </svg>
+          </div>
+
+          <div class="relative mt-10">
+            <p class="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#146ef5]">
+              Our commitment
+            </p>
+            <p class="mt-2 text-xl font-semibold leading-snug tracking-tight text-[#093a56] sm:text-2xl">
+              Clear expectations.<br />
+              Accountable delivery.
+            </p>
+          </div>
+        </article>
+
+      </div>
     </section>
-    <section class="wrap mt-20 grid gap-4 md:grid-cols-2">
-      <div class="rounded-lg bg-mist p-8"><h3 class="text-2xl font-semibold tracking-tight">Governance &amp; compliance</h3><p class="mt-3 text-slate">ADMISK is committed to operating within applicable laws, regulations and licensing requirements in each country where the group operates (Saudi Arabia, Kenya and Uganda), across the holding group and every division beneath it. Specific activities are marketed and delivered only within the scope of each entity’s approved commercial activities and any required professional or sector licenses.</p></div>
-      <div class="rounded-lg bg-onyx p-8 text-white"><h3 class="text-2xl font-semibold tracking-tight">Licensed partners</h3><p class="mt-3 text-[#bdbdbd]">Where a service is regulated or requires a specialist license, including legal services and regulated financial activities, we work with appropriately licensed partners and professionals.</p></div>
+
+    <!-- OPERATING PRINCIPLES -->
+    <section class="border-y border-[#e4e7eb] bg-[#f7f9fc] py-14 sm:py-18 md:py-24">
+      <div class="wrap">
+
+        <div class="grid gap-6 md:grid-cols-[0.85fr_1.15fr] md:gap-16">
+
+          <!-- Left introduction -->
+          <div class="md:sticky md:top-24 md:self-start">
+            <p class="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#146ef5] sm:text-xs">
+              How we work
+            </p>
+
+            <h2 class="h-display mt-3 max-w-lg text-3xl leading-tight tracking-[-0.045em] sm:text-4xl md:text-5xl">
+              Principles that guide every partnership.
+            </h2>
+
+            <p class="mt-5 max-w-md text-sm leading-7 text-[#5a5a5a]">
+              We use consistent operating principles to help keep responsibilities clear, decisions documented and engagements focused on agreed outcomes.
+            </p>
+
+            <div class="mt-7 hidden items-center gap-3 md:flex">
+              <span class="h-px w-10 bg-[#146ef5]"></span>
+              <span class="text-[10px] font-semibold uppercase tracking-[0.15em] text-[#5a5a5a]">
+                Our way of working
+              </span>
+            </div>
+          </div>
+
+          <!-- Principles list -->
+          <div class="overflow-hidden rounded-2xl border border-[#e0e5eb] bg-white">
+
+            @for (p of principles; track p; let i = $index) {
+              <div class="group flex items-center gap-4 border-b border-[#e8ebef] p-4 transition duration-200 last:border-b-0 hover:bg-[#f6f9ff] sm:gap-6 sm:p-6">
+
+                <span class="flex size-9 shrink-0 items-center justify-center rounded-lg bg-[#f0f5fc] text-[11px] font-semibold text-[#146ef5] transition group-hover:bg-[#093a56] group-hover:text-white sm:size-10">
+                  {{ (i + 1).toString().padStart(2, '0') }}
+                </span>
+
+                <p class="min-w-0 flex-1 text-sm font-medium leading-6 text-[#252b35] sm:text-base">
+                  {{ p }}
+                </p>
+
+                <span
+                  class="flex size-7 shrink-0 items-center justify-center rounded-full text-[#146ef5] transition duration-300 group-hover:translate-x-1"
+                  aria-hidden="true"
+                >
+                  →
+                </span>
+              </div>
+            }
+
+          </div>
+        </div>
+      </div>
     </section>
+
+    <!-- GOVERNANCE & COMPLIANCE -->
+    <section class="wrap py-14 sm:py-18 md:py-24">
+
+      <div class="max-w-2xl">
+        <p class="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#146ef5] sm:text-xs">
+          Trust &amp; governance
+        </p>
+
+        <h2 class="h-display mt-3 text-3xl leading-tight tracking-[-0.045em] sm:text-4xl md:text-5xl">
+          Responsible by design.
+        </h2>
+
+        <p class="mt-4 max-w-xl text-sm leading-7 text-[#5a5a5a]">
+          Our approach puts regulatory responsibilities, professional standards and clear operating boundaries at the centre of each engagement.
+        </p>
+      </div>
+
+      <div class="mt-8 grid gap-4 lg:grid-cols-2">
+
+        <!-- Governance card -->
+        <article class="group relative overflow-hidden rounded-2xl border border-[#e0e5eb] bg-white p-6 sm:p-8 md:p-10">
+
+          <div class="absolute right-0 top-0 h-1 w-24 bg-[#146ef5] transition-all duration-300 group-hover:w-40"></div>
+
+          <div class="flex items-start justify-between gap-4">
+            <div class="flex size-11 items-center justify-center rounded-xl bg-[#edf4ff] text-[#146ef5]">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="size-5" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 3 20 7v5c0 4.5-3.5 7.5-8 9-4.5-1.5-8-4.5-8-9V7l8-4Z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6M12 9v6"/>
+              </svg>
+            </div>
+
+            <span class="rounded-full border border-[#e0e5eb] px-3 py-1.5 text-[9px] font-semibold uppercase tracking-[0.12em] text-[#68717e]">
+              Governance
+            </span>
+          </div>
+
+          <h3 class="mt-7 text-2xl font-semibold tracking-tight text-[#093a56] sm:text-3xl">
+            Governance &amp; compliance
+          </h3>
+
+          <p class="mt-4 text-sm leading-7 text-[#5a5a5a]">
+            ADMISK is committed to operating within applicable laws, regulations and licensing requirements in each country where the group operates (Saudi Arabia, Kenya and Uganda), across the holding group and every division beneath it. Specific activities are marketed and delivered only within the scope of each entity’s approved commercial activities and any required professional or sector licenses.
+          </p>
+
+          <div class="mt-7 flex flex-wrap gap-2">
+            @for (country of ['Saudi Arabia', 'Kenya', 'Uganda']; track country) {
+              <span class="rounded-full bg-[#f1f5fa] px-3 py-1.5 text-[11px] font-medium text-[#093a56]">
+                {{ country }}
+              </span>
+            }
+          </div>
+        </article>
+
+        <!-- Licensed partners card -->
+        <article class="group relative isolate overflow-hidden rounded-2xl bg-[#093a56] p-6 text-white sm:p-8 md:p-10">
+
+          <div class="pointer-events-none absolute -right-20 -top-20 -z-10 size-64 rounded-full border border-white/[0.08]"></div>
+          <div class="pointer-events-none absolute -right-10 -top-10 -z-10 size-44 rounded-full border border-white/[0.08]"></div>
+          <div class="absolute bottom-0 left-0 h-1 w-24 bg-[#146ef5] transition-all duration-300 group-hover:w-40"></div>
+
+          <div class="flex items-start justify-between gap-4">
+            <div class="flex size-11 items-center justify-center rounded-xl border border-white/10 bg-white/10 text-[#a9ccff]">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="size-5" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8 12.5 10.5 15 16 9.5"/>
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 3 20 7v5c0 4.5-3.5 7.5-8 9-4.5-1.5-8-4.5-8-9V7l8-4Z"/>
+              </svg>
+            </div>
+
+            <span class="rounded-full border border-white/15 bg-white/[0.06] px-3 py-1.5 text-[9px] font-semibold uppercase tracking-[0.12em] text-white/65">
+              Professional standards
+            </span>
+          </div>
+
+          <h3 class="mt-7 text-2xl font-semibold tracking-tight sm:text-3xl">
+            Licensed partners
+          </h3>
+
+          <p class="mt-4 text-sm leading-7 text-white/70">
+            Where a service is regulated or requires a specialist license, including legal services and regulated financial activities, we work with appropriately licensed partners and professionals.
+          </p>
+
+          <div class="mt-7 flex items-center gap-3 border-t border-white/10 pt-5">
+            <span class="flex size-8 items-center justify-center rounded-full bg-white/10 text-[#a9ccff]" aria-hidden="true">
+              ✓
+            </span>
+            <p class="text-xs leading-5 text-white/75">
+              Specialist expertise aligned with applicable requirements.
+            </p>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- FINAL CTA -->
     <app-cta />
   `,
 })
-export class Why { why = WHY; principles = PRINCIPLES; }
+export class Why {
+  why = WHY;
+  principles = PRINCIPLES;
+}
 
 const ROAD = 'M627 860C618 846 595 808 575 775C555 742 527 695 505 660C483 625 460 589 445 565C430 541 416 528 415 515C414 502 420 494 438 490C456 486 486 486 520 490C554 494 601 507 640 512C679 517 726 525 755 522C784 519 802 505 812 492C822 479 822 459 815 445C808 431 789 416 770 408C751 400 720 401 700 395C680 389 656 383 650 372C644 361 652 343 665 330C678 317 708 303 730 292C752 281 777 273 800 262C823 251 846 241 870 228C894 215 920 191 945 185C970 179 994 185 1020 190C1046 195 1077 212 1100 215C1123 218 1138 213 1160 205C1182 197 1218 172 1230 165';
 
@@ -2178,33 +2656,324 @@ export class Roadmap {
   selector: 'app-contact',
   imports: [PageHead],
   template: `
-    <app-page-head crumb="Home / Contact" title="Let’s talk about your business." lead="One point of contact for investment, people, training, hospitality and trade." />
-    <section class="wrap mt-16 grid items-start gap-10 md:grid-cols-[1fr_1.1fr]">
-      <div class="grid gap-3">
-        @for (o of offices; track o.key) { <div class="rounded-lg border border-ash p-5"><h3 class="font-semibold">{{ o.name }}</h3><p class="mt-1 text-sm">{{ o.address }}</p><a [href]="'tel:' + o.phone.replaceAll(' ', '')" class="text-sm text-slate hover:underline">{{ o.phone }}</a>@if (o.alternatePhone) { <span class="text-sm text-slate"> or </span><a [href]="'tel:' + o.alternatePhone.replaceAll(' ', '')" class="text-sm text-slate hover:underline">{{ o.alternatePhone }}</a> }</div> }
-        <div class="rounded-lg border border-ash p-5"><h3 class="font-semibold">Email</h3><a [href]="'mailto:' + email" class="text-sm hover:underline">{{ email }}</a></div>
+    <app-page-head
+      crumb="Home / Contact"
+      title="Let’s build something meaningful."
+      [accent]="['meaningful.']"
+      lead="From strategic partnerships to people, training, hospitality and trade, connect with the right team at ADMISK."
+    />
+
+    <section class="wrap mt-12 pb-16 md:mt-16 md:pb-24">
+      <div class="grid items-stretch gap-6 lg:grid-cols-[0.85fr_1.15fr] lg:gap-8">
+
+        <!-- LEFT: CONTACT INFORMATION -->
+        <aside class="relative isolate overflow-hidden rounded-2xl bg-[#093a56] p-6 text-white sm:p-8 lg:p-10">
+
+          <!-- Decorative glow -->
+          <div class="pointer-events-none absolute -right-24 -top-24 -z-10 size-72 rounded-full bg-[#146ef5]/30 blur-3xl"></div>
+          <div class="pointer-events-none absolute -bottom-28 -left-20 -z-10 size-64 rounded-full bg-cyan-400/10 blur-3xl"></div>
+
+          <div class="relative">
+            <div class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.07] px-3 py-1.5">
+              <span class="size-2 rounded-full bg-emerald-400"></span>
+              <span class="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/80">
+                Let's connect
+              </span>
+            </div>
+
+            <h2 class="mt-6 max-w-sm text-3xl font-semibold leading-tight tracking-tight sm:text-4xl">
+              Every great partnership starts with a conversation.
+            </h2>
+
+            <p class="mt-4 max-w-md text-sm leading-7 text-white/65">
+              Tell us what you have in mind. Our team will help direct your enquiry to the appropriate division.
+            </p>
+
+            <!-- Contact email -->
+            <a
+              [href]="'mailto:' + email"
+              class="group mt-8 flex items-center gap-4 rounded-xl border border-white/15 bg-white/[0.06] p-4 transition duration-300 hover:border-white/30 hover:bg-white/[0.1]"
+            >
+              <span class="flex size-11 shrink-0 items-center justify-center rounded-lg bg-white/10 text-white">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="1.6" class="size-5">
+                  <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+                  <path d="m3 7 9 6 9-6"></path>
+                </svg>
+              </span>
+
+              <span class="min-w-0 flex-1">
+                <span class="block text-[11px] uppercase tracking-[0.15em] text-white/50">
+                  Email our team
+                </span>
+                <span class="mt-1 block break-words text-sm font-medium text-white">
+                  {{ email }}
+                </span>
+              </span>
+
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="1.7" class="size-4 shrink-0 transition-transform group-hover:translate-x-1">
+                <path d="M5 12h14M13 6l6 6-6 6"></path>
+              </svg>
+            </a>
+
+            <!-- Office list -->
+            <div class="mt-10">
+              <div class="flex items-center justify-between gap-3">
+                <h3 class="text-xs font-semibold uppercase tracking-[0.18em] text-white/55">
+                  Our offices
+                </h3>
+                <span class="text-xs text-white/40">{{ offices.length }} locations</span>
+              </div>
+
+              <div class="mt-4 grid gap-3">
+                @for (o of offices; track o.key; let i = $index) {
+                  <div class="group rounded-xl border border-white/10 bg-white/[0.045] p-4 transition duration-300 hover:border-white/25 hover:bg-white/[0.08]">
+
+                    <div class="flex items-start gap-3">
+                      <span class="flex size-9 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-white/[0.07] text-xs font-semibold text-white/80">
+                        {{ (i + 1).toString().padStart(2, '0') }}
+                      </span>
+
+                      <div class="min-w-0 flex-1">
+                        <h4 class="text-sm font-semibold text-white">
+                          {{ o.name }}
+                        </h4>
+
+                        <p class="mt-1.5 whitespace-pre-line text-xs leading-6 text-white/55">
+                          {{ o.address }}
+                        </p>
+
+                        <div class="mt-3 flex flex-wrap items-center gap-x-3 gap-y-2">
+                          <a
+                            [href]="'tel:' + o.phone.replaceAll(' ', '')"
+                            class="inline-flex items-center gap-2 text-xs font-medium text-white/80 transition hover:text-white"
+                          >
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                              stroke-width="1.6" class="size-3.5">
+                              <path d="M22 16.92v3a2 2 0 0 1-2.18 2
+                                19.79 19.79 0 0 1-8.63-3.07
+                                19.5 19.5 0 0 1-6-6
+                                A19.79 19.79 0 0 1 2.12 4.18
+                                2 2 0 0 1 4.11 2h3
+                                a2 2 0 0 1 2 1.72
+                                c.12.96.35 1.9.69 2.8
+                                a2 2 0 0 1-.45 2.11L8.08 9.91
+                                a16 16 0 0 0 6 6l1.27-1.27
+                                a2 2 0 0 1 2.11-.45
+                                c.9.34 1.84.57 2.8.69
+                                A2 2 0 0 1 22 16.92z"/>
+                            </svg>
+                            {{ o.phone }}
+                          </a>
+
+                          @if (o.alternatePhone) {
+                            <span class="text-white/25">/</span>
+                            <a
+                              [href]="'tel:' + o.alternatePhone.replaceAll(' ', '')"
+                              class="text-xs text-white/65 transition hover:text-white"
+                            >
+                              {{ o.alternatePhone }}
+                            </a>
+                          }
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                }
+              </div>
+            </div>
+
+            <!-- Bottom note -->
+            <div class="mt-8 flex items-start gap-3 border-t border-white/10 pt-5">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="1.6" class="mt-0.5 size-4 shrink-0 text-white/60">
+                <circle cx="12" cy="12" r="9"></circle>
+                <path d="M12 11v5M12 7h.01"></path>
+              </svg>
+
+              <p class="text-xs leading-6 text-white/50">
+                Share your enquiry using the form. Include the division or country relevant to your request so we can direct it appropriately.
+              </p>
+            </div>
+          </div>
+        </aside>
+
+        <!-- RIGHT: CONTACT FORM -->
+        <div class="rounded-2xl border border-ash bg-white p-5 shadow-[0_12px_50px_rgba(9,58,86,0.06)] sm:p-8 lg:p-10">
+
+          <div class="flex items-start justify-between gap-4">
+            <div>
+              <p class="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#146ef5]">
+                Get in touch
+              </p>
+
+              <h2 class="mt-2 text-2xl font-semibold tracking-tight text-[#093a56] sm:text-3xl">
+                Send us a message
+              </h2>
+
+              <p class="mt-3 max-w-md text-sm leading-6 text-slate">
+                Complete the details below and tell us a little about what you need.
+              </p>
+            </div>
+
+            <div class="hidden size-12 shrink-0 items-center justify-center rounded-xl bg-[#093a56]/[0.06] text-[#093a56] sm:flex">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="1.5" class="size-6">
+                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8
+                  8.5 8.5 0 0 1-7.6 4.7
+                  8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7
+                  a8.38 8.38 0 0 1-.9-3.8
+                  8.5 8.5 0 0 1 4.7-7.6
+                  8.38 8.38 0 0 1 3.8-.9h.5
+                  a8.48 8.48 0 0 1 8 8v.5z"/>
+              </svg>
+            </div>
+          </div>
+
+          <div class="my-7 h-px bg-ash"></div>
+
+          <form
+            #f
+            class="grid gap-x-5 gap-y-5 sm:grid-cols-2"
+            (submit)="$event.preventDefault(); send(f)"
+          >
+            <!-- Full name -->
+            <label class="block text-xs font-semibold text-[#093a56]">
+              Full name <span class="text-[#146ef5]">*</span>
+              <input
+                name="name"
+                type="text"
+                autocomplete="name"
+                placeholder="Your full name"
+                required
+                class="mt-2 block w-full rounded-lg border border-ash bg-[#f9fbfc] px-3.5 py-3 text-sm font-normal text-ink outline-none transition placeholder:text-slate/60 focus:border-[#146ef5] focus:bg-white focus:ring-4 focus:ring-[#146ef5]/10"
+              >
+            </label>
+
+            <!-- Company -->
+            <label class="block text-xs font-semibold text-[#093a56]">
+              Company
+              <input
+                name="company"
+                type="text"
+                autocomplete="organization"
+                placeholder="Company or organisation"
+                class="mt-2 block w-full rounded-lg border border-ash bg-[#f9fbfc] px-3.5 py-3 text-sm font-normal text-ink outline-none transition placeholder:text-slate/60 focus:border-[#146ef5] focus:bg-white focus:ring-4 focus:ring-[#146ef5]/10"
+              >
+            </label>
+
+            <!-- Email -->
+            <label class="block text-xs font-semibold text-[#093a56]">
+              Email address <span class="text-[#146ef5]">*</span>
+              <input
+                name="email"
+                type="email"
+                autocomplete="email"
+                placeholder="you@company.com"
+                required
+                class="mt-2 block w-full rounded-lg border border-ash bg-[#f9fbfc] px-3.5 py-3 text-sm font-normal text-ink outline-none transition placeholder:text-slate/60 focus:border-[#146ef5] focus:bg-white focus:ring-4 focus:ring-[#146ef5]/10"
+              >
+            </label>
+
+            <!-- Phone -->
+            <label class="block text-xs font-semibold text-[#093a56]">
+              Phone number
+              <input
+                name="phone"
+                type="tel"
+                autocomplete="tel"
+                placeholder="+966 ..."
+                class="mt-2 block w-full rounded-lg border border-ash bg-[#f9fbfc] px-3.5 py-3 text-sm font-normal text-ink outline-none transition placeholder:text-slate/60 focus:border-[#146ef5] focus:bg-white focus:ring-4 focus:ring-[#146ef5]/10"
+              >
+            </label>
+
+            <!-- Division -->
+            <label class="block text-xs font-semibold text-[#093a56]">
+              Division of interest
+              <select
+                name="division"
+                class="mt-2 block w-full appearance-none rounded-lg border border-ash bg-[#f9fbfc] px-3.5 py-3 text-sm font-normal text-ink outline-none transition focus:border-[#146ef5] focus:bg-white focus:ring-4 focus:ring-[#146ef5]/10"
+              >
+                <option>Not sure yet</option>
+                @for (d of divisions; track d.slug) {
+                  <option>{{ d.title }}</option>
+                }
+              </select>
+            </label>
+
+            <!-- Country -->
+            <label class="block text-xs font-semibold text-[#093a56]">
+              Country
+              <input
+                name="country"
+                type="text"
+                autocomplete="country-name"
+                placeholder="Your country"
+                class="mt-2 block w-full rounded-lg border border-ash bg-[#f9fbfc] px-3.5 py-3 text-sm font-normal text-ink outline-none transition placeholder:text-slate/60 focus:border-[#146ef5] focus:bg-white focus:ring-4 focus:ring-[#146ef5]/10"
+              >
+            </label>
+
+            <!-- Message -->
+            <label class="block text-xs font-semibold text-[#093a56] sm:col-span-2">
+              How can we help? <span class="text-[#146ef5]">*</span>
+              <textarea
+                name="message"
+                rows="5"
+                required
+                placeholder="Tell us about your enquiry, project or partnership opportunity..."
+                class="mt-2 block w-full resize-y rounded-lg border border-ash bg-[#f9fbfc] px-3.5 py-3 text-sm font-normal leading-6 text-ink outline-none transition placeholder:text-slate/60 focus:border-[#146ef5] focus:bg-white focus:ring-4 focus:ring-[#146ef5]/10"
+              ></textarea>
+            </label>
+
+            <!-- Submit -->
+            <div class="sm:col-span-2">
+              <button
+                type="submit"
+                class="group flex w-full items-center justify-center gap-3 rounded-lg bg-[#093a56] px-6 py-4 text-sm font-semibold text-white transition duration-300 hover:bg-[#146ef5] focus:outline-none focus:ring-4 focus:ring-[#146ef5]/20 sm:w-auto"
+              >
+                Send enquiry
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="1.8" class="size-4 transition-transform group-hover:translate-x-1">
+                  <path d="M5 12h14M13 6l6 6-6 6"></path>
+                </svg>
+              </button>
+
+              <p class="mt-4 text-xs leading-5 text-slate">
+                Your email application will open with your enquiry prepared for sending. You can review it before sending.
+              </p>
+            </div>
+          </form>
+        </div>
       </div>
-      <form #f class="grid gap-4 rounded-lg border border-ash p-6 shadow-xl md:grid-cols-2 md:p-8" (submit)="$event.preventDefault(); send(f)">
-        <h2 class="text-2xl font-semibold tracking-tight md:col-span-2">Send us a message</h2>
-        <label class="text-[13px] text-slate">Full name<input name="name" required class="mt-1.5 block w-full rounded border border-ash p-2.5 text-sm text-ink"></label>
-        <label class="text-[13px] text-slate">Company<input name="company" class="mt-1.5 block w-full rounded border border-ash p-2.5 text-sm text-ink"></label>
-        <label class="text-[13px] text-slate">Email<input name="email" type="email" required class="mt-1.5 block w-full rounded border border-ash p-2.5 text-sm text-ink"></label>
-        <label class="text-[13px] text-slate">Phone<input name="phone" class="mt-1.5 block w-full rounded border border-ash p-2.5 text-sm text-ink"></label>
-        <label class="text-[13px] text-slate">Division of interest
-          <select name="division" class="mt-1.5 block w-full rounded border border-ash bg-white p-2.5 text-sm text-ink"><option>Not sure yet</option>@for (d of divisions; track d.slug) { <option>{{ d.title }}</option> }</select></label>
-        <label class="text-[13px] text-slate">Country<input name="country" class="mt-1.5 block w-full rounded border border-ash p-2.5 text-sm text-ink"></label>
-        <label class="text-[13px] text-slate md:col-span-2">Message<textarea name="message" rows="5" required class="mt-1.5 block w-full rounded border border-ash p-2.5 text-sm text-ink"></textarea></label>
-        <div class="md:col-span-2"><button class="btn" type="submit">Send message</button><p class="mt-3 text-xs text-slate">This opens your email app with the message ready to send. The company profile says a partner reviews inquiries within one business day.</p></div>
-      </form>
     </section>
-    <div class="h-24"></div>
   `,
 })
 export class Contact {
-  offices = OFFICES; divisions = DIVISIONS; email = COMPANY.email;
-  send(f: HTMLFormElement) {
-    const d = new FormData(f);
-    const body = ['name', 'company', 'email', 'phone', 'division', 'country', 'message'].map((k) => `${k}: ${d.get(k) ?? ''}`).join('\n');
-    window.location.href = `mailto:${this.email}?subject=${encodeURIComponent('Website enquiry – ' + (d.get('division') ?? ''))}&body=${encodeURIComponent(body)}`;
-  }
+  offices = OFFICES;
+  divisions = DIVISIONS;
+  email = COMPANY.email;
+
+
+send(f: HTMLFormElement) {
+  const d = new FormData(f);
+
+  const body = [
+    'name',
+    'company',
+    'email',
+    'phone',
+    'division',
+    'country',
+    'message',
+  ]
+    .map((k) => `${k}: ${d.get(k) ?? ''}`)
+    .join('\n');
+
+  const subject = 'Website enquiry – ' + (d.get('division') ?? '');
+
+  window.location.href =
+    `mailto:${this.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }
+}
+

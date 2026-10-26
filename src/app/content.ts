@@ -50,9 +50,42 @@ export const PRACTICES = [
   },
 ];
 
+
 export const SECTORS = [
-  'Financial services', 'Real estate and construction', 'Energy and infrastructure', 'Technology',
-  'Healthcare', 'Manufacturing', 'Trade and logistics', 'Agribusiness',
+  'Financial services',
+  'Real estate and construction',
+  'Energy and infrastructure',
+  'Technology',
+  'Healthcare',
+  'Manufacturing',
+  'Trade and logistics',
+  'Agribusiness',
+];
+
+export const SECTOR_IMAGES = [
+  // Financial services
+  'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=700&q=75',
+
+  // Real estate and construction
+  'https://images.unsplash.com/photo-1487958449943-2429e8be8625?auto=format&fit=crop&w=700&q=75',
+
+  // Energy and infrastructure
+  'https://images.unsplash.com/photo-1466611653911-95081537e5b7?auto=format&fit=crop&w=700&q=75',
+
+  // Technology
+  'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=700&q=75',
+
+  // Healthcare
+  'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=700&q=75',
+
+  // Manufacturing
+  'https://images.unsplash.com/photo-1567789884554-0b844b597180?auto=format&fit=crop&w=700&q=75',
+
+  // Trade and logistics
+  'https://images.unsplash.com/photo-1494412519320-aa613dfb7738?auto=format&fit=crop&w=700&q=75',
+
+  // Agribusiness
+  'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=700&q=75',
 ];
 
 export const ABOUT_FAQ = [
@@ -120,7 +153,42 @@ export const STATS = [
   { n: '1', label: 'point of contact', text: 'One accountable team coordinating delivery across borders.', tag: 'Client promise', bg: 'from-[#146ef5] to-[#0a2250]', path: "PointOfContact.png" },
 ];
 
-export const VALUES = ['Integrity', 'Professionalism', 'Accountability', 'Partnership', 'Long-term relationships', 'Clear communication', 'Commercial discipline', 'Responsible growth'];
+export const VALUES = [
+  'Integrity',
+  'Professionalism',
+  'Accountability',
+  'Partnership',
+  'Long-term relationships',
+  'Clear communication',
+  'Commercial discipline',
+  'Responsible growth',
+];
+
+export const VALUE_IMAGES = [
+  // Integrity — architecture and structure
+  'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=500&q=70',
+
+  // Professionalism — modern office
+  'https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=500&q=70',
+
+  // Accountability — business planning
+  'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=500&q=70',
+
+  // Partnership — collaboration
+  'https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=500&q=70',
+
+  // Long-term relationships — team collaboration
+  'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=500&q=70',
+
+  // Clear communication — meeting
+  'https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=500&q=70',
+
+  // Commercial discipline — finance and analysis
+  'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=500&q=70',
+
+  // Responsible growth — sustainable development
+  'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&w=500&q=70',
+];
 
 export const SERVE = ['Entrepreneurs & SMEs', 'Companies entering new markets', 'Cafés & restaurants', 'Hotels & hospitality operators', 'Logistics & commercial companies', 'Investors & business owners', 'Retail & service businesses', 'Corporate employers & HR departments', 'International suppliers', 'Individuals seeking career skills', 'Employers upskilling their teams', 'Organizations needing expert consultants'];
 
