@@ -214,3 +214,94 @@
         scroll-behavior: auto;
     }
 }
+
+/* =========================================
+   ADMISK — Division Cards
+========================================= */
+
+.division-carousel {
+    scrollbar-width: none;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+}
+
+.division-carousel::-webkit-scrollbar {
+    display: none;
+}
+
+.division-card {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    isolation: isolate;
+}
+
+/* Subtle image zoom */
+.division-card img {
+    will-change: transform;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .division-card:hover img {
+        transform: scale(1.05);
+    }
+}
+
+/* Mobile and tablet: one card per slide */
+@media (max-width: 767px) {
+    .division-carousel {
+        display: flex;
+        gap: 14px;
+        overflow-x: auto;
+        padding-right: 20px;
+        padding-left: 20px;
+        scroll-padding-left: 20px;
+    }
+
+    .division-card {
+        flex: 0 0 100%;
+        width: 100%;
+        min-width: 0;
+        scroll-snap-align: start;
+    }
+}
+
+/* Small phones */
+@media (max-width: 374px) {
+    .division-card {
+        height: 370px;
+    }
+
+    .division-card h3 {
+        font-size: 22px;
+    }
+
+    .division-card > div:last-child {
+        padding: 18px;
+    }
+}
+
+/* Desktop: three-column grid */
+@media (min-width: 768px) {
+    .division-carousel {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+        overflow: visible;
+    }
+
+    .division-card {
+        width: auto;
+        min-width: 0;
+    }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .division-card,
+    .division-card *,
+    .division-card img {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
+    }
+}

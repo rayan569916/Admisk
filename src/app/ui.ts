@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, computed } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ICONS } from './content';
 
@@ -12,13 +12,18 @@ export class Icon {
   path() { return ICONS[this.name()] ?? ''; }
 }
 
+
 @Component({
   selector: 'app-page-head',
   template: `
     <header class="bg-gradient-to-b from-white to-[#e4eeff] pb-16 pt-16 md:pt-20">
       <div class="wrap">
         <p class="mb-5 text-sm text-slate">{{ crumb() }}</p>
-        <h1 class="h-display max-w-4xl text-4xl md:text-6xl">{{ title() }}</h1>
+        <h1 class="h-display max-w-4xl text-4xl md:text-6xl">
+          @for (p of parts(); track $index) {
+            <span [class]="p.hl ? 'bg-gradient-to-r from-brand to-[#7a5af8] bg-clip-text text-transparent' : ''">{{ p.text }}</span>
+          }
+        </h1>
         @if (lead()) { <p class="lead mt-6 max-w-2xl">{{ lead() }}</p> }
         <ng-content />
       </div>
@@ -28,6 +33,16 @@ export class PageHead {
   crumb = input('');
   title = input.required<string>();
   lead = input('');
+  /** Words or word-starts in the title to show in the blue→purple gradient */
+  accent = input<string[]>([]);
+
+  parts = computed(() => {
+    const t = this.title();
+    const acc = this.accent();
+    if (!acc.length) return [{ text: t, hl: false }];
+    const esc = acc.map((a) => a.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+    return t.split(new RegExp('(' + esc.join('|') + ')')).filter(Boolean).map((text) => ({ text, hl: acc.includes(text) }));
+  });
 }
 
 @Component({
