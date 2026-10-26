@@ -21,10 +21,10 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: 22
           cache: npm
@@ -33,7 +33,12 @@ jobs:
         run: npm ci
 
       - name: Build Angular application
-        run: npx ng build --base-href /Admisk/
+        run: npx ng build --configuration production --base-href /Admisk/
+
+      - name: Inspect build output
+        run: |
+          echo "Searching for Angular index.html:"
+          find dist -maxdepth 5 -type f -name index.html -print
 
       - name: Upload website
         uses: actions/upload-pages-artifact@v3
