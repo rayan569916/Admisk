@@ -1427,7 +1427,7 @@ export class Home implements OnInit, OnDestroy {
         <!-- Office image -->
         <div class="relative overflow-hidden">
           <img
-            [src]="media[o.key]"
+            [src]="o.image"
             [alt]="o.city"
             loading="lazy"
             class="h-48 w-full object-cover transition-transform duration-700 group-hover:scale-105 sm:h-52"

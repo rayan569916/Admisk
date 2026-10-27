@@ -8,10 +8,71 @@ export const COMPANY = {
   regions: ['Africa', 'GCC', 'Asia', 'Europe', 'USA'],
 };
 
+
 export const OFFICES = [
-  { key: 'riyadh', name: 'Headquarters', city: 'Riyadh', address: 'Qalidiya Tower, Riyadh, Saudi Arabia', phone: '+966 55 649 0042', alternatePhone: '' },
-  { key: 'nairobi', name: 'Nairobi office', city: 'Nairobi', address: 'Eastleigh, Nairobi, Kenya', phone: '+254 710 482488', alternatePhone: '' },
-  { key: 'kampala', name: 'Kampala office', city: 'Kampala', address: 'Kisenyi, Kampala, Uganda', phone: '+256 708 506070', alternatePhone: '+256 778 166 666' },
+  {
+    key: 'Saudi Arabia',
+    name: 'Headquarters',
+    city: 'Riyadh',
+    address: 'Qalidiya Tower, Riyadh, Saudi Arabia',
+    phone: '+966 55 649 0042',
+    alternatePhone: '',
+    image: 'https://images.unsplash.com/photo-1757774698963-b23f4b273adc?auto=format&fit=crop&w=1200&q=80'
+  },
+  {
+    key: 'Kenya',
+    name: 'Nairobi office',
+    city: 'Nairobi',
+    address: 'Eastleigh, Nairobi, Kenya',
+    phone: '+254 710 482488',
+    alternatePhone: '',
+    image: 'https://images.unsplash.com/photo-1693464550496-8a6b114585b8?auto=format&fit=crop&w=1200&q=80'
+  },
+  {
+    key: 'Uganda',
+    name: 'Kampala office',
+    city: 'Kampala',
+    address: 'Kisenyi, Kampala, Uganda',
+    phone: '+256 708 506070',
+    alternatePhone: '+256 778 166 666',
+    image: 'https://images.unsplash.com/photo-1661422111151-42d2f0f061ce?auto=format&fit=crop&w=1200&q=80'
+  },
+  {
+    key: 'Somalia',
+    name: 'Somalia office',
+    city: 'Mogadishu',
+    address: 'Mogadishu, Somalia',
+    phone: '',
+    alternatePhone: '',
+    image: 'https://images.unsplash.com/photo-1775634937590-7d27a59e313e?auto=format&fit=crop&w=1200&q=80'
+  },
+  {
+    key: 'Ethiopia',
+    name: 'Ethiopia office',
+    city: 'Addis Ababa',
+    address: 'Addis Ababa, Ethiopia',
+    phone: '',
+    alternatePhone: '',
+    image: 'https://images.unsplash.com/photo-1756723131979-4137c792bf5a?auto=format&fit=crop&w=1200&q=80'
+  },
+  {
+    key: 'Tanzania',
+    name: 'Tanzania office',
+    city: 'Dar es Salaam',
+    address: 'Dar es Salaam, Tanzania',
+    phone: '',
+    alternatePhone: '',
+    image: 'https://images.unsplash.com/photo-1790673038505-d47ea2b70daf?auto=format&fit=crop&w=1200&q=80'
+  },
+  {
+    key: 'USA',
+    name: 'USA office',
+    city: 'New York',
+    address: 'New York, USA',
+    phone: '',
+    alternatePhone: '',
+    image: 'https://images.unsplash.com/photo-1556538643-1642b85248fd?auto=format&fit=crop&w=1200&q=80'
+  }
 ];
 
 export const LEADERSHIP = [
@@ -148,7 +209,7 @@ export const DIVISIONS: Division[] = [
 
 export const STATS = [
   { n: '6', label: 'specialized divisions', text: 'Investment, consultancy, staffing, training, hospitality and trading under one parent company.', tag: 'Group structure', bg: 'from-[#2a4a9a] to-[#101a3a]', path: "SpecializedDivisions.png" },
-  { n: '3', label: 'offices in 3 countries', text: 'Riyadh, Nairobi and Kampala, with central governance and compliance oversight.', tag: 'Offices', bg: 'from-[#4a4a4a] to-[#111]', path: "OfficeTeamwork.png" },
+  { n: '7', label: 'offices in 7 countries', text: 'Saudi Arabia, USA, Ethiopia, Tanzania, Somalia, Kenya and Uganda with central governance and compliance oversight.', tag: 'Offices', bg: 'from-[#4a4a4a] to-[#111]', path: "OfficeTeamwork.png" },
   { n: '5', label: 'regions connected', text: 'Africa, the GCC, Asia, Europe and the USA, reached through one coordinated group.', tag: 'Reach', bg: 'from-[#6a4a2a] to-[#1a110a]', path: "RegionsConnected.png" },
   { n: '1', label: 'point of contact', text: 'One accountable team coordinating delivery across borders.', tag: 'Client promise', bg: 'from-[#146ef5] to-[#0a2250]', path: "PointOfContact.png" },
 ];
