@@ -41,7 +41,7 @@ import { COMPANY, DIVISIONS, OFFICES } from './content';
       >
 
       <span class="text-lg font-bold tracking-tight text-ink sm:text-xl">
-        ADMISK
+        Admisk inc
       </span>
     </a>
 
@@ -320,7 +320,7 @@ import { COMPANY, DIVISIONS, OFFICES } from './content';
             loading="lazy"
             class="size-10 shrink-0 rounded-xl object-contain ring-1 ring-white/10 sm:size-11">
 
-          <span>ADMISK</span>
+          <span>Admisk inc</span>
         </a>
 
         <p class="mt-4 max-w-xs text-[13px] leading-6 text-white/55 sm:text-sm">
