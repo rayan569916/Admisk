@@ -539,7 +539,7 @@ export class Home implements OnInit, OnDestroy {
 <app-page-head crumb="Home / About"
   title="A cross-border business holding group, headquartered in Riyadh."
   [accent]="['cross-border', 'Riy']"
-  lead="ADMISK Investment Limited oversees six specialized divisions across Saudi Arabia, Kenya and Uganda." />
+  lead="ADHMISK Investment Limited oversees six specialized divisions across Saudi Arabia, Kenya and Uganda." />
 <!-- Who We Are -->
 <section class="wrap pt-24 md:pt-32">
   <div class="grid items-center gap-8 rounded-[2rem] bg-mist p-5 md:grid-cols-[1.05fr_1fr] md:gap-12">
@@ -548,7 +548,7 @@ export class Home implements OnInit, OnDestroy {
     <div class="relative overflow-hidden rounded-3xl">
       <img
         src="Transparency.png"
-        alt="ADMISK connecting businesses and commercial partners across borders"
+        alt="ADHMISK connecting businesses and commercial partners across borders"
         loading="lazy"
         class="aspect-[4/3] w-full object-cover md:aspect-[5/4]"
       >
@@ -1318,7 +1318,7 @@ export class Home implements OnInit, OnDestroy {
         </p>
 
         <h3 class="mt-2 text-lg font-semibold tracking-tight sm:text-2xl">
-          ADMISK INVESTMENT LIMITED
+          ADHMISK INVESTMENT LIMITED
         </h3>
 
         <p class="mt-2 text-xs text-white/55">
@@ -1499,9 +1499,9 @@ export class Home implements OnInit, OnDestroy {
 export class About {
   media: Record<string, string> = MEDIA as unknown as Record<string, string>;
   teamImage = MEDIA.team;
-values = VALUES;
-valueImages = VALUE_IMAGES;
-  divisions = DIVISIONS; 
+  values = VALUES;
+  valueImages = VALUE_IMAGES;
+  divisions = DIVISIONS;
   offices = OFFICES;
   leadership = LEADERSHIP;
   practices = PRACTICES;
@@ -1581,7 +1581,7 @@ valueImages = VALUE_IMAGES;
           <article class="mt-7 grid overflow-hidden rounded-2xl border border-ash bg-white sm:rounded-3xl md:grid-cols-[0.8fr_1.2fr]">
 
             <!-- Founder image -->
-            <div class="relative overflow-hidden bg-[#e9edf4] h-120 md:h-auto md:min-h-[340px]">
+            <div class="relative overflow-hidden bg-[#e9edf4] h-120 md:h-auto md:min-h-[450px]">
               @if (f.photo) {
                 <img
                   [src]="f.photo"
@@ -1632,7 +1632,7 @@ valueImages = VALUE_IMAGES;
 
                 <div class="col-span-2 border-t border-ash pt-3 sm:col-span-1 sm:border-l sm:border-t-0 sm:pl-4 sm:pt-0">
                   <p class="text-sm font-semibold text-ink">Global presence</p>
-                  <p class="mt-1 text-xs leading-5 text-slate">Riyadh · Nairobi · Kampala</p>
+                  <p class="mt-1 text-xs leading-5 text-slate">Africa · GCC · Europe · USA</p>
                 </div>
               </div>
             </div>
@@ -1643,7 +1643,7 @@ valueImages = VALUE_IMAGES;
         <div class="mt-12 flex flex-col gap-3 sm:mt-14 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p class="text-[11px] font-semibold uppercase tracking-[0.16em] text-brand">
-              The people behind ADMISK
+              The people behind ADHMISK
             </p>
 
             <h3 class="h-display mt-2 max-w-xl text-2xl leading-tight tracking-tight sm:text-3xl lg:text-4xl">
@@ -1705,7 +1705,7 @@ valueImages = VALUE_IMAGES;
                 </p>
 
                 <div class="mt-auto flex items-center justify-between border-t border-ash pt-3 sm:pt-4">
-                  <span class="text-[10px] text-slate sm:text-xs">ADMISK team</span>
+                  <span class="text-[10px] text-slate sm:text-xs">ADHMISK team</span>
 
                   <span class="flex size-7 shrink-0 items-center justify-center rounded-full bg-mist text-ink transition duration-200 group-hover:bg-brand group-hover:text-white sm:size-8">
                     <svg
@@ -1786,7 +1786,7 @@ valueImages = VALUE_IMAGES;
 
         <p class="mt-3 max-w-xl text-sm leading-6 text-white/70 sm:text-base">
           Connect with our team to discuss your business needs and explore
-          how ADMISK can help.
+          how ADHMISK can help.
         </p>
       </div>
 
@@ -1824,58 +1824,58 @@ export class Leadership {
       role: 'Founder and CEO',
       group: 'Leadership',
       featured: true,
-      photo: 'employees/adhan-mohamud-abdi.jpg',
-      bio: 'Adhan founded ADMISK to connect investment, advisory, workforce, training, hospitality and trade under one accountable group. He sets the direction for all six divisions and stays closely involved in key client relationships across Riyadh, Nairobi and Kampala.',
+      photo: 'employees/adhan-mohamud-abdi.png',
+      bio: 'Adhan founded ADHMISK to connect investment, advisory, workforce, training, hospitality and trade under one accountable group. He sets the direction for all six divisions and stays closely involved in key client relationships across Riyadh, Nairobi and Kampala.',
     },
 
     {
       name: 'Mr. Mutaib Bin Abdullah Bin Hamadi',
       role: 'Managing Partner',
       group: 'Leadership',
-      photo: 'employees/mutaib-bin-abdullah-bin-hamadi.jpg',
+      photo: 'employees/mutaib-bin-abdullah-bin-hamadi.png',
       bio: 'Mutaib supports the founder in leading the group’s growth and partnerships. He works with clients and divisions to turn opportunities into well-structured, compliant projects.',
     },
-        {
+    {
       name: 'Dr. Abdallah Omar Elmi',
       role: 'Managing Partner',
       group: 'Leadership',
-      photo: 'employees/abdallah-omar-elmi.jpg',
+      photo: 'employees/abdallah-omar-elmi.png',
       bio: 'Abdallah works alongside the founder to guide the group’s divisions and client engagements, from first conversation to delivery. He helps keep every mandate accountable, disciplined and focused on long-term relationships.',
     },
     {
       name: 'Eng. Mohamed Altaher',
       role: 'Operations Manager',
       group: 'Leadership',
-      photo: 'employees/mohamed-altaher.jpg',
+      photo: 'employees/mohamed-altaher.png',
       bio: 'Mohamed keeps day-to-day delivery running smoothly across the divisions and offices. He owns clear responsibilities, documented approvals and on-time coordination, so clients deal with one organised team.',
     },
     {
       name: 'Mr. Ammar Mahmoud',
       role: 'Human Resources',
       group: 'Leadership',
-      photo: 'employees/ammar-mahmoud.jpg',
-      bio: 'Ammar looks after people and recruitment at ADMISK. He helps match capable candidates with employers and keeps hiring and training standards consistent across the group.',
+      photo: 'employees/ammar-mahmoud.png',
+      bio: 'Ammar looks after people and recruitment at ADHMISK. He helps match capable candidates with employers and keeps hiring and training standards consistent across the group.',
     },
     {
       name: 'Mr. Abin Raj',
       role: 'IT Manager',
       group: 'Leadership',
-      photo: 'employees/abin-raj.jpg',
-      bio: 'Abin manages the systems that keep ADMISK connected, from the website and client records to everyday tools used across three countries. He focuses on reliable, secure technology that supports every division.',
+      photo: 'employees/abin-raj.png',
+      bio: 'Abin manages the systems that keep ADHMISK connected, from the website and client records to everyday tools used across three countries. He focuses on reliable, secure technology that supports every division.',
     },
     {
       name: 'Mr. Reggie Sanchez',
       role: 'East Asia Marketing Representative',
       group: 'Leadership',
-      photo: 'employees/reggie-sanchez.jpg',
-      bio: 'Reggie builds relationships with businesses and suppliers across East Asia. He introduces them to ADMISK’s sourcing, trading and advisory services and helps open doors to new markets.',
+      photo: 'employees/reggie-sanchez.png',
+      bio: 'Reggie builds relationships with businesses and suppliers across East Asia. He introduces them to ADHMISK’s sourcing, trading and advisory services and helps open doors to new markets.',
     },
     {
       name: 'Ms. Anne Kimani',
       role: 'Africa Marketing Representative',
       group: 'Leadership',
-      photo: 'employees/anne-kimani.jpg',
-      bio: 'Anne represents ADMISK with companies and partners across Africa. She connects them with the right division, from recruitment and training to trade and business advisory.',
+      photo: 'employees/anne-kimani.png',
+      bio: 'Anne represents ADHMISK with companies and partners across Africa. She connects them with the right division, from recruitment and training to trade and business advisory.',
     },
   ];
 
@@ -2136,7 +2136,7 @@ export class DivisionDetail {
         <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
           <span class="absolute inset-0 animate-ping rounded-full bg-brand/20"></span>
           <div class="relative flex size-32 flex-col items-center justify-center rounded-full bg-gradient-to-br from-[#4d9bff] to-brand text-center text-white shadow-2xl">
-            <span class="text-xl font-bold tracking-tight">ADMISK</span>
+            <span class="text-xl font-bold tracking-tight">ADHMISK</span>
             <span class="text-xs opacity-90">One group</span>
           </div>
         </div>
@@ -2183,24 +2183,37 @@ export class DivisionDetail {
     </section>
 
     <!-- Client journey -->
-    <section class="wrap mt-24">
-      <div class="rounded-[2rem] bg-onyx px-6 py-12 text-white md:px-12 md:py-16">
-        <h2 class="h-display text-3xl md:text-5xl">Client journey</h2>
-        <p class="mt-3 max-w-lg text-[#bdbdbd]">Five clear steps keep every project accountable, from first conversation to long-term growth.</p>
-        <ol class="relative mt-12 grid gap-8 lg:grid-cols-5 lg:gap-6">
-          <span class="absolute left-6 right-6 top-6 hidden h-px bg-gradient-to-r from-brand via-[#6ca7ff] to-[#444] lg:block"></span>
-          @for (j of journey; track j.t; let i = $index) {
-            <li class="relative flex gap-4 lg:block">
-              <span class="relative z-10 flex size-12 shrink-0 items-center justify-center rounded-full bg-brand text-lg font-semibold ring-8 ring-onyx">{{ i + 1 }}</span>
-              <div class="lg:mt-5">
-                <h3 class="text-lg font-semibold tracking-tight">{{ j.t }}</h3>
-                <p class="mt-1.5 text-sm text-[#bdbdbd]">{{ j.d }}</p>
-              </div>
-            </li>
-          }
-        </ol>
-      </div>
-    </section>
+<section class="wrap relative mt-24">
+  <div class="relative isolate overflow-hidden rounded-2xl bg-onyx text-white sm:rounded-3xl">
+    <!-- Background image -->
+    <div
+      class="absolute inset-0 -z-10 bg-cover bg-center bg-no-repeat"
+      style="background-image: url('/QUESTIONS-bg.png')"
+      aria-hidden="true">
+    </div>
+
+    <!-- Optional dark tint so white text stays readable over the image -->
+    <div class="absolute inset-0 -z-10 bg-onyx/75" aria-hidden="true"></div>
+
+    <!-- Remove bg-onyx here so the background image shows through -->
+    <div class="relative rounded-[2rem] px-6 py-12 text-white md:px-12 md:py-16">
+      <h2 class="h-display text-3xl md:text-5xl">Client journey</h2>
+      <p class="mt-3 max-w-lg text-[#bdbdbd]">Five clear steps keep every project accountable, from first conversation to long-term growth.</p>
+      <ol class="relative mt-12 grid gap-8 lg:grid-cols-5 lg:gap-6">
+        <span class="absolute left-6 right-6 top-6 hidden h-px bg-gradient-to-r from-brand via-[#6ca7ff] to-[#444] lg:block"></span>
+        @for (j of journey; track j.t; let i = $index) {
+          <li class="relative flex gap-4 lg:block">
+            <span class="relative z-10 flex size-12 shrink-0 items-center justify-center rounded-full bg-brand text-lg font-semibold ring-8 ring-onyx">{{ i + 1 }}</span>
+            <div class="lg:mt-5">
+              <h3 class="text-lg font-semibold tracking-tight">{{ j.t }}</h3>
+              <p class="mt-1.5 text-sm text-[#bdbdbd]">{{ j.d }}</p>
+            </div>
+          </li>
+        }
+      </ol>
+    </div>
+  </div>
+</section>
 
     <app-cta />
   `,
@@ -2214,12 +2227,18 @@ export class Solutions {
     return { ...h, icon: this.hubIcons[i], x: 50 + 38 * Math.cos(a), y: 50 + 38 * Math.sin(a) };
   });
   groups = [
-    { title: 'Businesses & investors', ic: 'invest', items: [0, 1, 5, 6].map((i) => SERVE[i]),
-      card: 'bg-mist', icon: 'bg-white text-brand shadow-sm', tick: 'bg-brand text-white' },
-    { title: 'Hospitality & trade', ic: 'trade', items: [2, 3, 4, 8].map((i) => SERVE[i]),
-      card: 'bg-gradient-to-br from-brand to-[#0a2250] text-white', icon: 'bg-white/15 text-white', tick: 'bg-white text-brand' },
-    { title: 'Employers & people', ic: 'hr', items: [7, 9, 10, 11].map((i) => SERVE[i]),
-      card: 'border border-ash bg-white', icon: 'bg-mist text-brand', tick: 'bg-ink text-white' },
+    {
+      title: 'Businesses & investors', ic: 'invest', items: [0, 1, 5, 6].map((i) => SERVE[i]),
+      card: 'bg-mist', icon: 'bg-white text-brand shadow-sm', tick: 'bg-brand text-white'
+    },
+    {
+      title: 'Hospitality & trade', ic: 'trade', items: [2, 3, 4, 8].map((i) => SERVE[i]),
+      card: 'bg-gradient-to-br from-brand to-[#0a2250] text-white', icon: 'bg-white/15 text-white', tick: 'bg-white text-brand'
+    },
+    {
+      title: 'Employers & people', ic: 'hr', items: [7, 9, 10, 11].map((i) => SERVE[i]),
+      card: 'border border-ash bg-white', icon: 'bg-mist text-brand', tick: 'bg-ink text-white'
+    },
   ];
 }
 
@@ -2231,7 +2250,7 @@ export class Solutions {
 <app-page-head crumb="Home / Vision 2030"
   title="Aligned with Saudi Vision 2030."
   [accent]="['Al', 'Vision 2030']"
-  lead="Saudi Vision 2030 sets out the Kingdom’s plan to diversify the economy, grow the private sector and build a more connected, skilled and globally engaged nation. ADMISK’s divisions are designed to support these goals from Riyadh." />
+  lead="Saudi Vision 2030 sets out the Kingdom’s plan to diversify the economy, grow the private sector and build a more connected, skilled and globally engaged nation. ADHMISK’s divisions are designed to support these goals from Riyadh." />
     <!-- Image banner -->
     <section class="wrap mt-12">
       <div class="relative h-64 overflow-hidden rounded-[2rem] md:h-80">
@@ -2294,9 +2313,9 @@ export class Vision {
   imports: [PageHead, Cta],
   template: `
     <app-page-head
-      crumb="Home / Why ADMISK"
-      title="Why partner with ADMISK."
-      [accent]="['Why', 'ADMISK']"
+      crumb="Home / Why ADHMISK"
+      title="Why partner with ADHMISK."
+      [accent]="['Why', 'ADHMISK']"
       lead="One accountable group, with clear responsibilities, transparent terms and documented approvals."
     />
 
@@ -2307,7 +2326,7 @@ export class Vision {
       <div class="grid gap-6 border-b border-[#d8d8d8] pb-8 md:grid-cols-[1fr_0.65fr] md:items-end md:gap-12">
         <div>
           <p class="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#146ef5] sm:text-xs">
-            The ADMISK advantage
+            The ADHMISK advantage
           </p>
 
           <h2 class="h-display mt-3 max-w-2xl text-3xl leading-tight tracking-[-0.045em] sm:text-4xl md:text-5xl">
@@ -2509,7 +2528,7 @@ export class Vision {
           </h3>
 
           <p class="mt-4 text-sm leading-7 text-[#5a5a5a]">
-            ADMISK is committed to operating within applicable laws, regulations and licensing requirements in each country where the group operates (Saudi Arabia, Kenya and Uganda), across the holding group and every division beneath it. Specific activities are marketed and delivered only within the scope of each entity’s approved commercial activities and any required professional or sector licenses.
+            ADHMISK is committed to operating within applicable laws, regulations and licensing requirements in each country where the group operates (Saudi Arabia, Kenya and Uganda), across the holding group and every division beneath it. Specific activities are marketed and delivered only within the scope of each entity’s approved commercial activities and any required professional or sector licenses.
           </p>
 
           <div class="mt-7 flex flex-wrap gap-2">
@@ -2645,9 +2664,9 @@ export class Roadmap {
   road = ROAD;
   nodes = [
     { x: 505, y: 660, icon: 'foundation', label: { l: null, r: 63.1, t: 76.9, align: 'text-right' } },
-    { x: 415, y: 515, icon: 'hr',         label: { l: null, r: 70.6, t: 56.3, align: 'text-right' } },
-    { x: 755, y: 522, icon: 'invest',     label: { l: 64.2, r: null, t: 72.5, align: 'text-left' } },
-    { x: 945, y: 185, icon: 'globe',      label: { l: null, r: 28.75, t: 3.1, align: 'text-right' } },
+    { x: 415, y: 515, icon: 'hr', label: { l: null, r: 70.6, t: 56.3, align: 'text-right' } },
+    { x: 755, y: 522, icon: 'invest', label: { l: 64.2, r: null, t: 72.5, align: 'text-left' } },
+    { x: 945, y: 185, icon: 'globe', label: { l: null, r: 28.75, t: 3.1, align: 'text-right' } },
   ];
 }
 
@@ -2660,13 +2679,13 @@ export class Roadmap {
       crumb="Home / Contact"
       title="Let’s build something meaningful."
       [accent]="['meaningful.']"
-      lead="From strategic partnerships to people, training, hospitality and trade, connect with the right team at ADMISK."
+      lead="From strategic partnerships to people, training, hospitality and trade, connect with the right team at ADHMISK."
     />
 
     <section class="wrap mt-12 pb-16 md:mt-16 md:pb-24">
       <div class="grid items-stretch gap-6 lg:grid-cols-[0.85fr_1.15fr] lg:gap-8">
 
-        <!-- LEFT: CONTACT INFORMATION -->
+<!-- LEFT: CONTACT INFORMATION (replace the whole <aside> with this; the form on the right stays unchanged) -->
         <aside class="relative isolate overflow-hidden rounded-2xl bg-[#093a56] p-6 text-white sm:p-8 lg:p-10">
 
           <!-- Decorative glow -->
@@ -2681,118 +2700,129 @@ export class Roadmap {
               </span>
             </div>
 
-            <h2 class="mt-6 max-w-sm text-3xl font-semibold leading-tight tracking-tight sm:text-4xl">
+            <h2 class="mt-5 max-w-sm text-2xl font-semibold leading-tight tracking-tight sm:text-3xl lg:text-[2rem]">
               Every great partnership starts with a conversation.
             </h2>
 
-            <p class="mt-4 max-w-md text-sm leading-7 text-white/65">
+            <p class="mt-3 max-w-md text-sm leading-6 text-white/65">
               Tell us what you have in mind. Our team will help direct your enquiry to the appropriate division.
             </p>
 
             <!-- Contact email -->
             <a
               [href]="'mailto:' + email"
-              class="group mt-8 flex items-center gap-4 rounded-xl border border-white/15 bg-white/[0.06] p-4 transition duration-300 hover:border-white/30 hover:bg-white/[0.1]"
+              class="group mt-6 flex items-center gap-4 rounded-xl border border-white/15 bg-white/[0.06] p-3.5 transition duration-300 hover:border-white/30 hover:bg-white/[0.1]"
             >
-              <span class="flex size-11 shrink-0 items-center justify-center rounded-lg bg-white/10 text-white">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                  stroke-width="1.6" class="size-5">
+              <span class="flex size-10 shrink-0 items-center justify-center rounded-lg bg-white/10 text-white">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="size-5">
                   <rect x="3" y="5" width="18" height="14" rx="2"></rect>
                   <path d="m3 7 9 6 9-6"></path>
                 </svg>
               </span>
 
               <span class="min-w-0 flex-1">
-                <span class="block text-[11px] uppercase tracking-[0.15em] text-white/50">
-                  Email our team
-                </span>
-                <span class="mt-1 block break-words text-sm font-medium text-white">
-                  {{ email }}
-                </span>
+                <span class="block text-[11px] uppercase tracking-[0.15em] text-white/50">Email our team</span>
+                <span class="mt-0.5 block break-words text-sm font-medium text-white">{{ email }}</span>
               </span>
 
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                stroke-width="1.7" class="size-4 shrink-0 transition-transform group-hover:translate-x-1">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
+                class="size-4 shrink-0 transition-transform group-hover:translate-x-1">
                 <path d="M5 12h14M13 6l6 6-6 6"></path>
               </svg>
             </a>
 
-            <!-- Office list -->
-            <div class="mt-10">
+            <!-- Offices -->
+            <div class="mt-7">
               <div class="flex items-center justify-between gap-3">
-                <h3 class="text-xs font-semibold uppercase tracking-[0.18em] text-white/55">
-                  Our offices
-                </h3>
+                <h3 class="text-xs font-semibold uppercase tracking-[0.18em] text-white/55">Our offices</h3>
                 <span class="text-xs text-white/40">{{ offices.length }} locations</span>
               </div>
 
-              <div class="mt-4 grid gap-3">
+              <!--
+                Mobile: first N offices + "show all" toggle (page just grows a little).
+                Tablet (sm–lg): 2 columns, since the aside is full width there.
+                Desktop (lg+): single column inside a fixed-height scroll area,
+                so the aside never grows taller than the form no matter how many offices exist.
+              -->
+              <div
+                class="mt-3 grid gap-2 sm:grid-cols-2 sm:gap-2.5 lg:max-h-[24rem] lg:grid-cols-1 lg:overflow-y-auto lg:overscroll-contain lg:pr-1.5 [scrollbar-color:rgba(255,255,255,0.25)_transparent] [scrollbar-width:thin]"
+                role="list"
+                tabindex="0"
+                aria-label="Office locations"
+              >
                 @for (o of offices; track o.key; let i = $index) {
-                  <div class="group rounded-xl border border-white/10 bg-white/[0.045] p-4 transition duration-300 hover:border-white/25 hover:bg-white/[0.08]">
+                  <div
+                    role="listitem"
+                    [class]="showAllOffices() || i < officePreviewCount ? '' : 'max-lg:hidden'"
+                    class="rounded-lg border border-white/10 bg-white/[0.045] px-3.5 py-3 transition duration-300 hover:border-white/25 hover:bg-white/[0.08]"
+                  >
+                    <h4 class="text-sm font-semibold text-white">{{ o.name }}</h4>
 
-                    <div class="flex items-start gap-3">
-                      <span class="flex size-9 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-white/[0.07] text-xs font-semibold text-white/80">
-                        {{ (i + 1).toString().padStart(2, '0') }}
-                      </span>
+                    <p class="mt-1 line-clamp-2 whitespace-pre-line text-xs leading-5 text-white/55">
+                      {{ o.address }}
+                    </p>
 
-                      <div class="min-w-0 flex-1">
-                        <h4 class="text-sm font-semibold text-white">
-                          {{ o.name }}
-                        </h4>
+                    <div class="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1">
+                      <a
+                        [href]="'tel:' + o.phone.replaceAll(' ', '')"
+                        class="inline-flex items-center gap-1.5 text-xs font-medium text-white/80 transition hover:text-white"
+                      >
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="size-3.5">
+                          <path d="M22 16.92v3a2 2 0 0 1-2.18 2
+                            19.79 19.79 0 0 1-8.63-3.07
+                            19.5 19.5 0 0 1-6-6
+                            A19.79 19.79 0 0 1 2.12 4.18
+                            2 2 0 0 1 4.11 2h3
+                            a2 2 0 0 1 2 1.72
+                            c.12.96.35 1.9.69 2.8
+                            a2 2 0 0 1-.45 2.11L8.08 9.91
+                            a16 16 0 0 0 6 6l1.27-1.27
+                            a2 2 0 0 1 2.11-.45
+                            c.9.34 1.84.57 2.8.69
+                            A2 2 0 0 1 22 16.92z"/>
+                        </svg>
+                        {{ o.phone }}
+                      </a>
 
-                        <p class="mt-1.5 whitespace-pre-line text-xs leading-6 text-white/55">
-                          {{ o.address }}
-                        </p>
-
-                        <div class="mt-3 flex flex-wrap items-center gap-x-3 gap-y-2">
-                          <a
-                            [href]="'tel:' + o.phone.replaceAll(' ', '')"
-                            class="inline-flex items-center gap-2 text-xs font-medium text-white/80 transition hover:text-white"
-                          >
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                              stroke-width="1.6" class="size-3.5">
-                              <path d="M22 16.92v3a2 2 0 0 1-2.18 2
-                                19.79 19.79 0 0 1-8.63-3.07
-                                19.5 19.5 0 0 1-6-6
-                                A19.79 19.79 0 0 1 2.12 4.18
-                                2 2 0 0 1 4.11 2h3
-                                a2 2 0 0 1 2 1.72
-                                c.12.96.35 1.9.69 2.8
-                                a2 2 0 0 1-.45 2.11L8.08 9.91
-                                a16 16 0 0 0 6 6l1.27-1.27
-                                a2 2 0 0 1 2.11-.45
-                                c.9.34 1.84.57 2.8.69
-                                A2 2 0 0 1 22 16.92z"/>
-                            </svg>
-                            {{ o.phone }}
-                          </a>
-
-                          @if (o.alternatePhone) {
-                            <span class="text-white/25">/</span>
-                            <a
-                              [href]="'tel:' + o.alternatePhone.replaceAll(' ', '')"
-                              class="text-xs text-white/65 transition hover:text-white"
-                            >
-                              {{ o.alternatePhone }}
-                            </a>
-                          }
-                        </div>
-                      </div>
+                      @if (o.alternatePhone) {
+                        <span class="text-white/25">/</span>
+                        <a
+                          [href]="'tel:' + o.alternatePhone.replaceAll(' ', '')"
+                          class="text-xs text-white/65 transition hover:text-white"
+                        >
+                          {{ o.alternatePhone }}
+                        </a>
+                      }
                     </div>
                   </div>
                 }
               </div>
+
+              <!-- Mobile/tablet toggle -->
+              @if (offices.length > officePreviewCount) {
+                <button
+                  type="button"
+                  (click)="showAllOffices.set(!showAllOffices())"
+                  [attr.aria-expanded]="showAllOffices()"
+                  class="mt-3 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-lg border border-white/15 px-4 py-2.5 text-xs font-medium text-white/80 transition hover:border-white/30 hover:bg-white/[0.07] hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white lg:hidden"
+                >
+                  {{ showAllOffices() ? 'Show fewer offices' : 'Show all ' + offices.length + ' offices' }}
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                    class="size-3.5 transition-transform" [class.rotate-180]="showAllOffices()" aria-hidden="true">
+                    <path d="m6 9 6 6 6-6"></path>
+                  </svg>
+                </button>
+              }
             </div>
 
             <!-- Bottom note -->
-            <div class="mt-8 flex items-start gap-3 border-t border-white/10 pt-5">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                stroke-width="1.6" class="mt-0.5 size-4 shrink-0 text-white/60">
+            <div class="mt-6 flex items-start gap-3 border-t border-white/10 pt-4">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
+                class="mt-0.5 size-4 shrink-0 text-white/60">
                 <circle cx="12" cy="12" r="9"></circle>
                 <path d="M12 11v5M12 7h.01"></path>
               </svg>
-
-              <p class="text-xs leading-6 text-white/50">
+              <p class="text-xs leading-5 text-white/50">
                 Share your enquiry using the form. Include the division or country relevant to your request so we can direct it appropriately.
               </p>
             </div>
@@ -2953,27 +2983,29 @@ export class Contact {
   offices = OFFICES;
   divisions = DIVISIONS;
   email = COMPANY.email;
+  showAllOffices = signal(false);
+  officePreviewCount = 4;
 
 
-send(f: HTMLFormElement) {
-  const d = new FormData(f);
+  send(f: HTMLFormElement) {
+    const d = new FormData(f);
 
-  const body = [
-    'name',
-    'company',
-    'email',
-    'phone',
-    'division',
-    'country',
-    'message',
-  ]
-    .map((k) => `${k}: ${d.get(k) ?? ''}`)
-    .join('\n');
+    const body = [
+      'name',
+      'company',
+      'email',
+      'phone',
+      'division',
+      'country',
+      'message',
+    ]
+      .map((k) => `${k}: ${d.get(k) ?? ''}`)
+      .join('\n');
 
-  const subject = 'Website enquiry – ' + (d.get('division') ?? '');
+    const subject = 'Website enquiry – ' + (d.get('division') ?? '');
 
-  window.location.href =
-    `mailto:${this.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-}
+    window.location.href =
+      `mailto:${this.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  }
 }
 

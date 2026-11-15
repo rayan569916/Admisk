@@ -44,7 +44,7 @@ export const routes: Routes = [
     title: 'Saudi Vision 2030 – Admisk inc',
   },
   {
-    path: 'why-Admisk inc',
+    path: 'why-admisk',
     loadComponent: () =>
       import('./components/pages/pages').then((m) => m.Why),
     title: 'Why Admisk inc',
