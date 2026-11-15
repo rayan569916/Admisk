@@ -1,7 +1,11 @@
 {
   "name": "admisk-website",
   "version": "1.0.0",
-  "scripts": { "start": "ng serve", "build": "ng build", "ng": "ng" },
+  "scripts": {
+    "start": "ng serve",
+    "build": "ng build",
+    "ng": "ng"
+  },
   "private": true,
   "dependencies": {
     "@angular/common": "^21.0.0",
@@ -17,6 +21,8 @@
     "@angular/build": "^21.0.0",
     "@angular/cli": "^21.0.0",
     "@angular/compiler-cli": "^21.0.0",
+    "@emnapi/core": "^1.11.3",
+    "@emnapi/runtime": "^1.11.3",
     "@tailwindcss/postcss": "^4.1.0",
     "postcss": "^8.5.0",
     "tailwindcss": "^4.1.0",
