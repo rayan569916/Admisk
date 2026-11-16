@@ -30,11 +30,15 @@ export class MediaSkeleton {
 
 @Component({
   selector: 'app-img',
+  host: {
+    'style': 'display: contents;'
+  },
   template: `
-    <div class="relative overflow-hidden" [class]="containerClass()">
+    <div [class]="containerClass()">
       @if (!loaded() && !hasError()) {
-        <div class="absolute inset-0 skeleton-shimmer z-10 pointer-events-none rounded-[inherit]">
-          <div class="w-full h-full bg-[#ece8de]/80 animate-pulse"></div>
+        <div class="absolute inset-0 z-10 pointer-events-none rounded-[inherit]"
+             [class]="dark() ? 'bg-white/10 animate-pulse' : 'skeleton-shimmer'">
+          <div class="w-full h-full" [class]="dark() ? 'bg-white/5' : 'bg-[#ece8de]/80 animate-pulse'"></div>
         </div>
       }
       <img
@@ -42,7 +46,7 @@ export class MediaSkeleton {
         [alt]="alt()"
         [loading]="priority() ? 'eager' : 'lazy'"
         [attr.fetchpriority]="priority() ? 'high' : 'auto'"
-        [class]="imgClass() + ' transition-opacity duration-500 ease-out ' + (loaded() ? 'opacity-100' : 'opacity-0')"
+        [class]="'absolute inset-0 ' + imgClass() + ' transition-opacity duration-500 ease-out ' + (loaded() ? 'opacity-100' : 'opacity-0')"
         (load)="loaded.set(true)"
         (error)="hasError.set(true)"
       />
@@ -52,9 +56,10 @@ export class MediaSkeleton {
 export class ImgSkeleton {
   src = input.required<string>();
   alt = input('');
-  containerClass = input('w-full h-full');
+  containerClass = input('relative w-full h-full overflow-hidden');
   imgClass = input('w-full h-full object-cover');
   priority = input(false);
+  dark = input(false);
   loaded = signal(false);
   hasError = signal(false);
 }

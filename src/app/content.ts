@@ -1,5 +1,19 @@
-export interface Division { slug: string; title: string; short: string; intro: string; icon: string; services: string[]; path: string; }
+export interface DivisionSubsection {
+  title: string;
+  intro: string;
+  services: string[];
+}
 
+export interface Division {
+  slug: string;
+  title: string;
+  icon: string;            // add 'legal' to your existing icon type / icon map
+  path: string;
+  short: string;
+  intro: string;
+  services: string[];
+  subsections?: DivisionSubsection[];   // NEW – used by Manpower → Hospitality Solutions
+}
 export const COMPANY = {
   name: 'ADMISK Investment Limited',
   legal: 'AIL ADMISK Investment Limited',
@@ -93,19 +107,19 @@ export const LEADERSHIP = [
 export const PRACTICES = [
   {
     title: 'Investment Advisory', image: 'investment',
-    path:'InvestmentAdvisory.png',
+    path: 'InvestmentAdvisory.png',
     intro: 'Capital raising, portfolio structuring and transaction support for founders, family offices and institutional allocators.',
     services: ['Equity and debt capital raising', 'Portfolio construction and allocation', 'M&A and exit advisory', 'Valuation and due diligence'],
   },
   {
     title: 'Legal Consultancy', image: 'legal',
-    path:'LegalConsultancy.png',
+    path: 'LegalConsultancy.png',
     intro: 'Transaction focused legal coordination that considers regulatory and contractual exposure alongside commercial objectives.',
     services: ['Deal structuring and documentation', 'Regulatory and compliance advisory', 'Contract negotiation', 'Corporate governance'],
   },
   {
     title: 'Business Consultancy', image: 'business',
-    path:'BusinessConsultancy.png',
+    path: 'BusinessConsultancy.png',
     intro: 'Operating and growth strategy for companies scaling, restructuring or preparing for a transaction.',
     services: ['Growth and market-entry strategy', 'Operational restructuring', 'Financial and risk modeling', 'Board and management advisory'],
   },
@@ -172,39 +186,140 @@ export const ICONS: Record<string, string> = {
   trade: 'M14 3l10 5v12l-10 5-10-5V8zM4 8l10 5 10-5M14 13v12',
   foundation: 'M3 24h22M6 24V11l8-7 8 7v13M11 24v-7h6v7',
   globe: 'M4 14a10 10 0 1 0 20 0a10 10 0 1 0 -20 0M4 14h20M14 4c-4 3-4 17 0 20M14 4c4 3 4 17 0 20',
+  legal: 'M12 2l7 4v6c0 5-3 9-7 10-4-1-7-5-7-10V6z',
 };
 
+
 export const DIVISIONS: Division[] = [
-  { slug: 'investment-advisory', title: 'Investment & Advisory', icon: 'invest',
-    path:'CrossBorderAdvisory.png',
-    short: 'Opportunity assessment, investor materials and transaction support.',
-    intro: 'Business and investment-oriented advisory for entrepreneurs, investors and companies.',
-    services: ['Opportunity assessment', 'Business plans & investor materials', 'Financial & risk modeling', 'Valuation & due diligence support', 'Capital-raising support where permitted', 'M&A and transaction support'] },
-  { slug: 'business-consultancy', title: 'Business Consultancy', icon: 'consult',
-    path:'BusinessConsultancy.png',
-    short: 'Market entry, growth strategy and operational improvement.',
-    intro: 'Practical strategy and operational support for companies entering, scaling or restructuring.',
-    services: ['Market-entry strategy', 'Operational improvement', 'Sales & business development strategy', 'Specialist project consultants', 'Growth strategy', 'Market research', 'Management advisory', 'Training & capacity-building advisory'] },
-  { slug: 'hr-staffing', title: 'HR & Staffing', icon: 'hr',
-    path:'GovernanceCompliance.png',
+
+  // 1) MERGED: Business Consultancy + Investment & Advisory
+  {
+    slug: 'business-consultancy',
+    title: 'Business Consultancy & Advisory',
+    icon: 'consult',
+    path: 'BusinessConsultancy.png',
+    short: 'Company setup, market entry, growth strategy and investment advisory.',
+    intro: 'Practical strategy, operational and investment-oriented advisory for entrepreneurs, investors and companies, from setting up a new business to entering, scaling or restructuring an existing one.',
+    services: [
+      'Company formation & set-up support for entrepreneurs',
+      'Market-entry strategy',
+      'Growth strategy',
+      'Operational improvement',
+      'Market research',
+      'Sales & business development strategy',
+      'Management advisory',
+      'Specialist project consultants',
+      'Training & capacity-building advisory',
+      'Opportunity assessment',
+      'Business plans & investor materials',
+      'Financial & risk modeling',
+      'Valuation & due diligence support',
+      'Capital-raising support where permitted',
+      'M&A and transaction support',
+    ],
+  },
+
+  // 2) NEW: Legal Consultancy
+  {
+    slug: 'legal-consultancy',
+    title: 'Legal Consultancy',
+    icon: 'legal',
+    path: 'LegalConsultancy.png',          // TODO: add this image
+    short: 'Legal guidance and support for Iqama, visa, passport and employment issues.',
+    intro: 'Legal consultancy and practical support for individuals and workers facing residency, documentation or employment problems, covering Iqama, visa and passport matters.',
+    services: [
+      'Iqama legal consultancy and support',
+      'Legal support in court for Huroob (absconding) cases, with basic legal fees',
+      'Support for unpaid salary and employer disputes',
+      'Visa consultancy and support',
+      'Visa expiry renewal',
+      'Passport consultancy and support',
+      'Passport expiry renewal',
+    ],
+  },
+
+  // 3) Manpower (replaces HR & Staffing + Hospitality Solutions as a top-level division)
+  {
+    slug: 'manpower',
+    title: 'Manpower',
+    icon: 'hr',
+    path: 'HospitalitySolutions.png',      // was GovernanceCompliance.png on HR & Staffing; swap if you have a Manpower image
+    short: 'Recruitment and workforce solutions, including hospitality staffing and operations.',
+    intro: 'Recruitment and workforce solutions for companies seeking reliable talent across sales, logistics, administration and hospitality.',
+    services: [
+      'Workforce solutions for companies',
+      'Sales & customer-service recruitment',
+      'Drivers & logistics recruitment',
+      'Professional & administrative recruitment',
+    ],
+    subsections: [
+      {
+        title: 'Hospitality Solutions',
+        intro: 'Specialized support for cafés, restaurants, hotels and hospitality operators.',
+        services: [
+          'Barista and hospitality recruitment',
+          'Restaurant & hotel recruitment',
+          'Restaurant staffing solutions',
+          'Operations consulting',
+          'Café opening support',
+          'Hospitality training coordination',
+          'Event staffing',
+        ],
+      },
+    ],
+  },
+  {
+    slug: 'hr-staffing', title: 'HR & Staffing', icon: 'hr',
+    path: 'GovernanceCompliance.png',
     short: 'Recruitment and workforce solutions for reliable talent.',
     intro: 'Recruitment and workforce solutions for companies seeking reliable talent.',
-    services: ['Hospitality recruitment', 'Restaurant & hotel recruitment', 'Café/barista recruitment', 'Sales & customer-service recruitment', 'Drivers & logistics recruitment', 'Professional & administrative recruitment'] },
-  { slug: 'skills-training', title: 'Skills Training Center', icon: 'train',
-    path:'SkillsTraining.png',
-    short: 'Job-focused training that builds capable, work-ready teams.',
-    intro: 'Practical, job-focused training that equips people with the skills employers need, linked directly to our staffing and hospitality divisions.',
-    services: ['Barista & café operations training', 'Sales & business development training', 'Corporate staff upskilling programs', 'Hospitality & customer-service training', 'Driver & logistics skills training', 'Training needs assessment for employers'] },
-  { slug: 'hospitality', title: 'Hospitality Solutions', icon: 'hosp',
-    path:'HospitalitySolutions.png',
-    short: 'Staffing, training and operations support for cafés and hotels.',
-    intro: 'Specialized support for cafés, restaurants, hotels and hospitality operators.',
-    services: ['Barista and hospitality recruitment', 'Restaurant staffing solutions', 'Operations consulting', 'Café opening support', 'Hospitality training coordination', 'Event staffing'] },
-  { slug: 'import-export-trading', title: 'Import, Export & Trading', icon: 'trade',
-    path:'ImportExportTrading.png',
-    short: 'Sourcing, import/export and logistics across five regions.',
-    intro: 'Import and export, commercial sourcing and supply-chain coordination connecting businesses with products, suppliers and markets across Africa, the GCC, Asia, Europe and the USA.',
-    services: ['Import & export coordination', 'Procurement coordination', 'Café/restaurant equipment sourcing', 'Supplier sourcing', 'Glass & commercial products', 'Logistics and distribution support'] },
+    services: ['Hospitality recruitment', 'Restaurant & hotel recruitment', 'Café/barista recruitment', 'Sales & customer-service recruitment', 'Drivers & logistics recruitment', 'Professional & administrative recruitment']
+  },
+
+  // 4) UPDATED: Skills Training Center
+  {
+    slug: 'skills-training',
+    title: 'Skills Training Center',
+    icon: 'train',
+    path: 'SkillsTraining.png',
+    short: 'Job-focused training and certification, in Kenya and online worldwide.',
+    intro: 'Practical, job-focused training and professional certification that keeps people and teams work-ready and up to date in the job market. Delivered at our centre in Kenya and through remote classes for customers anywhere in the world.',
+    services: [
+      'Professional skills training & certification (e.g. accounting)',
+      'Certificate renewal & recertification (e.g. every 3 years)',
+      'Training centre in Kenya (Africa)',
+      'Remote classes for customers worldwide',
+      'Upskilling to stay current in the job market',
+      'Barista & café operations training',
+      'Sales & business development training',
+      'Corporate staff upskilling programs',
+      'Hospitality & customer-service training',
+      'Driver & logistics skills training',
+      'Training needs assessment for employers',
+    ],
+  },
+
+  // 5) UPDATED: Import, Export & Trading
+  {
+    slug: 'import-export-trading',
+    title: 'Import, Export & Trading',
+    icon: 'trade',
+    path: 'ImportExportTrading.png',
+    short: 'Sourcing, import/export and logistics from anywhere in the world.',
+    intro: 'Import and export, commercial sourcing and supply-chain coordination connecting businesses with products, suppliers and markets worldwide, including Africa, the GCC, Asia, Europe and the USA.',
+    services: [
+      'Import & export coordination',
+      'Live meat trading',
+      'Frozen meat trading',
+      'Textiles sourcing (including from Bangladesh)',
+      'Sourcing from anywhere in the world',
+      'Procurement coordination',
+      'Supplier sourcing',
+      'Café/restaurant equipment sourcing',
+      'Glass & commercial products',
+      'Logistics and distribution support',
+    ],
+  },
 ];
 
 export const STATS = [
@@ -268,10 +383,10 @@ export const HUB = [
 
 export const VISION = [
   { goal: 'Diversifying the economy and growing the private sector', who: 'Investment & Advisory · Business Consultancy', text: 'We help entrepreneurs, SMEs and investors assess opportunities, plan, raise capital where permitted and scale their businesses.' },
-  { goal: 'Attracting investment and global partnerships', who: 'Cross-border advisory',text: 'Market-entry support for international companies and investors coming into Saudi Arabia, and for Saudi businesses expanding abroad.' },
+  { goal: 'Attracting investment and global partnerships', who: 'Cross-border advisory', text: 'Market-entry support for international companies and investors coming into Saudi Arabia, and for Saudi businesses expanding abroad.' },
   { goal: 'Developing national skills and human capital', who: 'Skills Training Center · HR & Staffing', text: 'Job-focused training and recruitment that connect capable people with the employers who need them.' },
   { goal: 'Growing tourism, hospitality and services', who: 'Hospitality Solutions', text: 'Staffing, training and operations support for cafés, restaurants, hotels and hospitality operators.' },
-  { goal: 'Strengthening trade, exports and logistics', who: 'Import, Export & Trading',text: 'Import and export coordination, supplier sourcing and logistics that link Saudi businesses with markets across Africa, the GCC, Asia, Europe and the USA.' },
+  { goal: 'Strengthening trade, exports and logistics', who: 'Import, Export & Trading', text: 'Import and export coordination, supplier sourcing and logistics that link Saudi businesses with markets across Africa, the GCC, Asia, Europe and the USA.' },
   { goal: 'Building a trusted business environment', who: 'Governance & compliance', text: 'We operate within applicable laws and licensing requirements and work with licensed partners for regulated services.' },
 ];
 

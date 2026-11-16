@@ -1,27 +1,44 @@
 <!-- Hero Section -->
-<section class="relative isolate min-h-[100svh] overflow-hidden bg-[#f8f5ef]
+<!-- <section class="relative isolate min-h-[100svh] overflow-hidden bg-[#f8f5ef]
            md:min-h-[850px]">
-    <!-- Responsive Background -->
-    <picture class="absolute inset-0 -z-20 block">
-        <source media="(max-width: 767px)" srcset="home_sm.png" />
+    <div class="absolute inset-0 -z-20 block md:hidden">
+        <div class="relative size-full overflow-hidden">
+            @if (!heroBgLoaded()) {
+                <div class="absolute inset-0 z-10 skeleton-shimmer pointer-events-none">
+                    <div class="size-full bg-[#ece8de]/60 animate-pulse"></div>
+                </div>
+            }
+            <img
+                src="home_sm.png"
+                alt=""
+                class="h-full w-full object-cover object-[62%_center] transition-opacity duration-500"
+                [class.opacity-0]="!heroBgLoaded()"
+                [class.opacity-100]="heroBgLoaded()"
+                (load)="heroBgLoaded.set(true)"
+                (error)="heroBgLoaded.set(true)"
+            />
+        </div>
+    </div>
 
-        <img src="home_md.png" alt="" class="h-full w-full object-cover object-center
-                   max-md:object-[62%_center]" />
-    </picture>
+    <div class="absolute inset-0 -z-20 hidden h-full w-full overflow-hidden bg-[#f8f5ef] md:block">
+        @if (!heroBgLoaded()) {
+            <div class="absolute inset-0 z-10 skeleton-shimmer pointer-events-none">
+                <div class="size-full bg-[#ece8de]/60 animate-pulse"></div>
+            </div>
+        }
+        <video
+            class="size-full object-cover object-center transition-opacity duration-700 ease-out"
+            [class.opacity-0]="!heroBgLoaded()"
+            [class.opacity-100]="heroBgLoaded()"
+            src="videos/bg-video.mp4"
+            autoplay muted loop playsinline preload="auto"
+            (loadeddata)="heroBgLoaded.set(true)"
+            (canplay)="heroBgLoaded.set(true)"
+            (playing)="heroBgLoaded.set(true)"
+            (error)="heroBgLoaded.set(true)">
+        </video>
+    </div>
 
-    <!-- Text readability overlay -->
-    <div class="absolute inset-0 -z-10
-               bg-gradient-to-r
-               from-[#fffdf8]/95
-               via-[#fffaf0]/80
-               via-45%
-               to-transparent
-               md:from-[#fffdf8]/95
-               md:via-[#fffaf0]/65
-               md:via-45%
-               md:to-transparent"></div>
-
-    <!-- Bottom gradient -->
     <div class="absolute inset-0 -z-10
                bg-gradient-to-t
                from-[#f7f4ee]/70
@@ -34,10 +51,8 @@
                px-5 pt-24
                sm:px-8
                md:min-h-[850px] md:px-0 md:pt-24">
-        <!-- Main Hero Content -->
         <div class="grid flex-1 grid-cols-1 gap-6
                    md:grid-cols-[1.4fr_0.6fr] md:gap-8">
-            <!-- Left Content -->
             <div class="max-w-[760px]">
                 <p class="mb-4 text-[10px] font-bold uppercase
                            tracking-[0.17em] text-[#a9854b]
@@ -67,26 +82,8 @@
                     trade — connecting opportunities across markets.
                 </p>
             </div>
-
-            <!-- Right Tagline: Desktop Only -->
-            <!-- <div class="hidden justify-end pt-2 md:flex">
-                <div class="h-fit border-l-2 border-[#b28b4d] pl-7 pr-4">
-                    <p
-                        class="max-w-[190px] text-sm font-semibold
-                               uppercase leading-[1.9] tracking-wide
-                               text-[#334766]"
-                    >
-                        People<br />
-                        Markets<br />
-                        Opportunities<br />
-                        A Stronger<br />
-                        Tomorrow
-                    </p>
-                </div>
-            </div> -->
         </div>
 
-        <!-- Division Cards -->
         <div class="mt-8 grid grid-cols-1 gap-3 pb-8
                    sm:mt-10 sm:grid-cols-3 sm:gap-4 sm:pb-12
                    md:mt-0 md:pb-16">
@@ -103,7 +100,6 @@
                            sm:h-36 sm:min-h-0 sm:items-center
                            sm:rounded-lg sm:px-5
                            md:px-6">
-                <!-- Card Text -->
                 <div class="relative z-10 min-w-0 flex-1 sm:pr-1">
                     <h3 class="text-base font-semibold
                                    tracking-tight text-[#102d59]
@@ -119,7 +115,6 @@
                     </p>
                 </div>
 
-                <!-- Image -->
                 <div class="relative h-[76px] w-[76px] shrink-0
                                overflow-hidden rounded-lg
                                bg-[#f3e9d7]
@@ -134,40 +129,51 @@
             }
         </div>
     </div>
-</section>
+</section> -->
+
+<app-hero-scroll />
 
 <!-- Global Connectivity Strip -->
 <section class="connectivity-strip relative isolate
            h-[300px] overflow-hidden bg-[#102d59] text-white
            sm:h-[340px] md:h-[400px] lg:h-[440px]">
-    <!-- Background Video -->
-    <app-media-skeleton #vidSkeleton containerClass="absolute inset-0 -z-20 h-full w-full">
-        <video #v class="h-full w-full object-cover transition-opacity duration-700 ease-out"
-            [class.opacity-0]="!vidSkeleton.loaded()"
-            [class.opacity-100]="vidSkeleton.loaded()"
+    <!-- Background Video Container with Skeleton Loading -->
+    <div class="absolute inset-0 -z-20 h-full w-full overflow-hidden bg-[#0d2242]">
+        <!-- Shimmer Skeleton Placeholder (displays in background while video buffers) -->
+        @if (!videoLoaded()) {
+            <div class="absolute inset-0 z-0 bg-[#0d2242] skeleton-shimmer pointer-events-none">
+                <div class="size-full bg-white/5 animate-pulse"></div>
+            </div>
+        }
+
+        <!-- Video -->
+        <video #v class="size-full object-cover transition-opacity duration-700 ease-out"
+            [class.opacity-0]="!videoLoaded()"
+            [class.opacity-100]="videoLoaded()"
             src="videos/cover.mp4"
-            [poster]="media.heroPoster" autoplay muted loop playsinline preload="metadata"
-            (loadeddata)="vidSkeleton.markLoaded()"
-            (canplay)="vidSkeleton.markLoaded()"
-            (error)="vidSkeleton.markError()"></video>
-    </app-media-skeleton>
+            [poster]="media.heroPoster" autoplay muted loop playsinline preload="auto"
+            (loadeddata)="onVideoReady()"
+            (canplay)="onVideoReady()"
+            (playing)="onVideoReady()"
+            (error)="videoError()"></video>
+    </div>
 
     <!-- Cinematic Overlay -->
-    <div class="absolute inset-0 -z-10
+    <div class="pointer-events-none absolute inset-0 -z-10
                bg-gradient-to-r
                from-[#08182e]/85
                via-[#102d59]/55
                to-[#102d59]/30"></div>
 
     <!-- Bottom Contrast -->
-    <div class="absolute inset-0 -z-10
+    <div class="pointer-events-none absolute inset-0 -z-10
                bg-gradient-to-t
                from-[#08182e]/80
                via-transparent
                to-[#08182e]/25"></div>
 
     <!-- Decorative Gold Accent -->
-    <div class="absolute left-0 top-0 h-full w-[3px]
+    <div class="pointer-events-none absolute left-0 top-0 h-full w-[3px]
                bg-gradient-to-b
                from-transparent via-[#c6a164] to-transparent"></div>
 
@@ -188,7 +194,7 @@
     </button>
 
     <!-- Content -->
-    <div class="relative flex h-full flex-col justify-between
+    <div class="relative z-10 flex h-full flex-col justify-between
                py-9 sm:py-10 md:py-12">
         <!-- Intro -->
         <div class="px-5 sm:px-8 md:px-12 lg:px-16">
@@ -599,7 +605,8 @@
                 <app-img
                     [src]="s.path"
                     [alt]="s.tag"
-                    containerClass="absolute inset-0 size-full"
+                    [dark]="true"
+                    containerClass="absolute inset-0 size-full overflow-hidden"
                     imgClass="size-full object-cover transition-transform duration-700 group-hover:scale-105" />
 
                 <!-- Dark overlay -->
@@ -799,7 +806,8 @@
                 <app-img
                     [src]="d.path"
                     [alt]="d.title"
-                    containerClass="absolute inset-0 size-full"
+                    [dark]="true"
+                    containerClass="absolute inset-0 size-full overflow-hidden"
                     imgClass="size-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" />
 
                 <!-- Dark gradient overlay -->
@@ -890,7 +898,7 @@
             </div>
         </div>
         <app-img src="audiance.png" alt="ADHMISK Audiences"
-            containerClass="h-[420px] w-full rounded-lg md:h-[520px]"
+            containerClass="relative overflow-hidden h-[420px] w-full rounded-lg md:h-[520px]"
             imgClass="size-full rounded-lg bg-mist object-cover" />
     </div>
 </section>

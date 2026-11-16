@@ -14,6 +14,7 @@ import { ABOUT_FAQ, ADVISORY_STATS, AUDIENCES, COMPANY, DIVISIONS, HUB, JOURNEY,
 import { MEDIA } from '../../media';
 import { Cta, Icon, PageHead, MediaSkeleton, ImgSkeleton } from '../../ui';
 import type * as Leaflet from 'leaflet';
+import { HeroScroll } from '../shared/HeroScroll';
 
 type LatLng = [number, number];
 interface Person { name: string; role: string; group: string; bio: string; photo?: string; featured?: boolean; }
@@ -22,7 +23,7 @@ interface Person { name: string; role: string; group: string; bio: string; photo
 /* ───────────── HOME ───────────── */
 @Component({
   selector: 'app-home',
-  imports: [RouterLink, Icon, Cta, MediaSkeleton, ImgSkeleton],
+  imports: [RouterLink, Icon, Cta, MediaSkeleton, ImgSkeleton, HeroScroll],
   templateUrl: './pages.html',
   styleUrl: './pages.css',
 })
@@ -39,32 +40,44 @@ export class Home implements OnInit, OnDestroy {
   offices = OFFICES;
 
   playing = signal(true);
+  videoLoaded = signal(false);
+  heroBgLoaded = signal(false);
   aud = signal(0);
   current = computed(() => AUDIENCES[this.aud()]);
 
-  cards = [
-    {
-      title: 'Invest & advise',
-      text: 'Assess opportunities and plan your market entry.',
-      icon: 'invest',
-      image: "InvestAdvise.png",
-      link: '/divisions/investment-advisory'
-    },
-    {
-      title: 'Hire & train',
-      text: 'Recruit and upskill work-ready teams.',
-      icon: 'hr',
-      image: "HireTrain.png",
-      link: '/divisions/hr-staffing'
-    },
-    {
-      title: 'Source & ship',
-      text: 'Import, export and supplier sourcing.',
-      icon: 'trade',
-      image: "SourceShip.png",
-      link: '/divisions/import-export-trading'
-    },
-  ];
+  onVideoReady(): void {
+    this.videoLoaded.set(true);
+    this.playing.set(true);
+  }
+
+  videoError(): void {
+    this.videoLoaded.set(true);
+    this.playing.set(false);
+  }
+
+  // cards = [
+  //   {
+  //     title: 'Invest & advise',
+  //     text: 'Assess opportunities and plan your market entry.',
+  //     icon: 'invest',
+  //     image: "InvestAdvise.png",
+  //     link: '/divisions/investment-advisory'
+  //   },
+  //   {
+  //     title: 'Hire & train',
+  //     text: 'Recruit and upskill work-ready teams.',
+  //     icon: 'hr',
+  //     image: "HireTrain.png",
+  //     link: '/divisions/hr-staffing'
+  //   },
+  //   {
+  //     title: 'Source & ship',
+  //     text: 'Import, export and supplier sourcing.',
+  //     icon: 'trade',
+  //     image: "SourceShip.png",
+  //     link: '/divisions/import-export-trading'
+  //   },
+  // ];
 
   imageCards = [
     {
@@ -98,12 +111,12 @@ export class Home implements OnInit, OnDestroy {
   private readonly mapEl = viewChild.required<ElementRef<HTMLDivElement>>('mapEl');
   private map?: Leaflet.Map;
 
-private readonly points: { label: string; pos: LatLng; dir: 'top' | 'bottom' | 'left' | 'right'; hq?: boolean }[] = [
-  { label: 'Africa', pos: [-1.2921, 36.8219], dir: 'bottom' },
-  { label: 'GCC',    pos: [24.7136, 46.6753], dir: 'right', hq: true },
-  { label: 'Europe', pos: [50.1109, 8.6821],  dir: 'top' },
-  { label: 'USA',    pos: [40.7128, -74.006], dir: 'top' },
-];
+  private readonly points: { label: string; pos: LatLng; dir: 'top' | 'bottom' | 'left' | 'right'; hq?: boolean }[] = [
+    { label: 'Africa', pos: [-1.2921, 36.8219], dir: 'bottom' },
+    { label: 'GCC', pos: [24.7136, 46.6753], dir: 'right', hq: true },
+    { label: 'Europe', pos: [50.1109, 8.6821], dir: 'top' },
+    { label: 'USA', pos: [40.7128, -74.006], dir: 'top' },
+  ];
 
 
   constructor() {
@@ -153,12 +166,12 @@ private readonly points: { label: string; pos: LatLng; dir: 'top' | 'bottom' | '
           }),
           keyboard: false,
         })
-.bindTooltip(p.label, {
-  permanent: true,
-  direction: p.dir,
-  offset: offsets[p.dir] as [number, number],
-  className: 'map-label',
-}).addTo(map);
+          .bindTooltip(p.label, {
+            permanent: true,
+            direction: p.dir,
+            offset: offsets[p.dir] as [number, number],
+            className: 'map-label',
+          }).addTo(map);
       }
 
       const updateBounds = () => {
@@ -810,7 +823,8 @@ private readonly points: { label: string; pos: LatLng; dir: 'top' | 'bottom' | '
       <app-img
         [src]="valueImages[i]"
         alt=""
-        containerClass="absolute inset-0 -z-20 size-full"
+        [dark]="true"
+        containerClass="absolute inset-0 -z-20 size-full overflow-hidden"
         imgClass="size-full object-cover transition duration-500 group-hover:scale-105"
       />
 
@@ -1306,7 +1320,8 @@ private readonly points: { label: string; pos: LatLng; dir: 'top' | 'bottom' | '
         <app-img
           [src]="sectorImages[i]"
           alt=""
-          containerClass="absolute inset-0 -z-20 size-full"
+          [dark]="true"
+          containerClass="absolute inset-0 -z-20 size-full overflow-hidden"
           imgClass="size-full object-cover transition duration-500 group-hover:scale-105"
         />
 
@@ -1942,20 +1957,20 @@ export class Leadership {
       bio: 'Adhan founded ADHMISK to connect investment, advisory, workforce, training, hospitality and trade under one accountable group. He sets the direction for all six divisions and stays closely involved in key client relationships across Riyadh, Nairobi and Kampala.',
     },
 
-    {
-      name: 'Mr. Mutaib Bin Abdullah Bin Hamadi',
-      role: 'Managing Partner',
-      group: 'Leadership',
-      photo: 'employees/mutaib-bin-abdullah-bin-hamadi.png',
-      bio: 'Mutaib supports the founder in leading the group’s growth and partnerships. He works with clients and divisions to turn opportunities into well-structured, compliant projects.',
-    },
-    {
-      name: 'Dr. Abdallah Omar Elmi',
-      role: 'Managing Partner',
-      group: 'Leadership',
-      photo: 'employees/abdallah-omar-elmi.png',
-      bio: 'Abdallah works alongside the founder to guide the group’s divisions and client engagements, from first conversation to delivery. He helps keep every mandate accountable, disciplined and focused on long-term relationships.',
-    },
+    // {
+    //   name: 'Mr. Mutaib Bin Abdullah Bin Hamadi',
+    //   role: 'Managing Partner',
+    //   group: 'Leadership',
+    //   photo: 'employees/mutaib-bin-abdullah-bin-hamadi.png',
+    //   bio: 'Mutaib supports the founder in leading the group’s growth and partnerships. He works with clients and divisions to turn opportunities into well-structured, compliant projects.',
+    // },
+    // {
+    //   name: 'Dr. Abdallah Omar Elmi',
+    //   role: 'Managing Partner',
+    //   group: 'Leadership',
+    //   photo: 'employees/abdallah-omar-elmi.png',
+    //   bio: 'Abdallah works alongside the founder to guide the group’s divisions and client engagements, from first conversation to delivery. He helps keep every mandate accountable, disciplined and focused on long-term relationships.',
+    // },
     {
       name: 'Eng. Mohamed Altaher',
       role: 'Operations Manager',
@@ -1978,7 +1993,14 @@ export class Leadership {
       bio: 'Abin manages the systems that keep ADHMISK connected, from the website and client records to everyday tools used across three countries. He focuses on reliable, secure technology that supports every division.',
     },
     {
-      name: 'Mr. Reggie Sanchez',
+      name: 'Mr. Shakir Bin Mohamed',
+      role: 'Marketing Manager',
+      group: 'Leadership',
+      photo: 'employees/Shakir-mohamed.png',
+      bio: 'Shakir leads marketing and communications for the group. He ensures that every division is represented consistently, professionally and with a clear message to clients, partners and the public.',
+    },
+    {
+      name: 'Ms. Reggie Sanchez',
       role: 'East Asia Marketing Representative',
       group: 'Leadership',
       photo: 'employees/reggie-sanchez.png',
@@ -1990,6 +2012,13 @@ export class Leadership {
       group: 'Leadership',
       photo: 'employees/anne-kimani.png',
       bio: 'Anne represents ADHMISK with companies and partners across Africa. She connects them with the right division, from recruitment and training to trade and business advisory.',
+    },
+    {
+      name: 'Mr. Ramzan Manaf',
+      role: 'Graphic Designer',
+      group: 'Leadership',
+      photo: 'employees/ramzan-manaf.png',
+      bio: 'Ramzan creates visual content for the group, from marketing materials and social media to presentations and client proposals. He ensures that every division is represented with a consistent, professional look.',
     },
   ];
 
@@ -2052,9 +2081,9 @@ export class Leadership {
   template: `
     <app-page-head
       crumb="Home / Divisions"
-      title="Six divisions. One connected vision."
+      title="Five divisions. One connected vision."
       [accent]="['connected vision.']"
-      lead="Specialist expertise across investment, consultancy, workforce solutions, training, hospitality and trade—coordinated under one accountable holding group."
+      lead="Specialist expertise across business consultancy and advisory, legal support, manpower, skills training and global trade, coordinated under one accountable holding group."
     />
 
     <section class="wrap mt-12 pb-12 sm:mt-16 sm:pb-16">
@@ -2075,11 +2104,14 @@ export class Leadership {
         </p>
       </div>
 
-      <!-- DIVISION IMAGE GRID -->
-      <div class="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+      <!-- DIVISION IMAGE GRID
+           xl uses a 6-col grid: 3 cards on the first row, the last 2 cards stretch to fill the second row
+           (no orphan card). sm uses 2 cols, with an odd last card spanning the full row. -->
+      <div class="grid gap-5 sm:grid-cols-2 xl:grid-cols-6">
 
         @for (d of divisions; track d.slug; let i = $index) {
           <article
+            [class]="span(i)"
             class="group relative isolate flex min-h-[390px] flex-col overflow-hidden rounded-2xl bg-[#093a56] shadow-sm transition duration-500 hover:-translate-y-1 hover:shadow-xl sm:min-h-[420px]"
           >
 
@@ -2087,11 +2119,12 @@ export class Leadership {
             <app-img
               [src]="d.path"
               [alt]="d.title"
-              containerClass="absolute inset-0 -z-30 size-full"
+              [dark]="true"
+              containerClass="absolute inset-0 -z-30 size-full overflow-hidden"
               imgClass="size-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
             />
 
-            <!-- FALLBACK-FRIENDLY OVERLAYS -->
+            <!-- OVERLAYS -->
             <div class="absolute inset-0 -z-20 bg-[#071d2b]/40"></div>
 
             <div
@@ -2113,28 +2146,9 @@ export class Leadership {
             <!-- CARD CONTENT -->
             <div class="mt-auto p-5 pt-16 sm:p-6 sm:pt-20">
 
-              <h2 class="max-w-sm text-2xl font-semibold leading-tight tracking-tight text-white sm:text-[26px]">
+              <h3 class="max-w-sm text-2xl font-semibold leading-tight tracking-tight text-white sm:text-[26px]">
                 {{ d.title }}
-              </h2>
-
-              <!-- <p class="mt-3 max-w-md text-sm leading-6 text-white/75">
-                {{ d.short }}
-              </p> -->
-
-              <!-- SERVICE PREVIEW -->
-              <!-- <div class="mt-5 flex flex-wrap gap-2">
-                @for (s of d.services.slice(0, 2); track s) {
-                  <span class="rounded-full border border-white/15 bg-white/10 px-3 py-1.5 text-[11px] font-medium text-white/90 backdrop-blur-sm">
-                    {{ s }}
-                  </span>
-                }
-
-                @if (d.services.length > 2) {
-                  <span class="rounded-full border border-white/15 bg-white/10 px-3 py-1.5 text-[11px] font-medium text-white/75 backdrop-blur-sm">
-                    +{{ d.services.length - 2 }} more
-                  </span>
-                }
-              </div> -->
+              </h3>
 
               <!-- DIVIDER -->
               <div class="my-5 h-px bg-white/20"></div>
@@ -2150,13 +2164,7 @@ export class Leadership {
                 </span>
 
                 <span class="flex size-9 items-center justify-center rounded-full border border-white/30 bg-white/10 transition duration-300 group-hover/link:translate-x-1 group-hover/link:bg-white group-hover/link:text-[#093a56]">
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.8"
-                    class="size-4"
-                  >
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="size-4">
                     <path d="M5 12h14M13 6l6 6-6 6"></path>
                   </svg>
                 </span>
@@ -2178,6 +2186,14 @@ export class Leadership {
 })
 export class Divisions {
   divisions = DIVISIONS;
+
+  /** Grid spans so the last row is always filled (works for 5 divisions, and for 3/4/6 too). */
+  span(i: number): string {
+    const n = this.divisions.length;
+    const smFull = i === n - 1 && n % 2 === 1 ? 'sm:col-span-2' : '';
+    const xlWide = n % 3 === 2 && i >= n - 2 ? 'xl:col-span-3' : 'xl:col-span-2';
+    return `${smFull} ${xlWide}`;
+  }
 }
 
 
@@ -2189,13 +2205,28 @@ export class Divisions {
       <app-page-head [crumb]="'Divisions / ' + d.title" [title]="d.title" [lead]="d.intro">
         <div class="mt-8 flex gap-3"><a class="btn" routerLink="/contact">Talk to this team</a><a class="btn-ghost" routerLink="/divisions">All divisions</a></div>
       </app-page-head>
+
       <section class="wrap mt-16 grid items-start gap-10 md:grid-cols-2">
-        <app-img [src]="d.path" [alt]="d.title" containerClass="aspect-[3/2] w-full rounded-lg md:min-w-0 h-[390px] sm:h-[420px] md:h-[440px]" imgClass="size-full rounded-lg bg-mist object-cover" />
+        <app-img [src]="d.path" [alt]="d.title" containerClass="relative overflow-hidden aspect-[3/2] w-full rounded-lg md:min-w-0 h-[390px] sm:h-[420px] md:sticky md:top-24 md:h-[440px]" imgClass="size-full rounded-lg bg-mist object-cover" />
+
         <div>
           <h2 class="h-display text-3xl md:text-4xl">What we offer</h2>
           <div class="mt-6 border-t border-ash">@for (s of d.services; track s) { <div class="arrow-row">{{ s }}<span class="text-slate">→</span></div> }</div>
+
+          <!-- SUBSECTIONS (e.g. Manpower → Hospitality Solutions) -->
+          @for (sub of d.subsections ?? []; track sub.title) {
+            <div class="mt-10 rounded-xl border border-ash bg-mist/60 p-5 sm:p-6">
+              <p class="text-[11px] font-semibold uppercase tracking-[0.18em] text-brand">Part of {{ d.title }}</p>
+              <h3 class="mt-2 text-2xl font-semibold tracking-tight text-ink">{{ sub.title }}</h3>
+              <p class="mt-2 text-sm leading-6 text-slate">{{ sub.intro }}</p>
+              <div class="mt-4 border-t border-ash">
+                @for (s of sub.services; track s) { <div class="arrow-row">{{ s }}<span class="text-slate">→</span></div> }
+              </div>
+            </div>
+          }
         </div>
       </section>
+
       <section class="wrap mt-20">
         <h2 class="h-display text-3xl md:text-4xl">Related divisions</h2>
         <div class="mt-8 grid gap-4 md:grid-cols-3">
