@@ -108,7 +108,7 @@ import { ImgSkeleton } from '../../ui';
             <video
               class="hidden size-full object-cover md:block"
               src="videos/bg-video.mp4"
-              poster="home_sm.png"
+              poster="home_md.png"
               autoplay loop playsinline preload="auto"
               [muted]="true"
               (loadedmetadata)="startVideo($event)"
