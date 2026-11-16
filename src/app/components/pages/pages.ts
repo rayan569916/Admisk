@@ -7,19 +7,22 @@ import {
   signal,
   HostListener,
   ElementRef,
-  ViewChild
+  ViewChild, afterNextRender, DestroyRef, inject, viewChild,
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ABOUT_FAQ, ADVISORY_STATS, AUDIENCES, COMPANY, DIVISIONS, HUB, JOURNEY, LEADERSHIP, OFFICES, PRACTICES, PRINCIPLES, ROADMAP, SECTOR_IMAGES, SECTORS, SERVE, STATS, VALUE_IMAGES, VALUES, VISION, WHY } from '../../content';
 import { MEDIA } from '../../media';
-import { Cta, Icon, PageHead } from '../../ui';
+import { Cta, Icon, PageHead, MediaSkeleton, ImgSkeleton } from '../../ui';
+import type * as Leaflet from 'leaflet';
+
+type LatLng = [number, number];
 interface Person { name: string; role: string; group: string; bio: string; photo?: string; featured?: boolean; }
 
 
 /* ───────────── HOME ───────────── */
 @Component({
   selector: 'app-home',
-  imports: [RouterLink, Icon, Cta],
+  imports: [RouterLink, Icon, Cta, MediaSkeleton, ImgSkeleton],
   templateUrl: './pages.html',
   styleUrl: './pages.css',
 })
@@ -86,6 +89,119 @@ export class Home implements OnInit, OnDestroy {
       cta: 'Explore Advisory'
     },
   ];
+
+
+
+  // Add this inside your existing component class -----------------------------
+
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly mapEl = viewChild.required<ElementRef<HTMLDivElement>>('mapEl');
+  private map?: Leaflet.Map;
+
+private readonly points: { label: string; pos: LatLng; dir: 'top' | 'bottom' | 'left' | 'right'; hq?: boolean }[] = [
+  { label: 'Africa', pos: [-1.2921, 36.8219], dir: 'bottom' },
+  { label: 'GCC',    pos: [24.7136, 46.6753], dir: 'right', hq: true },
+  { label: 'Europe', pos: [50.1109, 8.6821],  dir: 'top' },
+  { label: 'USA',    pos: [40.7128, -74.006], dir: 'top' },
+];
+
+
+  constructor() {
+    // Runs in the browser only, so it is SSR-safe. Leaflet is loaded lazily.
+    afterNextRender(async () => {
+      const mod: any = await import('leaflet');
+      const L: typeof Leaflet = mod.default ?? mod;
+      const offsets = { top: [0, -8], bottom: [0, 8], left: [-10, 0], right: [10, 0] } as const;
+
+
+      const mapEl = this.mapEl()?.nativeElement;
+      if (!mapEl) return;
+
+      const map = L.map(mapEl, {
+        scrollWheelZoom: false,   // don't hijack page scroll
+        attributionControl: false,
+        zoomControl: true,
+        worldCopyJump: true,
+        minZoom: 1,
+      });
+      this.map = map;
+
+      L.control.attribution({ prefix: false }).addTo(map);
+      L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        maxZoom: 19,
+      }).addTo(map);
+
+      // Curved, animated route between consecutive points
+      for (let i = 0; i < this.points.length - 1; i++) {
+        L.polyline(this.arc(this.points[i].pos, this.points[i + 1].pos), {
+          color: '#146ef5',
+          weight: 2.5,
+          className: 'route-line',
+          interactive: false,
+        }).addTo(map);
+      }
+
+      // Pins + permanent labels
+      for (const p of this.points) {
+        L.marker(p.pos, {
+          icon: L.divIcon({
+            className: '',
+            html: `<span class="map-dot ${p.hq ? 'map-dot--hq' : ''}"></span>`,
+            iconSize: [16, 16],
+            iconAnchor: [8, 8],
+          }),
+          keyboard: false,
+        })
+.bindTooltip(p.label, {
+  permanent: true,
+  direction: p.dir,
+  offset: offsets[p.dir] as [number, number],
+  className: 'map-label',
+}).addTo(map);
+      }
+
+      const updateBounds = () => {
+        if (!this.map) return;
+        this.map.invalidateSize();
+        if (mapEl.clientWidth > 0 && mapEl.clientHeight > 0) {
+          this.map.fitBounds(L.latLngBounds(this.points.map(p => p.pos)), { padding: [36, 36] });
+        }
+      };
+
+      if (mapEl.clientWidth > 0 && mapEl.clientHeight > 0) {
+        map.fitBounds(L.latLngBounds(this.points.map(p => p.pos)), { padding: [36, 36] });
+      } else {
+        map.setView([25, 20], 2);
+      }
+
+      setTimeout(updateBounds, 100);
+      setTimeout(updateBounds, 500);
+
+      if (typeof ResizeObserver !== 'undefined') {
+        const ro = new ResizeObserver(() => updateBounds());
+        ro.observe(mapEl);
+        this.destroyRef.onDestroy(() => ro.disconnect());
+      }
+    });
+
+    this.destroyRef.onDestroy(() => this.map?.remove());
+  }
+
+  /** Quadratic curve between two points so routes look like flight arcs. */
+  private arc(a: LatLng, b: LatLng, steps = 48, bend = 0.2): LatLng[] {
+    const dx = b[0] - a[0];
+    const dy = b[1] - a[1];
+    const cx = (a[0] + b[0]) / 2 - dy * bend;
+    const cy = (a[1] + b[1]) / 2 + dx * bend;
+    return Array.from({ length: steps + 1 }, (_, i) => {
+      const t = i / steps, u = 1 - t;
+      return [
+        u * u * a[0] + 2 * u * t * cx + t * t * b[0],
+        u * u * a[1] + 2 * u * t * cy + t * t * b[1],
+      ] as LatLng;
+    });
+  }
 
   // =========================================
   // Mobile Carousel
@@ -534,7 +650,7 @@ export class Home implements OnInit, OnDestroy {
 /* ───────────── ABOUT ───────────── */
 @Component({
   selector: 'app-about',
-  imports: [RouterLink, PageHead, Cta],
+  imports: [RouterLink, PageHead, Cta, ImgSkeleton],
   template: `
 <app-page-head crumb="Home / About"
   title="A cross-border business holding group, headquartered in Riyadh."
@@ -546,12 +662,12 @@ export class Home implements OnInit, OnDestroy {
 
     <!-- Image card -->
     <div class="relative overflow-hidden rounded-3xl">
-      <img
+      <app-img
         src="Transparency.png"
         alt="ADHMISK connecting businesses and commercial partners across borders"
-        loading="lazy"
-        class="aspect-[4/3] w-full object-cover md:aspect-[5/4]"
-      >
+        containerClass="aspect-[4/3] w-full md:aspect-[5/4] rounded-3xl"
+        imgClass="size-full object-cover rounded-3xl"
+      />
 
       <!-- Image overlay -->
       <div class="absolute inset-0 rounded-3xl bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
@@ -691,13 +807,11 @@ export class Home implements OnInit, OnDestroy {
     >
 
       <!-- Background image -->
-      <img
+      <app-img
         [src]="valueImages[i]"
         alt=""
-        aria-hidden="true"
-        loading="lazy"
-        decoding="async"
-        class="absolute inset-0 -z-20 size-full object-cover transition duration-500 group-hover:scale-105"
+        containerClass="absolute inset-0 -z-20 size-full"
+        imgClass="size-full object-cover transition duration-500 group-hover:scale-105"
       />
 
       <!-- Dark overlay -->
@@ -769,12 +883,12 @@ export class Home implements OnInit, OnDestroy {
 
         <!-- Image -->
         <div class="relative overflow-hidden rounded-t-[1.75rem]">
-          <img
+          <app-img
             [src]="p.path"
             [alt]="p.title + ' advisory meeting'"
-            loading="lazy"
-            class="h-56 w-full object-cover transition-transform duration-700 group-hover:scale-105"
-          >
+            containerClass="h-56 w-full"
+            imgClass="size-full object-cover transition-transform duration-700 group-hover:scale-105"
+          />
 
           <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
 
@@ -930,12 +1044,12 @@ export class Home implements OnInit, OnDestroy {
 
     
       <div class="group relative overflow-hidden">
-        <img
+        <app-img
           [src]="teamImage"
           alt="Business team collaborating around a meeting table"
-          loading="lazy"
-          class="h-64 w-full object-cover transition-transform duration-700 group-hover:scale-[1.02] md:h-96"
-        >
+          containerClass="h-64 w-full md:h-96"
+          imgClass="size-full object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+        />
 
         <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
 
@@ -1189,13 +1303,11 @@ export class Home implements OnInit, OnDestroy {
       >
 
         <!-- Background image -->
-        <img
+        <app-img
           [src]="sectorImages[i]"
-          [alt]="''"
-          aria-hidden="true"
-          loading="lazy"
-          decoding="async"
-          class="absolute inset-0 -z-20 size-full object-cover transition duration-500 group-hover:scale-105"
+          alt=""
+          containerClass="absolute inset-0 -z-20 size-full"
+          imgClass="size-full object-cover transition duration-500 group-hover:scale-105"
         />
 
         <!-- Dark overlay for readability -->
@@ -1426,12 +1538,12 @@ export class Home implements OnInit, OnDestroy {
 
         <!-- Office image -->
         <div class="relative overflow-hidden">
-          <img
+          <app-img
             [src]="o.image"
             [alt]="o.city"
-            loading="lazy"
-            class="h-48 w-full object-cover transition-transform duration-700 group-hover:scale-105 sm:h-52"
-          >
+            containerClass="h-48 w-full sm:h-52"
+            imgClass="size-full object-cover transition-transform duration-700 group-hover:scale-105"
+          />
 
           <!-- Image overlay -->
           <div class="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent"></div>
@@ -1520,7 +1632,7 @@ export class About {
 /* ───────────── LEADERSHIP ───────────── */
 @Component({
   selector: 'app-leadership',
-  imports: [RouterLink],
+  imports: [RouterLink, ImgSkeleton],
   template: `
     <!-- LEADERSHIP SECTION -->
     <section class="overflow-hidden bg-mist py-12 sm:py-16 lg:py-20">
@@ -1583,11 +1695,12 @@ export class About {
             <!-- Founder image -->
             <div class="relative overflow-hidden bg-[#e9edf4] h-120 md:h-auto md:min-h-[450px]">
               @if (f.photo) {
-                <img
+                <app-img
                   [src]="f.photo"
                   [alt]="f.name"
-                  loading="lazy"
-                  class="absolute inset-0 size-full object-cover object-top">
+                  containerClass="absolute inset-0 size-full"
+                  imgClass="size-full object-cover object-top"
+                />
               } @else {
                 <div class="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-[#4d9bff] to-brand text-6xl font-semibold text-white">
                   {{ initials(f.name) }}
@@ -1666,11 +1779,12 @@ export class About {
               <!-- IMAGE -->
               <div class="relative aspect-[4/5] overflow-hidden bg-[#e9edf4]">
                 @if (p.photo) {
-                  <img
+                  <app-img
                     [src]="p.photo"
                     [alt]="p.name"
-                    loading="lazy"
-                    class="size-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.04]">
+                    containerClass="size-full"
+                    imgClass="size-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.04]"
+                  />
                 } @else {
                   <div class="flex size-full items-center justify-center bg-gradient-to-br from-[#4d9bff] to-brand text-4xl font-semibold text-white">
                     {{ initials(p.name) }}
@@ -1934,7 +2048,7 @@ export class Leadership {
 /* ───────────── DIVISIONS ───────────── */
 @Component({
   selector: 'app-divisions',
-  imports: [RouterLink, PageHead, Icon, Cta],
+  imports: [RouterLink, PageHead, Icon, Cta, ImgSkeleton],
   template: `
     <app-page-head
       crumb="Home / Divisions"
@@ -1970,13 +2084,12 @@ export class Leadership {
           >
 
             <!-- BACKGROUND IMAGE -->
-            <img
+            <app-img
               [src]="d.path"
               [alt]="d.title"
-              loading="lazy"
-              decoding="async"
-              class="absolute inset-0 -z-30 size-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-            >
+              containerClass="absolute inset-0 -z-30 size-full"
+              imgClass="size-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+            />
 
             <!-- FALLBACK-FRIENDLY OVERLAYS -->
             <div class="absolute inset-0 -z-20 bg-[#071d2b]/40"></div>
@@ -2070,14 +2183,14 @@ export class Divisions {
 
 @Component({
   selector: 'app-division-detail',
-  imports: [RouterLink, PageHead, Icon, Cta],
+  imports: [RouterLink, PageHead, Icon, Cta, ImgSkeleton],
   template: `
     @if (div(); as d) {
       <app-page-head [crumb]="'Divisions / ' + d.title" [title]="d.title" [lead]="d.intro">
         <div class="mt-8 flex gap-3"><a class="btn" routerLink="/contact">Talk to this team</a><a class="btn-ghost" routerLink="/divisions">All divisions</a></div>
       </app-page-head>
       <section class="wrap mt-16 grid items-start gap-10 md:grid-cols-2">
-        <img [src]="d.path" [alt]="d.title" class="aspect-[3/2] w-full rounded-lg bg-mist object-cover md:min-w-0 h-[390px] sm:h-[420px] md:h-[440px]">
+        <app-img [src]="d.path" [alt]="d.title" containerClass="aspect-[3/2] w-full rounded-lg md:min-w-0 h-[390px] sm:h-[420px] md:h-[440px]" imgClass="size-full rounded-lg bg-mist object-cover" />
         <div>
           <h2 class="h-display text-3xl md:text-4xl">What we offer</h2>
           <div class="mt-6 border-t border-ash">@for (s of d.services; track s) { <div class="arrow-row">{{ s }}<span class="text-slate">→</span></div> }</div>
@@ -2245,7 +2358,7 @@ export class Solutions {
 /* ───────────── VISION 2030 ───────────── */
 @Component({
   selector: 'app-vision',
-  imports: [PageHead, Cta, Icon],
+  imports: [PageHead, Cta, Icon, ImgSkeleton],
   template: `
 <app-page-head crumb="Home / Vision 2030"
   title="Aligned with Saudi Vision 2030."
@@ -2254,7 +2367,7 @@ export class Solutions {
     <!-- Image banner -->
     <section class="wrap mt-12">
       <div class="relative h-64 overflow-hidden rounded-[2rem] md:h-80">
-        <img src="vision-30.png" alt="Riyadh skyline" loading="lazy" class="size-full object-cover">
+        <app-img src="vision-30.png" alt="Riyadh skyline" containerClass="size-full" imgClass="size-full object-cover" />
         <div class="absolute inset-0 bg-gradient-to-t from-[#0a1230]/80 via-[#0a1230]/20 to-transparent"></div>
         <div class="absolute inset-x-6 bottom-6 flex flex-wrap items-end justify-between gap-4 text-white md:inset-x-10 md:bottom-8">
           <p class="max-w-md text-xl font-semibold leading-tight tracking-tight md:text-3xl">Riyadh-based · Vision 2030-aligned · Globally connected</p>

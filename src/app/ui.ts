@@ -1,6 +1,64 @@
-import { Component, input, computed } from '@angular/core';
+import { Component, input, computed, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ICONS } from './content';
+
+@Component({
+  selector: 'app-media-skeleton',
+  template: `
+    <div class="relative overflow-hidden" [class]="containerClass()">
+      @if (!loaded() && !hasError()) {
+        <div class="absolute inset-0 skeleton-shimmer z-10 pointer-events-none rounded-[inherit]">
+          <div class="w-full h-full bg-[#ece8de]/80 animate-pulse"></div>
+        </div>
+      }
+      <ng-content />
+    </div>
+  `,
+})
+export class MediaSkeleton {
+  containerClass = input<string>('w-full h-full');
+  loaded = signal(false);
+  hasError = signal(false);
+
+  markLoaded() {
+    this.loaded.set(true);
+  }
+  markError() {
+    this.hasError.set(true);
+  }
+}
+
+@Component({
+  selector: 'app-img',
+  template: `
+    <div class="relative overflow-hidden" [class]="containerClass()">
+      @if (!loaded() && !hasError()) {
+        <div class="absolute inset-0 skeleton-shimmer z-10 pointer-events-none rounded-[inherit]">
+          <div class="w-full h-full bg-[#ece8de]/80 animate-pulse"></div>
+        </div>
+      }
+      <img
+        [src]="src()"
+        [alt]="alt()"
+        [loading]="priority() ? 'eager' : 'lazy'"
+        [attr.fetchpriority]="priority() ? 'high' : 'auto'"
+        [class]="imgClass() + ' transition-opacity duration-500 ease-out ' + (loaded() ? 'opacity-100' : 'opacity-0')"
+        (load)="loaded.set(true)"
+        (error)="hasError.set(true)"
+      />
+    </div>
+  `,
+})
+export class ImgSkeleton {
+  src = input.required<string>();
+  alt = input('');
+  containerClass = input('w-full h-full');
+  imgClass = input('w-full h-full object-cover');
+  priority = input(false);
+  loaded = signal(false);
+  hasError = signal(false);
+}
+
 
 @Component({
   selector: 'app-icon',

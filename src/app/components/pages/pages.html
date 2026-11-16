@@ -127,9 +127,8 @@
                                sm:h-[110px] sm:w-[110px]
                                sm:rounded-tl-lg sm:rounded-br-none
                                sm:bg-white/90 sm:shadow-lg">
-                    <img [src]="c.image" [alt]="c.title" loading="lazy" class="h-full w-full object-cover
-                                   transition duration-500
-                                   group-hover:scale-105" />
+                    <app-img [src]="c.image" [alt]="c.title" containerClass="h-full w-full"
+                        imgClass="h-full w-full object-cover transition duration-500 group-hover:scale-105" />
                 </div>
             </a>
             }
@@ -142,8 +141,16 @@
            h-[300px] overflow-hidden bg-[#102d59] text-white
            sm:h-[340px] md:h-[400px] lg:h-[440px]">
     <!-- Background Video -->
-    <video #v class="absolute inset-0 -z-20 h-full w-full object-cover" src="videos/cover.mp4"
-        [poster]="media.heroPoster" autoplay muted loop playsinline preload="metadata"></video>
+    <app-media-skeleton #vidSkeleton containerClass="absolute inset-0 -z-20 h-full w-full">
+        <video #v class="h-full w-full object-cover transition-opacity duration-700 ease-out"
+            [class.opacity-0]="!vidSkeleton.loaded()"
+            [class.opacity-100]="vidSkeleton.loaded()"
+            src="videos/cover.mp4"
+            [poster]="media.heroPoster" autoplay muted loop playsinline preload="metadata"
+            (loadeddata)="vidSkeleton.markLoaded()"
+            (canplay)="vidSkeleton.markLoaded()"
+            (error)="vidSkeleton.markError()"></video>
+    </app-media-skeleton>
 
     <!-- Cinematic Overlay -->
     <div class="absolute inset-0 -z-10
@@ -342,9 +349,8 @@
             <!-- Image -->
             <div class="relative aspect-[4/4.5] overflow-hidden bg-[#f2ede4]">
 
-                <img [src]="c.img" [alt]="c.title" loading="lazy" class="h-full w-full object-cover
-                           transition-transform duration-700
-                           group-hover:scale-105" />
+                <app-img [src]="c.img" [alt]="c.title" containerClass="h-full w-full"
+                    imgClass="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
 
                 <!-- Image Overlay -->
                 <div class="absolute inset-0
@@ -421,8 +427,8 @@
             <!-- Image -->
             <div class="relative aspect-[5/4] overflow-hidden bg-[#f2ede4]">
 
-                <img [src]="c.img" [alt]="c.title" [attr.loading]="mobileCardIndex === 0 ? 'eager' : 'lazy'"
-                    class="h-full w-full object-cover" />
+                <app-img [src]="c.img" [alt]="c.title" [priority]="mobileCardIndex === 0" containerClass="h-full w-full"
+                    imgClass="h-full w-full object-cover" />
 
                 <div class="absolute inset-0
                            bg-gradient-to-t
@@ -522,8 +528,8 @@
 
     <!-- Image card -->
     <div class="relative overflow-hidden rounded-3xl">
-      <img src="Transparency.png" alt="ADHMISK coordinating business across borders" loading="lazy"
-           class="aspect-[4/3] w-full object-cover md:aspect-[5/4]">
+      <app-img src="Transparency.png" alt="ADHMISK coordinating business across borders"
+           containerClass="aspect-[4/3] w-full md:aspect-[5/4] rounded-3xl" imgClass="size-full object-cover rounded-3xl" />
       <div class="absolute inset-0 rounded-3xl bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
       <!-- <div class="absolute bottom-4 left-4 flex items-center gap-2.5 rounded-full bg-white py-2 pl-3 pr-4 text-[13px] font-medium shadow-lg">
         <span class="size-2.5 rounded-full bg-brand"></span>
@@ -590,11 +596,11 @@
                 [class.stats-card-active]="statsCardIndex === i">
 
                 <!-- Full-card background image -->
-                <img
+                <app-img
                     [src]="s.path"
                     [alt]="s.tag"
-                    class="absolute inset-0 size-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    loading="lazy">
+                    containerClass="absolute inset-0 size-full"
+                    imgClass="size-full object-cover transition-transform duration-700 group-hover:scale-105" />
 
                 <!-- Dark overlay -->
                 <div
@@ -720,47 +726,9 @@
         <p class="mt-auto pt-6 text-xs text-slate">One group. Three countries. One point of contact.</p>
       </div>
 
-<!-- Map: Africa → GCC → Europe → USA -->
-      <div class="relative hidden overflow-hidden rounded-lg bg-mist md:block">
-        <svg viewBox="0 0 400 300" class="size-full" role="img" aria-label="Route connecting Africa, the GCC, Europe and the USA">
-          <defs>
-            <pattern id="dots" width="14" height="14" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1.2" fill="#cfcfcf"/></pattern>
-          </defs>
-          <rect width="400" height="300" fill="url(#dots)"/>
-
-          <!-- Route segments -->
-          <g fill="none" stroke="#146ef5" stroke-width="2.5" stroke-dasharray="6 6" stroke-linecap="round">
-            <!-- Africa → GCC -->
-            <path d="M130 230 Q240 245 300 170">
-              <animate attributeName="stroke-dashoffset" from="24" to="0" dur="1.2s" repeatCount="indefinite"/>
-            </path>
-            <!-- GCC → Europe -->
-            <path d="M300 170 Q295 90 190 70">
-              <animate attributeName="stroke-dashoffset" from="24" to="0" dur="1.2s" repeatCount="indefinite"/>
-            </path>
-            <!-- Europe → USA -->
-            <path d="M190 70 Q125 55 60 110">
-              <animate attributeName="stroke-dashoffset" from="24" to="0" dur="1.2s" repeatCount="indefinite"/>
-            </path>
-          </g>
-
-          <!-- Nodes -->
-          <g>
-            <circle cx="300" cy="170" r="14" fill="#146ef5" opacity=".2"><animate attributeName="r" values="10;22;10" dur="2.4s" repeatCount="indefinite"/></circle>
-            <circle cx="300" cy="170" r="8" fill="#146ef5"/>
-            <circle cx="130" cy="230" r="6" fill="#080808"/>
-            <circle cx="190" cy="70" r="6" fill="#080808"/>
-            <circle cx="60" cy="110" r="6" fill="#080808"/>
-          </g>
-
-          <!-- Labels -->
-          <g font-size="12" font-weight="600">
-            <rect x="98"  y="244" width="64" height="24" rx="12" fill="#fff"/><text x="130" y="260" text-anchor="middle">Africa</text>
-            <rect x="272" y="184" width="56" height="24" rx="12" fill="#fff"/><text x="300" y="200" text-anchor="middle">GCC</text>
-            <rect x="155" y="34"  width="70" height="24" rx="12" fill="#fff"/><text x="190" y="50"  text-anchor="middle">Europe</text>
-            <rect x="34"  y="124" width="52" height="24" rx="12" fill="#fff"/><text x="60"  y="140" text-anchor="middle">USA</text>
-          </g>
-        </svg>
+      <!-- Map -->
+      <div class="relative isolate overflow-hidden rounded-xl bg-mist min-h-[300px] sm:min-h-[340px] md:min-h-[380px] w-full h-full shadow-inner border border-black/5">
+        <div #mapEl class="absolute inset-0 h-full w-full" role="region" aria-label="Map showing Africa, the GCC, Europe and the USA"></div>
       </div>
     </div>
   </div>
@@ -828,11 +796,11 @@
                 [class.division-card-active]="divisionCardIndex === i">
 
                 <!-- Full-card background image -->
-                <img
+                <app-img
                     [src]="d.path"
                     [alt]="d.title"
-                    loading="lazy"
-                    class="absolute inset-0 size-full object-cover transition-transform duration-700 ease-out group-hover:scale-105">
+                    containerClass="absolute inset-0 size-full"
+                    imgClass="size-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" />
 
                 <!-- Dark gradient overlay -->
                 <div
@@ -921,8 +889,9 @@
                 </div> }
             </div>
         </div>
-        <img src="audiance.png" alt="" loading="lazy"
-            class="h-[420px] w-full rounded-lg bg-mist object-cover md:h-[520px]">
+        <app-img src="audiance.png" alt="ADHMISK Audiences"
+            containerClass="h-[420px] w-full rounded-lg md:h-[520px]"
+            imgClass="size-full rounded-lg bg-mist object-cover" />
     </div>
 </section>
 
