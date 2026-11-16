@@ -109,8 +109,11 @@ import { ImgSkeleton } from '../../ui';
               class="hidden size-full object-cover md:block"
               src="videos/bg-video.mp4"
               poster="home_sm.png"
-              autoplay muted loop playsinline preload="auto"
+              autoplay loop playsinline preload="auto"
+              [muted]="true"
+              (loadedmetadata)="startVideo($event)"
               (loadeddata)="mediaLoaded.set(true)"
+              (playing)="mediaLoaded.set(true)"
               (error)="mediaLoaded.set(true)"></video>
             <div class="absolute inset-0 z-10 hidden bg-white/10 md:block" [class.animate-pulse]="!mediaLoaded()">
               <div class="size-full bg-white/5"></div>
@@ -163,6 +166,16 @@ export class HeroScroll {
   /** true once the scroll animation is running; false = SSR / reduced-motion layout */
   protected readonly animated = signal(false);
   protected readonly mediaLoaded = signal(false);
+
+  protected startVideo(event: Event): void {
+    const video = event.currentTarget as HTMLVideoElement;
+    // Set the DOM properties as well as the template binding. Some browsers
+    // inspect the element's muted property when deciding whether autoplay is allowed.
+    video.defaultMuted = true;
+    video.muted = true;
+    video.volume = 0;
+    void video.play().catch(() => undefined);
+  }
 
   /** Phrases that light up one after another. Edit freely. */
   protected readonly statement = [
