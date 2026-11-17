@@ -115,15 +115,19 @@ import { ImgSkeleton } from '../../ui';
               (loadeddata)="mediaLoaded.set(true)"
               (playing)="mediaLoaded.set(true)"
               (error)="mediaLoaded.set(true)"></video>
+            <video
+              class="size-full object-cover block md:hidden"
+              src="videos/bg-video-sm.mp4"
+              poster="home_sm.jpg"
+              autoplay loop playsinline preload="auto"
+              [muted]="true"
+              (loadedmetadata)="startVideo($event)"
+              (loadeddata)="mediaLoaded.set(true)"
+              (playing)="mediaLoaded.set(true)"
+              (error)="mediaLoaded.set(true)"></video>
             <div class="absolute inset-0 z-10 hidden bg-white/10 md:block" [class.animate-pulse]="!mediaLoaded()">
               <div class="size-full bg-white/5"></div>
             </div>
-            <app-img
-              src="home_sm.png"
-              alt=""
-              [dark]="true"
-              containerClass="absolute inset-0 block size-full md:hidden"
-              imgClass="size-full object-cover object-[62%_center]" />
           </div>
 
           <div class="absolute inset-0 bg-gradient-to-b from-[#08182e]/50 via-[#08182e]/15 to-[#08182e]/60"></div>

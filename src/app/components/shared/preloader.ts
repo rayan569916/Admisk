@@ -182,7 +182,7 @@ export class Preloader {
     }
 
     // Stay until the hero is ready, but never less than MIN (so the animation reads) or more than MAX
-    const MIN = reduce ? 600 : 3400;
+    const MIN = reduce ? 3000 : 6000;
     const MAX = 9000;
     await new Promise<void>(resolve => {
       const check = () => {
