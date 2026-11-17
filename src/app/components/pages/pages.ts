@@ -2112,74 +2112,69 @@ export class Leadership {
       <!-- DIVISION IMAGE GRID
            xl uses a 6-col grid: 3 cards on the first row, the last 2 cards stretch to fill the second row
            (no orphan card). sm uses 2 cols, with an odd last card spanning the full row. -->
-      <div class="grid gap-5 sm:grid-cols-2 xl:grid-cols-6">
+<div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-3">
 
-        @for (d of divisions; track d.slug; let i = $index) {
-          <article
-            [class]="span(i)"
-            class="group relative isolate flex min-h-[390px] flex-col overflow-hidden rounded-2xl bg-[#093a56] shadow-sm transition duration-500 hover:-translate-y-1 hover:shadow-xl sm:min-h-[420px]"
-          >
+  @for (d of divisions; track d.slug; let i = $index) {
+    <article
+      class="group relative isolate flex min-h-[390px] flex-col overflow-hidden rounded-2xl bg-[#093a56] shadow-sm transition duration-500 hover:-translate-y-1 hover:shadow-xl sm:min-h-[420px]"
+    >
 
-            <!-- BACKGROUND IMAGE -->
-            <app-img
-              [src]="d.path"
-              [alt]="d.title"
-              [dark]="true"
-              containerClass="absolute inset-0 -z-30 size-full overflow-hidden"
-              imgClass="size-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-            />
+      <!-- BACKGROUND IMAGE -->
+      <app-img
+        [src]="d.path"
+        [alt]="d.title"
+        [dark]="true"
+        containerClass="absolute inset-0 -z-30 size-full overflow-hidden"
+        imgClass="size-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+      />
 
-            <!-- OVERLAYS -->
-            <div class="absolute inset-0 -z-20 bg-[#071d2b]/40"></div>
+      <!-- OVERLAYS -->
+      <div class="absolute inset-0 -z-20 bg-[#071d2b]/40"></div>
 
-            <div
-              class="absolute inset-0 -z-10 bg-gradient-to-t from-[#061a28] via-[#071d2b]/65 to-[#071d2b]/10 transition-opacity duration-300 group-hover:from-[#061a28]/95 group-hover:via-[#071d2b]/70"
-            ></div>
+      <div
+        class="absolute inset-0 -z-10 bg-gradient-to-t from-[#061a28] via-[#071d2b]/65 to-[#071d2b]/10 transition-opacity duration-300 group-hover:from-[#061a28]/95 group-hover:via-[#071d2b]/70"
+      ></div>
 
-            <!-- TOP ROW -->
-            <div class="flex items-start justify-between gap-3 p-5 sm:p-6">
+      <!-- TOP ROW -->
+      <div class="flex items-start justify-between gap-3 p-5 sm:p-6">
+        <span class="flex size-12 items-center justify-center rounded-xl border border-white/20 bg-white/10 text-white shadow-lg backdrop-blur-md transition duration-300 group-hover:border-white/40 group-hover:bg-white/20">
+          <app-icon [name]="d.icon" />
+        </span>
 
-              <span class="flex size-12 items-center justify-center rounded-xl border border-white/20 bg-white/10 text-white shadow-lg backdrop-blur-md transition duration-300 group-hover:border-white/40 group-hover:bg-white/20">
-                <app-icon [name]="d.icon" />
-              </span>
-
-              <span class="rounded-full border border-white/20 bg-black/20 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.15em] text-white/90 backdrop-blur-md">
-                Division {{ (i + 1).toString().padStart(2, '0') }}
-              </span>
-            </div>
-
-            <!-- CARD CONTENT -->
-            <div class="mt-auto p-5 pt-16 sm:p-6 sm:pt-20">
-
-              <h3 class="max-w-sm text-2xl font-semibold leading-tight tracking-tight text-white sm:text-[26px]">
-                {{ d.title }}
-              </h3>
-
-              <!-- DIVIDER -->
-              <div class="my-5 h-px bg-white/20"></div>
-
-              <!-- FOOTER LINK -->
-              <a
-                [routerLink]="['/divisions', d.slug]"
-                class="group/link flex min-h-10 items-center justify-between gap-3 text-sm font-semibold text-white"
-                [attr.aria-label]="'Explore ' + d.title"
-              >
-                <span class="transition-colors group-hover/link:text-white/75">
-                  Explore division
-                </span>
-
-                <span class="flex size-9 items-center justify-center rounded-full border border-white/30 bg-white/10 transition duration-300 group-hover/link:translate-x-1 group-hover/link:bg-white group-hover/link:text-[#093a56]">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="size-4">
-                    <path d="M5 12h14M13 6l6 6-6 6"></path>
-                  </svg>
-                </span>
-              </a>
-
-            </div>
-          </article>
-        }
-
+        <span class="rounded-full border border-white/20 bg-black/20 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.15em] text-white/90 backdrop-blur-md">
+          Division {{ (i + 1).toString().padStart(2, '0') }}
+        </span>
       </div>
+
+      <!-- CARD CONTENT -->
+      <div class="mt-auto p-5 pt-16 sm:p-6 sm:pt-20">
+        <h3 class="max-w-sm text-2xl font-semibold leading-tight tracking-tight text-white sm:text-[26px]">
+          {{ d.title }}
+        </h3>
+
+        <div class="my-5 h-px bg-white/20"></div>
+
+        <!-- FOOTER LINK -->
+        <a
+          [routerLink]="['/divisions', d.slug]"
+          class="group/link flex min-h-10 items-center justify-between gap-3 text-sm font-semibold text-white"
+          [attr.aria-label]="'Explore ' + d.title"
+        >
+          <span class="transition-colors group-hover/link:text-white/75">
+            Explore division
+          </span>
+
+          <span class="flex size-9 items-center justify-center rounded-full border border-white/30 bg-white/10 transition duration-300 group-hover/link:translate-x-1 group-hover/link:bg-white group-hover/link:text-[#093a56]">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="size-4">
+              <path d="M5 12h14M13 6l6 6-6 6"></path>
+            </svg>
+          </span>
+        </a>
+      </div>
+    </article>
+  }
+
+</div>
     </section>
 
     <!-- GROUP CTA -->

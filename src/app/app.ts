@@ -57,7 +57,7 @@ import { COMPANY, DIVISIONS, OFFICES } from './content';
           routerLinkActive="text-brand"
           class="inline-flex items-center gap-1 py-5 transition-colors hover:text-brand"
         >
-          Divisions
+          Services
           <svg
             viewBox="0 0 24 24"
             fill="none"
@@ -187,7 +187,7 @@ import { COMPANY, DIVISIONS, OFFICES } from './content';
                 (click)="open.set(false)"
                 class="flex min-h-11 flex-1 items-center text-sm font-medium"
               >
-                Divisions
+                Services
               </a>
 
               <button
@@ -333,7 +333,7 @@ import { COMPANY, DIVISIONS, OFFICES } from './content';
       <!-- Divisions -->
       <nav aria-label="Divisions">
         <h3 class="mb-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-white/85 sm:mb-4 sm:text-xs">
-          Divisions
+          Services
         </h3>
         <ul class="space-y-2.5">
           @for (d of divisions; track d.slug) {

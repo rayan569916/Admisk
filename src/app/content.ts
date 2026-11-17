@@ -190,140 +190,147 @@ export const ICONS: Record<string, string> = {
 };
 
 
-export const DIVISIONS: Division[] = [
 
-  // 1) MERGED: Business Consultancy + Investment & Advisory
+export const DIVISIONS: Division[] = [
+  // 01. Business Consultancy & Investment
   {
     slug: 'business-consultancy',
-    title: 'Business Consultancy & Advisory',
+    title: 'Business Consultancy & Investment',
     icon: 'consult',
     path: 'BusinessConsultancy.png',
-    short: 'Company setup, market entry, growth strategy and investment advisory.',
-    intro: 'Practical strategy, operational and investment-oriented advisory for entrepreneurs, investors and companies, from setting up a new business to entering, scaling or restructuring an existing one.',
+    short: 'Business setup, growth advisory and investment opportunities.',
+    intro:
+      'ADHMISK helps individuals, entrepreneurs, investors and companies start, manage and grow their businesses. From launching a new business to improving existing operations, finding investment opportunities and building strategic partnerships, we provide practical guidance to help clients make informed decisions and achieve sustainable growth.',
     services: [
-      'Company formation & set-up support for entrepreneurs',
-      'Market-entry strategy',
-      'Growth strategy',
-      'Operational improvement',
-      'Market research',
-      'Sales & business development strategy',
-      'Management advisory',
-      'Specialist project consultants',
-      'Training & capacity-building advisory',
-      'Opportunity assessment',
-      'Business plans & investor materials',
-      'Financial & risk modeling',
-      'Valuation & due diligence support',
-      'Capital-raising support where permitted',
-      'M&A and transaction support',
+      'Business startup and company setup support',
+      'Business planning and development',
+      'Business growth and expansion strategies',
+      'Investment opportunity identification',
+      'Business and project investment advisory',
+      'Connecting investors with businesses',
+      'Business partnership facilitation',
+      'Market research and opportunity assessment',
+      'Operational improvement and management support',
+      'Sales and customer development strategies',
+      'Business cost optimization',
+      'New market entry and expansion support',
+      'Business risk assessment',
+      'Investor and business partner connections',
+      'Business development consultancy',
     ],
   },
 
-  // 2) NEW: Legal Consultancy
+  // 02. Legal Consultancy
   {
     slug: 'legal-consultancy',
     title: 'Legal Consultancy',
     icon: 'legal',
-    path: 'LegalConsultancy.png',          // TODO: add this image
-    short: 'Legal guidance and support for Iqama, visa, passport and employment issues.',
-    intro: 'Legal consultancy and practical support for individuals and workers facing residency, documentation or employment problems, covering Iqama, visa and passport matters.',
+    path: 'LegalConsultancy.png',
+    short:
+      'Practical support for residency, immigration, employment and legal documentation matters.',
+    intro:
+      'ADHMISK helps individuals and businesses understand and resolve legal, employment, immigration and documentation matters. We assist clients in understanding available options, preparing necessary documents and connecting with qualified legal professionals when required.',
     services: [
-      'Iqama legal consultancy and support',
-      'Legal support in court for Huroob (absconding) cases, with basic legal fees',
-      'Support for unpaid salary and employer disputes',
-      'Visa consultancy and support',
-      'Visa expiry renewal',
-      'Passport consultancy and support',
-      'Passport expiry renewal',
+      'Iqama and residency support',
+      'Huroob (absconding) and labour case assistance',
+      'Salary and employer dispute support',
+      'Visa and immigration assistance',
+      'Visa expiry and renewal guidance',
+      'Passport and embassy support',
+      'Passport expiry and renewal assistance',
+      'Employment and labour-related documentation',
+      'Business and contract legal support',
+      'Legal documentation and procedure guidance',
+      'Connection with qualified legal professionals',
     ],
   },
 
-  // 3) Manpower (replaces HR & Staffing + Hospitality Solutions as a top-level division)
+  // 03. Manpower & HR Solutions
   {
-    slug: 'manpower',
-    title: 'Manpower',
+    slug: 'manpower-hr-solutions',
+    title: 'Manpower & HR Solutions',
     icon: 'hr',
-    path: 'HospitalitySolutions.png',      // was GovernanceCompliance.png on HR & Staffing; swap if you have a Manpower image
-    short: 'Recruitment and workforce solutions, including hospitality staffing and operations.',
-    intro: 'Recruitment and workforce solutions for companies seeking reliable talent across sales, logistics, administration and hospitality.',
+    path: 'HospitalitySolutions.png',
+    short:
+      'Recruitment, manpower supply and HR solutions across multiple industries.',
+    intro:
+      'ADHMISK helps businesses find suitable employees and build reliable workforces across different industries. From hospitality and construction to logistics, retail and office administration, we support employers with recruitment, employee selection, staffing plans, temporary staffing and general human resource management.',
     services: [
-      'Workforce solutions for companies',
-      'Sales & customer-service recruitment',
-      'Drivers & logistics recruitment',
-      'Professional & administrative recruitment',
+      'Manpower supply and recruitment',
+      'Hospitality and food service recruitment',
+      'Construction and maintenance workforce',
+      'Warehousing and logistics recruitment',
+      'Retail and sales recruitment',
+      'Office and administrative recruitment',
+      'Cleaning and facility management staffing',
+      'Recruitment and employee selection',
+      'HR management and employee support',
+      'Workforce planning and staffing solutions',
+      'Project-based and temporary staffing',
+      'Employee coordination and support',
     ],
-    subsections: [
-      {
-        title: 'Hospitality Solutions',
-        intro: 'Specialized support for cafés, restaurants, hotels and hospitality operators.',
-        services: [
-          'Barista and hospitality recruitment',
-          'Restaurant & hotel recruitment',
-          'Restaurant staffing solutions',
-          'Operations consulting',
-          'Café opening support',
-          'Hospitality training coordination',
-          'Event staffing',
-        ],
-      },
-    ],
-  },
-  {
-    slug: 'hr-staffing', title: 'HR & Staffing', icon: 'hr',
-    path: 'GovernanceCompliance.png',
-    short: 'Recruitment and workforce solutions for reliable talent.',
-    intro: 'Recruitment and workforce solutions for companies seeking reliable talent.',
-    services: ['Hospitality recruitment', 'Restaurant & hotel recruitment', 'Café/barista recruitment', 'Sales & customer-service recruitment', 'Drivers & logistics recruitment', 'Professional & administrative recruitment']
   },
 
-  // 4) UPDATED: Skills Training Center
+  // 04. Skills Training Center
   {
     slug: 'skills-training',
     title: 'Skills Training Center',
     icon: 'train',
     path: 'SkillsTraining.png',
-    short: 'Job-focused training and certification, in Kenya and online worldwide.',
-    intro: 'Practical, job-focused training and professional certification that keeps people and teams work-ready and up to date in the job market. Delivered at our centre in Kenya and through remote classes for customers anywhere in the world.',
+    short:
+      'Flexible, practical training and career development to build job-ready skills.',
+    intro:
+      'ADHMISK believes that learning should be accessible to everyone. Our Skills Training Center provides practical and flexible learning opportunities for individuals who want to improve their education, develop professional skills and advance their careers. Our programmes focus on useful, job-oriented knowledge that learners can apply in real workplaces and everyday business activities.',
     services: [
-      'Professional skills training & certification (e.g. accounting)',
-      'Certificate renewal & recertification (e.g. every 3 years)',
-      'Training centre in Kenya (Africa)',
-      'Remote classes for customers worldwide',
-      'Upskilling to stay current in the job market',
-      'Barista & café operations training',
-      'Sales & business development training',
-      'Corporate staff upskilling programs',
-      'Hospitality & customer-service training',
-      'Driver & logistics skills training',
-      'Training needs assessment for employers',
+      'Practical and professional skills training',
+      'Job-oriented training programmes',
+      'Training completion certificates',
+      'Recognised certification through approved training partners',
+      'Professional skills development',
+      'CV preparation and improvement',
+      'Job interview preparation',
+      'Career development and employment guidance',
+      'Flexible learning opportunities',
+      'Practical workplace skills development',
+      'Business and entrepreneurship skills',
+      'Corporate and employee training programmes',
+      'Industry-specific training opportunities',
     ],
   },
 
-  // 5) UPDATED: Import, Export & Trading
+  // 05. Import, Export & Trading
   {
     slug: 'import-export-trading',
     title: 'Import, Export & Trading',
     icon: 'trade',
     path: 'ImportExportTrading.png',
-    short: 'Sourcing, import/export and logistics from anywhere in the world.',
-    intro: 'Import and export, commercial sourcing and supply-chain coordination connecting businesses with products, suppliers and markets worldwide, including Africa, the GCC, Asia, Europe and the USA.',
+    short:
+      'International sourcing, import/export coordination and global trading solutions.',
+    intro:
+      'ADHMISK connects individuals, farmers, manufacturers and businesses with buyers, suppliers and markets across different countries. We support international trade by helping clients source products, identify potential buyers, coordinate procurement, understand import requirements and arrange transportation and documentation through authorised partners where required.',
     services: [
-      'Import & export coordination',
+      'Import and export coordination',
+      'International buyer and seller connections',
       'Live meat trading',
       'Frozen meat trading',
-      'Textiles sourcing (including from Bangladesh)',
-      'Sourcing from anywhere in the world',
-      'Procurement coordination',
-      'Supplier sourcing',
-      'Café/restaurant equipment sourcing',
-      'Glass & commercial products',
-      'Logistics and distribution support',
+      'Agricultural and food product trading',
+      'Textile and fabric sourcing',
+      'International supplier sourcing',
+      'Global procurement coordination',
+      'Bulk purchasing and product sourcing',
+      'Café and restaurant equipment sourcing',
+      'Glass and commercial product sourcing',
+      'Cross-border trade facilitation',
+      'Import and export documentation coordination',
+      'Logistics and transportation coordination',
+      'Distribution and market access support',
     ],
   },
 ];
 
+
 export const STATS = [
-  { n: '6', label: 'specialized divisions', text: 'Investment, consultancy, staffing, training, hospitality and trading under one parent company.', tag: 'Group structure', bg: 'from-[#2a4a9a] to-[#101a3a]', path: "SpecializedDivisions.png" },
+  { n: '5', label: 'specialized services', text: 'Investment, consultancy, staffing, training, hospitality and trading under one parent company.', tag: 'Group structure', bg: 'from-[#2a4a9a] to-[#101a3a]', path: "SpecializedDivisions.png" },
   { n: '7', label: 'offices in 7 countries', text: 'Saudi Arabia, USA, Ethiopia, Tanzania, Somalia, Kenya and Uganda with central governance and compliance oversight.', tag: 'Offices', bg: 'from-[#4a4a4a] to-[#111]', path: "OfficeTeamwork.png" },
   { n: '5', label: 'regions connected', text: 'Africa, the GCC, Asia, Europe and the USA, reached through one coordinated group.', tag: 'Reach', bg: 'from-[#6a4a2a] to-[#1a110a]', path: "RegionsConnected.png" },
   { n: '1', label: 'point of contact', text: 'One accountable team coordinating delivery across borders.', tag: 'Client promise', bg: 'from-[#146ef5] to-[#0a2250]', path: "PointOfContact.png" },

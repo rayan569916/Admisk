@@ -59,7 +59,7 @@ import { ImgSkeleton } from '../../ui';
                   <a
                     [routerLink]="['/divisions', d.slug]"
                     [attr.aria-label]="'Explore ' + d.title"
-                    [class]="cards.length % 2 === 1 && last ? 'col-span-2' : ''"
+                    [class]="cards.length % 2 === 1 && last ? 'col-span-1' : ''"
                     class="group relative isolate flex min-h-[64px] items-center justify-between gap-3 overflow-hidden rounded-2xl border border-white/10 bg-[#102236] p-3.5 transition duration-300 hover:-translate-y-0.5 hover:border-[#a78043]/70 sm:min-h-[84px] sm:p-5">
 
                     <!-- Background image -->
