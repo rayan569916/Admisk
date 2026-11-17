@@ -398,7 +398,7 @@ export const VISION = [
 ];
 
 export const WHY = [
-  { t: 'One accountable group', d: 'Six divisions coordinated under a single parent company with central governance and compliance oversight.' },
+  { t: 'One accountable group', d: 'Five services coordinated under a single parent company with central governance and compliance oversight.' },
   { t: 'Cross-border reach', d: 'Offices in Riyadh, Nairobi and Kampala help clients connect with opportunities across Africa, the GCC, Asia, Europe and the USA.' },
   { t: 'Integrated services', d: 'Enter through one division and access advisory, workforce, training, hospitality and sourcing support as needs grow.' },
   { t: 'Licensed partner network', d: 'Regulated services are delivered with appropriately licensed legal and financial professionals.' },

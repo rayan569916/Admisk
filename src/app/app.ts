@@ -9,8 +9,8 @@ import { COMPANY, DIVISIONS, OFFICES } from './content';
   imports: [RouterOutlet, RouterLink, RouterLinkActive],
   template: `
 <!-- ANNOUNCEMENT BAR -->
-<div class="bg-brand px-3 py-2 text-center text-[11px] font-medium leading-5 text-white sm:px-4 sm:text-[13px]">
-  <span>Six divisions. Three offices. One point of contact.</span>
+<div class="hidden md:block bg-brand px-3 py-2 text-center text-[11px] font-medium leading-5 text-white sm:px-4 sm:text-[13px]">
+  <span>Five services. Three offices. One point of contact.</span>
   <a
     routerLink="/divisions"
     class="ml-1 inline-block whitespace-nowrap font-semibold underline underline-offset-4 transition hover:text-white/75"

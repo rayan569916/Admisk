@@ -17,6 +17,7 @@ import type * as Leaflet from 'leaflet';
 import { HeroScroll } from '../shared/HeroScroll';
 import { Preloader } from '../shared/preloader';
 import { PreloaderService } from '../shared/preloader.service';
+import { Preloader as PercentPreloader } from '../shared/preloader-percent';
 
 type LatLng = [number, number];
 interface Person { name: string; role: string; group: string; bio: string; photo?: string; featured?: boolean; }
@@ -1652,8 +1653,12 @@ export class About {
 /* ───────────── LEADERSHIP ───────────── */
 @Component({
   selector: 'app-leadership',
-  imports: [RouterLink, ImgSkeleton],
+  imports: [RouterLink, ImgSkeleton, PercentPreloader],
   template: `
+    @if (showLoader()) {
+      <app-preloader [imagesReady]="assetsReady()" (completed)="showLoader.set(false)" />
+    }
+
     <!-- LEADERSHIP SECTION -->
     <section class="overflow-hidden bg-mist py-12 sm:py-16 lg:py-20">
       <div class="wrap">
@@ -1720,6 +1725,7 @@ export class About {
                   [alt]="f.name"
                   containerClass="absolute inset-0 size-full"
                   imgClass="size-full object-cover object-top"
+                  (load)="onImageLoad()"
                 />
               } @else {
                 <div class="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-[#4d9bff] to-brand text-6xl font-semibold text-white">
@@ -1804,6 +1810,7 @@ export class About {
                     [alt]="p.name"
                     containerClass="size-full"
                     imgClass="size-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.04]"
+                    (load)="onImageLoad()"
                   />
                 } @else {
                   <div class="flex size-full items-center justify-center bg-gradient-to-br from-[#4d9bff] to-brand text-4xl font-semibold text-white">
@@ -1959,7 +1966,7 @@ export class Leadership {
       group: 'Leadership',
       featured: true,
       photo: 'employees/adhan-mohamud-abdi.png',
-      bio: 'Adhan founded ADHMISK to connect investment, advisory, workforce, training, hospitality and trade under one accountable group. He sets the direction for all six divisions and stays closely involved in key client relationships across Riyadh, Nairobi and Kampala.',
+      bio: 'Adhan founded ADHMISK to connect investment, advisory, workforce, training, hospitality and trade under one accountable group. He sets the direction for all five divisions and stays closely involved in key client relationships across Riyadh, Nairobi and Kampala.',
     },
 
     // {
@@ -2038,6 +2045,31 @@ export class Leadership {
 
   group = signal('All');
   limit = signal(8);
+  showLoader = signal(true);
+  assetsReady = signal(false);
+
+  private imagesTotal = 0;
+  private imagesLoaded = 0;
+
+  ngOnInit(): void {
+    // Count all leadership photos that will be rendered so the preloader
+    // can wait until every image asset is loaded before fading out.
+    this.imagesTotal = this.leadership.filter(p => p.photo).length;
+
+    if (this.imagesTotal === 0) {
+      this.assetsReady.set(true);
+      this.showLoader.set(false);
+    } else {
+      this.showLoader.set(true);
+    }
+  }
+
+  onImageLoad(): void {
+    this.imagesLoaded++;
+    if (this.imagesLoaded >= this.imagesTotal) {
+      this.assetsReady.set(true);
+    }
+  }
 
   groups = computed(() => [
     'All',

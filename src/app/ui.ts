@@ -1,4 +1,4 @@
-import { Component, input, computed, signal } from '@angular/core';
+import { Component, input, computed, signal, output } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ICONS } from './content';
 
@@ -47,7 +47,7 @@ export class MediaSkeleton {
         [loading]="priority() ? 'eager' : 'lazy'"
         [attr.fetchpriority]="priority() ? 'high' : 'auto'"
         [class]="'absolute inset-0 ' + imgClass() + ' transition-opacity duration-500 ease-out ' + (loaded() ? 'opacity-100' : 'opacity-0')"
-        (load)="loaded.set(true)"
+        (load)="loaded.set(true); load.emit()"
         (error)="hasError.set(true)"
       />
     </div>
@@ -62,6 +62,7 @@ export class ImgSkeleton {
   dark = input(false);
   loaded = signal(false);
   hasError = signal(false);
+  readonly load = output<void>();
 }
 
 
