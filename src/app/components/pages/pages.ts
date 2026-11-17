@@ -15,6 +15,8 @@ import { MEDIA } from '../../media';
 import { Cta, Icon, PageHead, MediaSkeleton, ImgSkeleton } from '../../ui';
 import type * as Leaflet from 'leaflet';
 import { HeroScroll } from '../shared/HeroScroll';
+import { Preloader } from '../shared/preloader';
+import { PreloaderService } from '../shared/preloader.service';
 
 type LatLng = [number, number];
 interface Person { name: string; role: string; group: string; bio: string; photo?: string; featured?: boolean; }
@@ -23,7 +25,7 @@ interface Person { name: string; role: string; group: string; bio: string; photo
 /* ───────────── HOME ───────────── */
 @Component({
   selector: 'app-home',
-  imports: [RouterLink, Icon, Cta, MediaSkeleton, ImgSkeleton, HeroScroll],
+  imports: [RouterLink, Icon, Cta, MediaSkeleton, ImgSkeleton, HeroScroll, Preloader],
   templateUrl: './pages.html',
   styleUrl: './pages.css',
 })
@@ -48,11 +50,13 @@ export class Home implements OnInit, OnDestroy {
   onVideoReady(): void {
     this.videoLoaded.set(true);
     this.playing.set(true);
+    this.preloader.markReady();
   }
 
   videoError(): void {
     this.videoLoaded.set(true);
     this.playing.set(false);
+    this.preloader.markReady();
   }
 
   // cards = [
@@ -108,6 +112,7 @@ export class Home implements OnInit, OnDestroy {
   // Add this inside your existing component class -----------------------------
 
   private readonly destroyRef = inject(DestroyRef);
+  private readonly preloader = inject(PreloaderService);
   private readonly mapEl = viewChild.required<ElementRef<HTMLDivElement>>('mapEl');
   private map?: Leaflet.Map;
 
@@ -2015,7 +2020,7 @@ export class Leadership {
     },
     {
       name: 'Mr. Ramzan Manaf',
-      role: 'Graphic Designer',
+      role: 'Assistant Marketing Manager',
       group: 'Leadership',
       photo: 'employees/ramzan-manaf.png',
       bio: 'Ramzan creates visual content for the group, from marketing materials and social media to presentations and client proposals. He ensures that every division is represented with a consistent, professional look.',

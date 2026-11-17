@@ -15,8 +15,8 @@ export interface Division {
   subsections?: DivisionSubsection[];   // NEW – used by Manpower → Hospitality Solutions
 }
 export const COMPANY = {
-  name: 'ADMISK Investment Limited',
-  legal: 'AIL ADMISK Investment Limited',
+  name: 'ADHMISK Investment Limited',
+  legal: 'ADHMISK Investment Limited',
   tagline: 'Connecting opportunity, strategy, people and growth.',
   email: 'adfaminvestment@gmail.com',
   regions: ['Africa', 'GCC', 'Asia', 'Europe', 'USA'],
