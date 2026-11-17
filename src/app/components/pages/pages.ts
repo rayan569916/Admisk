@@ -2052,16 +2052,18 @@ export class Leadership {
   private imagesLoaded = 0;
 
   ngOnInit(): void {
-    // Count all leadership photos that will be rendered so the preloader
-    // can wait until every image asset is loaded before fading out.
-    this.imagesTotal = this.leadership.filter(p => p.photo).length;
+    const photos = this.leadership.filter(p => p.photo).map(p => p.photo);
+    this.imagesTotal = photos.length;
 
     if (this.imagesTotal === 0) {
       this.assetsReady.set(true);
       this.showLoader.set(false);
-    } else {
-      this.showLoader.set(true);
+      return;
     }
+
+    // Show the loader on first visit; returning visitors in the same session
+    // skip it entirely via sessionStorage inside the preloader component.
+    this.showLoader.set(true);
   }
 
   onImageLoad(): void {

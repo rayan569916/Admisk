@@ -23,11 +23,11 @@ import {
  * The clip line rises with progress, so at 41% the bottom 41% of the digits
  * is solid white while the rest stays outlined — exactly like the reference.
  *
- * The preloader stays visible until BOTH:
- *   - the minimum time has elapsed (so the animation can be read)
- *   - imagesReady() is true (all page assets are loaded)
- *
- * It never stays longer than MAX (so a slow connection never traps the visitor).
+ * Behaviour (matches the video preloader):
+ *   - Shown once per session (sessionStorage). Returning visitors skip it.
+ *   - Only shown when images are NOT already loaded. If assetsReady() is true
+ *     from the start, the loader never mounts.
+ *   - Minimum 1.5s so the animation reads; maximum 8s so slow loads never trap.
  *
  * Angular 21 (signals, @for control flow, zoneless-friendly).
  * Tailwind CSS 4 utilities + one tiny style block for grain + stroke.
@@ -37,6 +37,8 @@ import {
  *     <app-preloader [imagesReady]="assetsReady()" (completed)="showLoader.set(false)" />
  *   }
  */
+const SEEN_KEY = 'adhmisk-leadership-intro-seen';
+
 @Component({
   selector: 'app-preloader',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -103,7 +105,7 @@ import {
 })
 export class Preloader {
   /** Total time to go from 0% to 100% (ms). */
-  readonly duration = input(500);
+  readonly duration = input(4000);
   /** Becomes true when all page image assets have loaded. */
   readonly imagesReady = input(false);
   /** Emits once the counter reaches 100% and the fade-out is done. */
@@ -123,7 +125,19 @@ export class Preloader {
   private timers: ReturnType<typeof setTimeout>[] = [];
 
   constructor() {
-    afterNextRender(() => this.animate());
+    // Wait until the parent has subscribed to `completed` before emitting.
+    // Emitting synchronously in the constructor loses the event, leaving the
+    // parent-visible loader mounted at its initial 0% for the whole session.
+    afterNextRender(() => {
+      try {
+        if (sessionStorage.getItem(SEEN_KEY) === '1') {
+          this.completed.emit();
+          return;
+        }
+      } catch { /* storage blocked: just show it */ }
+
+      this.animate();
+    });
     this.destroyRef.onDestroy(() => {
       cancelAnimationFrame(this.rafId);
       this.timers.forEach(clearTimeout);
@@ -159,8 +173,9 @@ export class Preloader {
 
   private finish(): void {
     this.progress.set(100);
-    this.timers.push(setTimeout(() => this.fading.set(true), 150));
-    this.timers.push(setTimeout(() => this.completed.emit(), 150 + 200));
+    try { sessionStorage.setItem(SEEN_KEY, '1'); } catch { /* ignore */ }
+    this.timers.push(setTimeout(() => this.fading.set(true), 250));
+    this.timers.push(setTimeout(() => this.completed.emit(), 250 + 700));
   }
 }
 
