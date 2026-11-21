@@ -1,19 +1,4 @@
-export interface DivisionSubsection {
-  title: string;
-  intro: string;
-  services: string[];
-}
 
-export interface Division {
-  slug: string;
-  title: string;
-  icon: string;            // add 'legal' to your existing icon type / icon map
-  path: string;
-  short: string;
-  intro: string;
-  services: string[];
-  subsections?: DivisionSubsection[];   // NEW – used by Manpower → Hospitality Solutions
-}
 export const COMPANY = {
   name: 'ADHMISK Investment Limited',
   legal: 'ADHMISK Investment Limited',
@@ -191,61 +176,114 @@ export const ICONS: Record<string, string> = {
 
 
 
+// --- Types -------------------------------------------------------------------
+export interface DivisionSubsection {
+  id: string;          // anchor id, also used for the "jump to" chips
+  title: string;
+  intro: string;       // short description shown under the heading
+  services: string[];  // bullet rows
+}
+
+export interface Division {
+  slug: string;
+  title: string;
+  icon: string;
+  path: string;
+  short: string;                    // one-liner used on cards
+  intro: string;                    // lead paragraph on the division page
+  subsections: DivisionSubsection[]; // replaces the old flat `services` list
+}
+
+// --- Data --------------------------------------------------------------------
 export const DIVISIONS: Division[] = [
-  // 01. Business Consultancy & Investment
+
+  // 01. Consultancy
   {
-    slug: 'business-consultancy',
-    title: 'Business Consultancy & Investment',
+    slug: 'consultancy',
+    title: 'Consultancy',
     icon: 'consult',
     path: 'BusinessConsultancy.png',
-    short: 'Business setup, growth advisory and investment opportunities.',
-    intro:
-      'ADHMISK helps individuals, entrepreneurs, investors and companies start, manage and grow their businesses. From launching a new business to improving existing operations, finding investment opportunities and building strategic partnerships, we provide practical guidance to help clients make informed decisions and achieve sustainable growth.',
-    services: [
-      'Business startup and company setup support',
-      'Business planning and development',
-      'Business growth and expansion strategies',
-      'Investment opportunity identification',
-      'Business and project investment advisory',
-      'Connecting investors with businesses',
-      'Business partnership facilitation',
-      'Market research and opportunity assessment',
-      'Operational improvement and management support',
-      'Sales and customer development strategies',
-      'Business cost optimization',
-      'New market entry and expansion support',
-      'Business risk assessment',
-      'Investor and business partner connections',
-      'Business development consultancy',
-    ],
-  },
-
-  // 02. Legal Consultancy
-  {
-    slug: 'legal-consultancy',
-    title: 'Legal Consultancy',
-    icon: 'legal',
-    path: 'LegalConsultancy.png',
     short:
-      'Practical support for residency, immigration, employment and legal documentation matters.',
+      'Business, investment, trade and legal guidance, plus employment and immigration support.',
     intro:
-      'ADHMISK helps individuals and businesses understand and resolve legal, employment, immigration and documentation matters. We assist clients in understanding available options, preparing necessary documents and connecting with qualified legal professionals when required.',
-    services: [
-      'Iqama and residency support',
-      'Huroob (absconding) and labour case assistance',
-      'Salary and employer dispute support',
-      'Visa and immigration assistance',
-      'Visa expiry and renewal guidance',
-      'Passport and embassy support',
-      'Passport expiry and renewal assistance',
-      'Employment and labour-related documentation',
-      'Business and contract legal support',
-      'Legal documentation and procedure guidance',
-      'Connection with qualified legal professionals',
+      'ADHMISK provides practical consultancy to help individuals, entrepreneurs, investors and businesses make informed decisions and solve challenges. Our services cover business, investment, international trade and legal matters. We guide clients through important procedures, help them understand their options and connect them with qualified professionals when needed.',
+    subsections: [
+      {
+        id: 'business-consultancy',
+        title: 'Business Consultancy',
+        intro:
+          'We help individuals and companies start, manage and grow their businesses through business planning, operational improvements and guidance on new opportunities.',
+        services: [
+          'Business planning and development',
+          'Business startup, management and growth support',
+          'Operational improvements',
+          'Guidance on new business opportunities',
+        ],
+      },
+      {
+        id: 'investment-consultancy',
+        title: 'Investment Consultancy',
+        intro:
+          'We assist individuals and businesses in exploring investment opportunities, finding suitable business partners and understanding potential projects and markets.',
+        services: [
+          'Investment opportunity exploration',
+          'Finding suitable business partners',
+          'Understanding potential projects and markets',
+        ],
+      },
+      {
+        id: 'trade-consultancy',
+        title: 'Trade Consultancy',
+        intro:
+          'We guide businesses on local and international trading, including import and export procedures, finding suppliers, connecting with buyers and entering new markets.',
+        services: [
+          'Local and international trading guidance',
+          'Import and export procedures',
+          'Finding suppliers and connecting with buyers',
+          'New market entry support',
+        ],
+      },
+      {
+        id: 'legal-contract-consultancy',
+        title: 'Legal & Contract Consultancy',
+        intro:
+          'We provide guidance on business agreements, contracts, legal requirements and disputes, connecting clients with qualified legal professionals when necessary.',
+        services: [
+          'Business agreements and contracts',
+          'Legal requirements guidance',
+          'Dispute guidance',
+          'Connection with qualified legal professionals',
+        ],
+      },
+      {
+        id: 'employment-labour-support',
+        title: 'Employment & Labour Support',
+        intro:
+          'We assist with employment-related concerns, including Huroob (absconding) cases, unpaid salaries, employer disputes and other labour matters.',
+        services: [
+          'Huroob (absconding) case assistance',
+          'Unpaid salary support',
+          'Employer dispute support',
+          'Other labour matters',
+        ],
+      },
+      {
+        id: 'residency-visa-immigration',
+        title: 'Residency, Visa & Immigration Support',
+        intro:
+          'We help clients understand and complete procedures related to Iqama, residency renewals, visas, immigration and required documentation.',
+        services: [
+          'Iqama support',
+          'Residency renewals',
+          'Visa procedures',
+          'Immigration procedures',
+          'Required documentation support',
+        ],
+      },
     ],
   },
 
-  // 03. Manpower & HR Solutions
+  // 02. Manpower & HR Solutions
   {
     slug: 'manpower-hr-solutions',
     title: 'Manpower & HR Solutions',
@@ -254,24 +292,92 @@ export const DIVISIONS: Division[] = [
     short:
       'Recruitment, manpower supply and HR solutions across multiple industries.',
     intro:
-      'ADHMISK helps businesses find suitable employees and build reliable workforces across different industries. From hospitality and construction to logistics, retail and office administration, we support employers with recruitment, employee selection, staffing plans, temporary staffing and general human resource management.',
-    services: [
-      'Manpower supply and recruitment',
-      'Hospitality and food service recruitment',
-      'Construction and maintenance workforce',
-      'Warehousing and logistics recruitment',
-      'Retail and sales recruitment',
-      'Office and administrative recruitment',
-      'Cleaning and facility management staffing',
-      'Recruitment and employee selection',
-      'HR management and employee support',
-      'Workforce planning and staffing solutions',
-      'Project-based and temporary staffing',
-      'Employee coordination and support',
+      'ADHMISK helps companies find suitable workers for different types of jobs. From hotels and restaurants to construction sites, warehouses, shops and offices, we connect employers with people who have the skills and experience the work requires. We also support businesses with recruitment, employee selection, staffing plans and general HR management.',
+    subsections: [
+      {
+        id: 'hospitality-food-services',
+        title: 'Hospitality & Food Services',
+        intro:
+          'Staffing and operational support for hotels, restaurants, cafés and catering businesses.',
+        services: [
+          'Hotel staffing',
+          'Restaurant staffing',
+          'Café and catering staffing',
+          'Operational support',
+        ],
+      },
+      {
+        id: 'human-resources',
+        title: 'Human Resources',
+        intro:
+          'HR support including recruitment, workforce management and employee services.',
+        services: [
+          'Recruitment and employee selection',
+          'Staffing plans and workforce planning',
+          'Workforce management',
+          'HR management and employee support',
+        ],
+      },
+      {
+        id: 'warehousing-logistics',
+        title: 'Warehousing & Logistics',
+        intro:
+          'Skilled manpower and operational support for warehouses and supply chain operations.',
+        services: [
+          'Skilled warehouse manpower',
+          'Supply chain operational support',
+        ],
+      },
+      {
+        id: 'drivers-transportation',
+        title: 'Drivers & Transportation Services',
+        intro:
+          'Providing qualified drivers for delivery, logistics and other operations.',
+        services: [
+          'Delivery drivers',
+          'Logistics drivers',
+          'Drivers for other operations',
+        ],
+      },
+      {
+        id: 'construction-technical-staff',
+        title: 'Construction & Technical Staff',
+        intro:
+          'Supply of skilled personnel for construction, industrial and technical projects.',
+        services: [
+          'Construction personnel',
+          'Industrial project personnel',
+          'Technical project personnel',
+        ],
+      },
+      {
+        id: 'facility-support-services',
+        title: 'Facility Support Services',
+        intro:
+          'Manpower solutions for cleaning, maintenance, security and general support operations.',
+        services: [
+          'Cleaning',
+          'Maintenance',
+          'Security',
+          'General support operations',
+        ],
+      },
+      {
+        id: 'staffing-options',
+        title: 'Flexible Staffing Options',
+        intro:
+          'Support for businesses looking for individual employees, multiple workers or staffing for larger projects.',
+        services: [
+          'Individual employees',
+          'Multiple workers',
+          'Larger project staffing',
+          'Project-based and temporary staffing',
+        ],
+      },
     ],
   },
 
-  // 04. Skills Training Center
+  // 03. Skills Training Center
   {
     slug: 'skills-training',
     title: 'Skills Training Center',
@@ -280,25 +386,41 @@ export const DIVISIONS: Division[] = [
     short:
       'Flexible, practical training and career development to build job-ready skills.',
     intro:
-      'ADHMISK believes that learning should be accessible to everyone. Our Skills Training Center provides practical and flexible learning opportunities for individuals who want to improve their education, develop professional skills and advance their careers. Our programmes focus on useful, job-oriented knowledge that learners can apply in real workplaces and everyday business activities.',
-    services: [
-      'Practical and professional skills training',
-      'Job-oriented training programmes',
-      'Training completion certificates',
-      'Recognised certification through approved training partners',
-      'Professional skills development',
-      'CV preparation and improvement',
-      'Job interview preparation',
-      'Career development and employment guidance',
-      'Flexible learning opportunities',
-      'Practical workplace skills development',
-      'Business and entrepreneurship skills',
-      'Corporate and employee training programmes',
-      'Industry-specific training opportunities',
+      'ADHMISK believes that learning should be accessible to everyone. Our Skills Training Center provides practical and flexible learning opportunities for people who want to improve their education, develop professional skills and advance their careers, including those who cannot attend regular classes because of work, family responsibilities or a busy schedule.',
+    subsections: [
+      {
+        id: 'career-development',
+        title: 'Career Development',
+        intro:
+          'Practical, job-focused learning that can be applied in real jobs and everyday business activities, not just theory.',
+        services: [
+          'Practical and professional skills training',
+          'Job-oriented training programmes',
+          'Flexible learning opportunities',
+          'Practical workplace skills development',
+          'Business and entrepreneurship skills',
+          'Corporate and employee training programmes',
+          'Industry-specific training opportunities',
+          'CV preparation and improvement',
+          'Job interview preparation',
+          'Career development and employment guidance',
+        ],
+      },
+      {
+        id: 'certifications',
+        title: 'Certifications',
+        // TODO: confirm wording. The document pasted the Investment paragraph here by mistake.
+        intro:
+          'Depending on the course and its approval, learners may receive training completion certificates or have access to recognised certification programmes through approved training partners.',
+        services: [
+          'Training completion certificates',
+          'Recognised certification through approved training partners',
+        ],
+      },
     ],
   },
 
-  // 05. Import, Export & Trading
+  // 04. Import, Export & Trading
   {
     slug: 'import-export-trading',
     title: 'Import, Export & Trading',
@@ -307,30 +429,58 @@ export const DIVISIONS: Division[] = [
     short:
       'International sourcing, import/export coordination and global trading solutions.',
     intro:
-      'ADHMISK connects individuals, farmers, manufacturers and businesses with buyers, suppliers and markets across different countries. We support international trade by helping clients source products, identify potential buyers, coordinate procurement, understand import requirements and arrange transportation and documentation through authorised partners where required.',
-    services: [
-      'Import and export coordination',
-      'International buyer and seller connections',
-      'Live meat trading',
-      'Frozen meat trading',
-      'Agricultural and food product trading',
-      'Textile and fabric sourcing',
-      'International supplier sourcing',
-      'Global procurement coordination',
-      'Bulk purchasing and product sourcing',
-      'Café and restaurant equipment sourcing',
-      'Glass and commercial product sourcing',
-      'Cross-border trade facilitation',
-      'Import and export documentation coordination',
-      'Logistics and transportation coordination',
-      'Distribution and market access support',
+      'ADHMISK connects individuals, farmers, manufacturers and businesses with buyers, suppliers and markets across different countries. From small businesses expanding their reach to established companies entering new markets, we provide practical support to trade with greater confidence and build long-term business relationships.',
+    subsections: [
+      {
+        id: 'import-export-coordination',
+        title: 'Import & Export Coordination',
+        intro:
+          'Help buying and selling in local and international markets, from import requirements to transportation and documentation through authorised partners, where the trade is permitted.',
+        services: [
+          'Import and export coordination',
+          'Import and export documentation coordination',
+          'Logistics and transportation coordination',
+          'Cross-border trade facilitation',
+          'Distribution and market access support',
+        ],
+      },
+      {
+        id: 'buyers-suppliers-sourcing',
+        title: 'Buyers, Suppliers & Sourcing',
+        intro:
+          'Finding reliable suppliers and potential buyers, comparing prices, checking quality and negotiating with confidence.',
+        services: [
+          'International buyer and seller connections',
+          'International supplier sourcing',
+          'Global procurement coordination',
+          'Bulk purchasing and product sourcing',
+          'Product price comparison',
+          'Product quality checking',
+          'Negotiation with suppliers',
+          'Identifying suitable trading opportunities',
+        ],
+      },
+      {
+        id: 'products-we-trade',
+        title: 'Products We Trade',
+        intro:
+          'Product categories we source and trade for clients.',
+        services: [
+          'Live meat trading',
+          'Frozen meat trading',
+          'Agricultural and food product trading',
+          'Textile and fabric sourcing',
+          'Café and restaurant equipment sourcing',
+          'Glass and commercial product sourcing',
+        ],
+      },
     ],
   },
 ];
 
 
 export const STATS = [
-  { n: '5', label: 'specialized services', text: 'Investment, consultancy, staffing, training, hospitality and trading under one parent company.', tag: 'Group structure', bg: 'from-[#2a4a9a] to-[#101a3a]', path: "SpecializedDivisions.png" },
+  { n: '4', label: 'specialized services', text: 'Investment, consultancy, staffing, training, hospitality and trading under one parent company.', tag: 'Group structure', bg: 'from-[#2a4a9a] to-[#101a3a]', path: "SpecializedDivisions.png" },
   { n: '7', label: 'offices in 7 countries', text: 'Saudi Arabia, USA, Ethiopia, Tanzania, Somalia, Kenya and Uganda with central governance and compliance oversight.', tag: 'Offices', bg: 'from-[#4a4a4a] to-[#111]', path: "OfficeTeamwork.png" },
   { n: '5', label: 'regions connected', text: 'Africa, the GCC, Asia, Europe and the USA, reached through one coordinated group.', tag: 'Reach', bg: 'from-[#6a4a2a] to-[#1a110a]', path: "RegionsConnected.png" },
   { n: '1', label: 'point of contact', text: 'One accountable team coordinating delivery across borders.', tag: 'Client promise', bg: 'from-[#146ef5] to-[#0a2250]', path: "PointOfContact.png" },

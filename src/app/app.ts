@@ -10,7 +10,7 @@ import { COMPANY, DIVISIONS, OFFICES } from './content';
   template: `
 <!-- ANNOUNCEMENT BAR -->
 <div class="hidden md:block bg-brand px-3 py-2 text-center text-[11px] font-medium leading-5 text-white sm:px-4 sm:text-[13px]">
-  <span>Five services. Three offices. One point of contact.</span>
+  <span>Four services. Seven offices. One point of contact.</span>
   <a
     routerLink="/divisions"
     class="ml-1 inline-block whitespace-nowrap font-semibold underline underline-offset-4 transition hover:text-white/75"
@@ -261,88 +261,57 @@ import { COMPANY, DIVISIONS, OFFICES } from './content';
 </nav>
 
     <main><router-outlet /></main>
-<footer class="relative isolate overflow-hidden bg-onyx text-sm text-[#bdbdbd]">
+<footer class="relative isolate bg-onyx text-sm text-[#bdbdbd]">
 
-  <!-- Background accents -->
-  <div class="pointer-events-none absolute -right-40 -top-40 -z-10 size-[420px] rounded-full bg-brand/15 blur-[120px]"></div>
-  <div class="pointer-events-none absolute -bottom-40 -left-40 -z-10 size-[360px] rounded-full bg-[#7a5af8]/10 blur-[110px]"></div>
+  <!-- Top accent line -->
   <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand/70 to-transparent"></div>
 
   <div class="wrap">
 
-    <!-- CTA (tighter on mobile, single row on desktop) -->
-    <section class="grid gap-5 border-b border-white/10 py-8 sm:py-10 lg:grid-cols-[1.2fr_0.8fr] lg:items-center lg:gap-12 lg:py-12">
+    <!-- Main row: brand | services | company | offices -->
+    <div class="grid grid-cols-2 gap-x-6 gap-y-7 py-8 sm:py-10 lg:grid-cols-[1.5fr_1fr_0.8fr_1.1fr] lg:gap-x-10">
 
-      <h2 class="h-display max-w-2xl text-2xl leading-[1.1] tracking-tight text-white sm:text-3xl md:text-4xl">
-        Ready to connect
-        <span class="bg-gradient-to-r from-[#6ca7ff] to-[#a58bff] bg-clip-text text-transparent">
-          across borders?
-        </span>
-      </h2>
-
-      <div class="flex flex-col gap-3 sm:flex-row sm:flex-wrap lg:justify-end">
-        <a
-          routerLink="/contact"
-          class="inline-flex min-h-11 items-center justify-center gap-3 rounded-lg bg-brand px-5 py-3 text-sm font-semibold text-white transition duration-200 hover:-translate-y-0.5 hover:bg-blue-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand">
-          Get in touch
-          <span aria-hidden="true">↗</span>
-        </a>
-
-        <a
-          [href]="'mailto:' + company.email"
-          class="inline-flex min-h-11 min-w-0 items-center justify-center gap-2 rounded-lg border border-white/10 bg-white/[0.03] px-4 py-3 text-sm font-medium text-white/80 transition hover:border-white/20 hover:bg-white/[0.07] hover:text-white">
-          <span class="min-w-0 break-all">{{ company.email }}</span>
-          <span class="shrink-0 text-white/50" aria-hidden="true">↗</span>
-        </a>
-      </div>
-    </section>
-
-    <!-- Main row: brand + links (offices no longer squeezed in a narrow column) -->
-    <div class="grid grid-cols-2 gap-x-6 gap-y-8 py-8 sm:gap-x-10 sm:py-10 lg:grid-cols-[1.6fr_1fr_1fr] lg:gap-12">
-
-      <!-- Brand -->
+      <!-- Brand + contact -->
       <div class="col-span-2 lg:col-span-1">
         <a
           routerLink="/"
           aria-label="ADHMISK home"
-          class="inline-flex items-center gap-3 text-xl font-bold tracking-tight text-white sm:text-2xl">
+          class="inline-flex items-center gap-3 text-xl font-bold tracking-tight text-white">
           <img
             src="icon.png"
             alt=""
             aria-hidden="true"
-            width="44"
-            height="44"
+            width="40"
+            height="40"
             loading="lazy"
-            class="size-10 shrink-0 rounded-xl object-contain ring-1 ring-white/10 sm:size-11">
+            class="size-9 shrink-0 rounded-lg object-contain ring-1 ring-white/10 sm:size-10">
           <span>Adhmisk</span>
         </a>
 
-        <p class="mt-3 max-w-sm text-[13px] leading-6 text-white/55 sm:text-sm">
+        <p class="mt-3 max-w-xs text-[13px] leading-6 text-white/55">
           {{ company.tagline }}
         </p>
 
-        <div class="mt-4 flex flex-wrap gap-2">
-          @for (r of company.regions; track r) {
-            <span class="rounded-full border border-white/10 bg-white/[0.035] px-3 py-1 text-[11px] text-white/65">
-              {{ r }}
-            </span>
-          }
-        </div>
+        <a
+          [href]="'mailto:' + company.email"
+          class="mt-3 inline-flex min-h-8 items-center gap-1.5 break-all text-[13px] font-medium text-white/80 transition hover:text-white">
+          {{ company.email }}
+          <span class="text-white/40" aria-hidden="true">↗</span>
+        </a>
       </div>
 
-      <!-- Divisions -->
-      <nav aria-label="Divisions">
-        <h3 class="mb-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-white/85 sm:mb-4 sm:text-xs">
+      <!-- Services -->
+      <nav aria-label="Services">
+        <h3 class="mb-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-white/85">
           Services
         </h3>
-        <ul class="space-y-2.5">
+        <ul class="space-y-2">
           @for (d of divisions; track d.slug) {
             <li>
               <a
                 [routerLink]="['/divisions', d.slug]"
-                class="group inline-flex items-start gap-2 text-[12px] leading-5 text-white/55 transition hover:text-white sm:text-[13px]">
-                <span class="mt-2 h-px w-0 shrink-0 bg-brand transition-all duration-200 group-hover:w-3"></span>
-                <span>{{ d.title }}</span>
+                class="text-[12px] leading-5 text-white/55 transition hover:text-white sm:text-[13px]">
+                {{ d.title }}
               </a>
             </li>
           }
@@ -351,75 +320,43 @@ import { COMPANY, DIVISIONS, OFFICES } from './content';
 
       <!-- Company -->
       <nav aria-label="Company">
-        <h3 class="mb-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-white/85 sm:mb-4 sm:text-xs">
+        <h3 class="mb-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-white/85">
           Company
         </h3>
-        <ul class="space-y-2.5">
+        <ul class="space-y-2">
           @for (l of company_links; track l.to) {
             <li>
               <a
                 [routerLink]="l.to"
-                class="group inline-flex items-start gap-2 text-[12px] leading-5 text-white/55 transition hover:text-white sm:text-[13px]">
-                <span class="mt-2 h-px w-0 shrink-0 bg-brand transition-all duration-200 group-hover:w-3"></span>
-                <span>{{ l.label }}</span>
+                class="text-[12px] leading-5 text-white/55 transition hover:text-white sm:text-[13px]">
+                {{ l.label }}
               </a>
             </li>
           }
         </ul>
       </nav>
+
+      <!-- Offices: city names only (full addresses and phones live on the Contact page) -->
+      <div class="col-span-2 lg:col-span-1">
+        <h3 class="mb-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-white/85">
+          Our offices
+        </h3>
+        <ul class="flex flex-wrap gap-x-3 gap-y-1.5 lg:grid lg:grid-cols-2 lg:gap-x-4">
+          @for (o of offices; track o.key) {
+            <li>
+              <a
+                routerLink="/contact"
+                class="text-[12px] leading-5 text-white/55 transition hover:text-white sm:text-[13px]">
+                {{ o.city }}
+              </a>
+            </li>
+          }
+        </ul>
+      </div>
     </div>
 
-    <!-- Offices: full-width, compact multi-column grid -->
-    <section aria-labelledby="offices-title" class="border-t border-white/10 py-8 sm:py-10">
-
-      <div class="mb-4 flex items-baseline justify-between gap-3 sm:mb-5">
-        <h3 id="offices-title" class="text-[11px] font-semibold uppercase tracking-[0.16em] text-white/85 sm:text-xs">
-          Our offices
-          <span class="ml-1 font-normal normal-case tracking-normal text-white/40">({{ offices.length }})</span>
-        </h3>
-      </div>
-
-      <div class="grid gap-2.5 sm:grid-cols-2 sm:gap-3 lg:grid-cols-3 xl:grid-cols-4">
-        @for (o of offices; track o.key; let i = $index) {
-          <!-- On mobile only the first N are shown until expanded; desktop always shows all -->
-          <article
-            [class]="showAllOffices() || i < officePreviewCount ? '' : 'max-lg:hidden'"
-            class="rounded-lg border border-white/[0.08] bg-white/[0.03] px-3.5 py-3 transition duration-200 hover:border-white/15 hover:bg-white/[0.06]">
-
-            <div class="flex items-baseline justify-between gap-3">
-              <h4 class="truncate font-semibold text-white">{{ o.city }}</h4>
-              <span class="shrink-0 text-[10px] text-white/40 sm:text-[11px]">{{ o.name }}</span>
-            </div>
-
-            <p class="mt-1 line-clamp-2 text-xs leading-5 text-white/50">
-              {{ o.address }}
-            </p>
-
-            <a
-              [href]="'tel:' + o.phone.replaceAll(' ', '')"
-              class="mt-1.5 inline-flex items-center gap-1.5 text-xs font-medium text-[#79adff] transition hover:text-white">
-              {{ o.phone }}
-              <span aria-hidden="true" class="text-white/30">↗</span>
-            </a>
-          </article>
-        }
-      </div>
-
-      <!-- Mobile/tablet only toggle -->
-      @if (offices.length > officePreviewCount) {
-        <button
-          type="button"
-          (click)="showAllOffices.set(!showAllOffices())"
-          [attr.aria-expanded]="showAllOffices()"
-          class="mt-4 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-lg border border-white/10 px-4 py-2.5 text-xs font-medium text-white/75 transition hover:border-white/25 hover:bg-white/[0.06] hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand lg:hidden">
-          {{ showAllOffices() ? 'Show fewer offices' : 'Show all ' + offices.length + ' offices' }}
-          <span aria-hidden="true" class="transition-transform" [class.rotate-180]="showAllOffices()">↓</span>
-        </button>
-      }
-    </section>
-
-    <!-- Bottom bar: single compact row (hard-coded city list removed, regions/offices already shown above) -->
-    <div class="flex items-center justify-between gap-4 border-t border-white/10 py-5">
+    <!-- Bottom bar -->
+    <div class="flex items-center justify-between gap-4 border-t border-white/10 py-4">
       <p class="text-xs leading-5 text-white/40">
         © {{ company.legal }} 2026. All rights reserved.
       </p>
@@ -427,8 +364,8 @@ import { COMPANY, DIVISIONS, OFFICES } from './content';
       <button
         type="button"
         (click)="toTop()"
-        class="inline-flex shrink-0 items-center gap-2 rounded-full border border-white/10 px-4 py-2 text-xs font-medium text-white/75 transition hover:border-white/25 hover:bg-white/[0.06] hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand">
-        <span class="max-sm:sr-only">Back to top</span>
+        aria-label="Back to top"
+        class="inline-flex size-9 shrink-0 items-center justify-center rounded-full border border-white/10 text-white/75 transition hover:border-white/25 hover:bg-white/[0.06] hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand">
         <span aria-hidden="true">↑</span>
       </button>
     </div>

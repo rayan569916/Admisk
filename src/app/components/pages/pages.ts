@@ -2120,7 +2120,7 @@ export class Leadership {
   template: `
     <app-page-head
       crumb="Home / Divisions"
-      title="Five divisions. One connected vision."
+      title="Four divisions. One connected vision."
       [accent]="['connected vision.']"
       lead="Specialist expertise across business consultancy and advisory, legal support, manpower, skills training and global trade, coordinated under one accountable holding group."
     />
@@ -2146,7 +2146,7 @@ export class Leadership {
       <!-- DIVISION IMAGE GRID
            xl uses a 6-col grid: 3 cards on the first row, the last 2 cards stretch to fill the second row
            (no orphan card). sm uses 2 cols, with an odd last card spanning the full row. -->
-<div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-3">
+<div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
 
   @for (d of divisions; track d.slug; let i = $index) {
     <article
@@ -2240,26 +2240,49 @@ export class Divisions {
         <div class="mt-8 flex gap-3"><a class="btn" routerLink="/contact">Talk to this team</a><a class="btn-ghost" routerLink="/divisions">All divisions</a></div>
       </app-page-head>
 
-      <section class="wrap mt-16 grid items-start gap-10 md:grid-cols-2">
-        <app-img [src]="d.path" [alt]="d.title" containerClass="relative overflow-hidden aspect-[3/2] w-full rounded-lg md:min-w-0 h-[390px] sm:h-[420px] md:sticky md:top-24 md:h-[440px]" imgClass="size-full rounded-lg bg-mist object-cover" />
+<section class="wrap mt-16 grid items-start gap-10 md:grid-cols-2">
+  <app-img [src]="d.path" [alt]="d.title" containerClass="relative overflow-hidden aspect-[3/2] w-full rounded-lg md:min-w-0 h-[390px] sm:h-[420px] md:sticky md:top-24 md:h-[440px]" imgClass="size-full rounded-lg bg-mist object-cover" />
 
-        <div>
-          <h2 class="h-display text-3xl md:text-4xl">What we offer</h2>
-          <div class="mt-6 border-t border-ash">@for (s of d.services; track s) { <div class="arrow-row">{{ s }}<span class="text-slate">→</span></div> }</div>
+  <div>
+    <h2 class="h-display text-3xl md:text-4xl">What we offer</h2>
 
-          <!-- SUBSECTIONS (e.g. Manpower → Hospitality Solutions) -->
-          @for (sub of d.subsections ?? []; track sub.title) {
-            <div class="mt-10 rounded-xl border border-ash bg-mist/60 p-5 sm:p-6">
-              <p class="text-[11px] font-semibold uppercase tracking-[0.18em] text-brand">Part of {{ d.title }}</p>
-              <h3 class="mt-2 text-2xl font-semibold tracking-tight text-ink">{{ sub.title }}</h3>
-              <p class="mt-2 text-sm leading-6 text-slate">{{ sub.intro }}</p>
-              <div class="mt-4 border-t border-ash">
-                @for (s of sub.services; track s) { <div class="arrow-row">{{ s }}<span class="text-slate">→</span></div> }
-              </div>
-            </div>
-          }
-        </div>
-      </section>
+    <!-- Jump chips (only when there is more than one subsection) -->
+    @if (d.subsections.length > 1) {
+      <nav class="mt-5 flex flex-wrap gap-2" aria-label="Services in this division">
+        @for (sub of d.subsections; track sub.id) {
+          <a
+            [href]="'#' + sub.id"
+            (click)="scrollTo(sub.id, $event)"
+            class="rounded-full border border-ash bg-white px-3.5 py-1.5 text-xs font-medium text-ink transition hover:border-brand hover:text-brand">
+            {{ sub.title }}
+          </a>
+        }
+      </nav>
+    }
+
+    <!-- One highlighted card per subsection -->
+    <div class="mt-8 space-y-5">
+      @for (sub of d.subsections; track sub.id; let i = $index) {
+        <section
+          [id]="sub.id"
+          class="scroll-mt-28 rounded-xl border border-ash bg-mist/60 p-5 sm:p-6">
+
+          <p class="text-[11px] font-semibold uppercase tracking-[0.18em] text-brand">
+            {{ (i + 1).toString().padStart(2, '0') }}
+          </p>
+          <h3 class="mt-2 text-2xl font-semibold tracking-tight text-ink">{{ sub.title }}</h3>
+          <p class="mt-2 text-sm leading-6 text-slate">{{ sub.intro }}</p>
+
+          <div class="mt-4 border-t border-ash">
+            @for (s of sub.services; track s) {
+              <div class="arrow-row">{{ s }}<span class="text-slate">→</span></div>
+            }
+          </div>
+        </section>
+      }
+    </div>
+  </div>
+</section>
 
       <section class="wrap mt-20">
         <h2 class="h-display text-3xl md:text-4xl">Related divisions</h2>
@@ -2280,6 +2303,10 @@ export class DivisionDetail {
   media = MEDIA;
   div = computed(() => DIVISIONS.find((d: any) => d.slug === this.slug()));
   related = computed(() => DIVISIONS.filter((d: any) => d.slug !== this.slug()).slice(0, 3));
+  scrollTo(id: string, event: Event): void {
+    event.preventDefault();
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
 }
 
 /* ───────────── SOLUTIONS ───────────── */
