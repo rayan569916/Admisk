@@ -18,6 +18,7 @@ import { HeroScroll } from '../shared/HeroScroll';
 import { Preloader } from '../shared/preloader';
 import { PreloaderService } from '../shared/preloader.service';
 import { Preloader as PercentPreloader } from '../shared/preloader-percent';
+import { CommonModule } from '@angular/common';
 
 type LatLng = [number, number];
 interface Person { name: string; role: string; group: string; bio: string; photo?: string; featured?: boolean; }
@@ -2146,7 +2147,7 @@ export class Leadership {
       <!-- DIVISION IMAGE GRID
            xl uses a 6-col grid: 3 cards on the first row, the last 2 cards stretch to fill the second row
            (no orphan card). sm uses 2 cols, with an odd last card spanning the full row. -->
-<div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+<div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
 
   @for (d of divisions; track d.slug; let i = $index) {
     <article
@@ -2231,83 +2232,434 @@ export class Divisions {
 }
 
 
+
 @Component({
   selector: 'app-division-detail',
-  imports: [RouterLink, PageHead, Icon, Cta, ImgSkeleton],
+  imports: [RouterLink, PageHead, Icon, Cta, ImgSkeleton, CommonModule],
   template: `
     @if (div(); as d) {
-      <app-page-head [crumb]="'Divisions / ' + d.title" [title]="d.title" [lead]="d.intro">
-        <div class="mt-8 flex gap-3"><a class="btn" routerLink="/contact">Talk to this team</a><a class="btn-ghost" routerLink="/divisions">All divisions</a></div>
-      </app-page-head>
 
-<section class="wrap mt-16 grid items-start gap-10 md:grid-cols-2">
-  <app-img [src]="d.path" [alt]="d.title" containerClass="relative overflow-hidden aspect-[3/2] w-full rounded-lg md:min-w-0 h-[390px] sm:h-[420px] md:sticky md:top-24 md:h-[440px]" imgClass="size-full rounded-lg bg-mist object-cover" />
+          <!-- HERO -->
+          <section class="px-4 pt-6 sm:px-8 lg:px-10">
 
-  <div>
-    <h2 class="h-display text-3xl md:text-4xl">What we offer</h2>
+            <div class="relative min-h-[440px] overflow-hidden rounded-[22px] bg-[#DCDDF0] mg:min-h-[650px] lg:min-h-[850px]">
 
-    <!-- Jump chips (only when there is more than one subsection) -->
-    @if (d.subsections.length > 1) {
-      <nav class="mt-5 flex flex-wrap gap-2" aria-label="Services in this division">
-        @for (sub of d.subsections; track sub.id) {
-          <a
-            [href]="'#' + sub.id"
-            (click)="scrollTo(sub.id, $event)"
-            class="rounded-full border border-ash bg-white px-3.5 py-1.5 text-xs font-medium text-ink transition hover:border-brand hover:text-brand">
-            {{ sub.title }}
-          </a>
-        }
-      </nav>
+              <app-img
+                [src]="d.path"
+                [alt]="d.title"
+                containerClass="absolute inset-0 size-full"
+                imgClass="size-full object-cover" />
+
+              <div class="absolute inset-0 bg-gradient-to-r from-[#171529]/85 via-[#25213C]/45 to-transparent"></div>
+              <div class="absolute inset-0 bg-gradient-to-t from-[#171529]/50 via-transparent to-transparent"></div>
+
+              <div class="relative z-10 flex min-h-[60dvh] flex-col items-center justify-end px-7 py-3  text-white sm:px-14 lg:px-20">
+
+                <span class="text-[10px] font-semibold uppercase tracking-[0.28em] text-white/75">
+                  ADHMISK · OUR EXPERTISE
+                </span>
+
+                <h1 class="h-display mt-6 max-w-3xl text-4xl leading-[1.12] sm:text-5xl lg:text-6xl">
+                  {{ d.title }}
+                </h1>
+
+                <!-- <p class="mt-5 max-w-xl text-sm leading-7 text-white/80 sm:text-base sm:leading-8">
+                  {{ d.intro }}
+                </p> -->
+
+                <div class="mt-8 flex flex-wrap gap-3">
+                  <a
+                    routerLink="/contact"
+                    [queryParams]="{ division: d.slug }"
+                    class="rounded-full bg-white px-7 py-3.5 text-xs font-semibold text-[#29243D] transition hover:bg-[#DCDCF2]">
+                    Talk to our team →
+                  </a>
+
+                  <a
+                    (click)="scrollTo(d.subsections[0].id, $event)"
+                    class="rounded-full border transition-all duration-1000 border-white/50 px-7 py-3.5 text-xs font-semibold text-white transition hover:bg-white hover:text-[#29243D]">
+                    Explore services
+                  </a>
+                </div>
+
+              </div>
+            </div>
+          </section>
+
+      <!-- Visual introduction -->
+      <section class="wrap mt-12">
+        <div class="relative overflow-hidden rounded-2xl bg-mist">
+          <div class="grid items-center md:grid-cols-[1fr_0.85fr]">
+
+            <div class="relative z-10 p-7 sm:p-10 lg:p-14">
+              <span class="text-xs font-semibold uppercase tracking-[0.2em] text-brand">
+                ADHMISK · OUR EXPERTISE
+              </span>
+
+              <h2 class="h-display mt-4 text-3xl leading-tight md:text-4xl">
+                Discover how we can
+                <span class="text-brand"> help you.</span>
+              </h2>
+
+              <p class="mt-4 max-w-lg text-sm leading-7 text-slate">
+                {{d.intro}}
+              </p>
+
+              <div class="mt-7 flex flex-wrap items-center gap-4">
+                <span class="text-sm font-medium text-ink">
+                  {{ d.subsections.length }} service categories
+                </span>
+                <span class="size-1 rounded-full bg-brand"></span>
+                <span class="text-sm text-slate">
+                  {{ getServiceCount(d) }} services
+                </span>
+              </div>
+            </div>
+
+            <div class="relative h-64 md:h-full md:min-h-[500px]">
+              <app-img
+                [src]="d.path"
+                [alt]="d.title"
+                containerClass="absolute inset-0 h-full w-full"
+                imgClass="size-full object-cover" />
+
+              <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent md:bg-gradient-to-r md:from-mist md:via-transparent md:to-transparent"></div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- Service navigation -->
+      <section class="wrap mt-16" id="services">
+
+        <div class="flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
+          <div>
+            <span class="text-xs font-semibold uppercase tracking-[0.2em] text-brand">
+              EXPLORE OUR SERVICES
+            </span>
+
+            <h2 class="h-display mt-3 text-3xl md:text-4xl">
+              What we offer
+            </h2>
+
+            <p class="mt-3 max-w-xl text-sm leading-7 text-slate">
+              Browse our service categories to discover how we can
+              support your goals.
+            </p>
+          </div>
+
+          <span class="text-sm font-medium text-slate">
+            {{ getServiceCount(d) }} services available
+          </span>
+        </div>
+
+
+<!-- Category navigation -->
+@if (d.subsections.length > 1) {
+  <nav
+    class="mt-8 flex gap-2 overflow-x-auto pb-3 scrollbar-hide"
+    aria-label="Service categories">
+
+    @for (sub of d.subsections; track sub.id; let i = $index) {
+      <a
+        [href]="'#' + sub.id"
+        (click)="scrollTo(sub.id, $event)"
+        class="group flex shrink-0 items-center gap-2.5 rounded-full border border-[#DEDEEA] bg-white px-4 py-3 text-[11px] font-medium text-[#49465D] transition-all duration-300 hover:border-[#29243D] hover:bg-[#29243D] hover:text-white">
+
+        <span class="text-[10px] font-semibold text-[#8179AD] group-hover:text-[#DCD6F5]">
+          {{ (i + 1).toString().padStart(2, '0') }}
+        </span>
+
+        {{ sub.title }}
+
+        <span class="text-xs opacity-50">↗</span>
+      </a>
     }
 
-    <!-- One highlighted card per subsection -->
-    <div class="mt-8 space-y-5">
-      @for (sub of d.subsections; track sub.id; let i = $index) {
-        <section
-          [id]="sub.id"
-          class="scroll-mt-28 rounded-xl border border-ash bg-mist/60 p-5 sm:p-6">
+  </nav>
+}
 
-          <p class="text-[11px] font-semibold uppercase tracking-[0.18em] text-brand">
-            {{ (i + 1).toString().padStart(2, '0') }}
+<!-- Asymmetrical service layout -->
+<div class="mt-10 grid grid-cols-1 gap-4 md:grid-cols-12">
+
+  @for (sub of d.subsections; track sub.id; let i = $index) {
+
+    @let pos = i === 0 ? 0 : ((i - 1) % 3) + 1;
+
+    <article
+      [id]="sub.id"
+      class="group relative isolate flex min-w-0 scroll-mt-28 flex-col overflow-hidden rounded-[24px] transition-all duration-500 hover:-translate-y-1 hover:shadow-xl hover:shadow-[#29243D]/10"
+      [ngClass]="{
+        'md:col-span-12': pos === 0 || pos === 3,
+        'md:col-span-6':  pos === 1 || pos === 2,
+        'min-h-[340px]':  pos === 0,
+        'min-h-[360px]':  pos === 1 || pos === 2,
+        'min-h-[290px]':  pos === 3,
+        'bg-[#DCDCF0]':   pos === 0,
+        'bg-[#29243D]':   pos === 1,
+        'text-white':     pos === 1,
+        'bg-white':       pos === 2,
+        'bg-[#E8E6F3]':   pos === 3,
+        'text-[#29243D]': pos === 2 || pos === 3
+      }">
+
+      <!-- Oversized background number -->
+      <span
+        class="pointer-events-none absolute -right-2 -top-8 -z-10 select-none text-[190px] font-bold leading-none tracking-[-0.12em] transition-transform duration-700 group-hover:scale-105 sm:text-[240px] md:text-[280px]"
+        [ngClass]="{
+          'text-white/30':     pos === 0,
+          'text-white/[0.055]': pos === 1,
+          'text-[#DCDCF0]/60': pos === 2,
+          'text-white/40':     pos === 3
+        }">
+        {{ (i + 1).toString().padStart(2, '0') }}
+      </span>
+
+      <div class="relative flex flex-1 flex-col p-6 sm:p-9 lg:p-11">
+
+        <!-- Top information -->
+        <div class="flex items-center justify-between gap-3">
+
+          <span
+            class="text-[10px] font-bold uppercase tracking-[0.2em]"
+            [ngClass]="{
+              'text-[#77719B]': pos === 0 || pos === 2 || pos === 3,
+              'text-[#BDB6DA]': pos === 1
+            }">
+            {{ (i + 1).toString().padStart(2, '0') }} / {{ sub.title }}
+          </span>
+
+          <span
+            class="rounded-full px-3 py-1.5 text-[9px] font-semibold tracking-wider"
+            [ngClass]="{
+              'bg-white/60':    pos === 0 || pos === 2 || pos === 3,
+              'text-[#625B91]': pos === 0 || pos === 2 || pos === 3,
+              'bg-white/10':    pos === 1,
+              'text-white/70':  pos === 1
+            }">
+            {{ sub.services.length }} SERVICES
+          </span>
+
+        </div>
+
+        <!-- Heading -->
+        <div class="mt-8 max-w-2xl">
+
+          <h3
+            class="h-display text-2xl leading-tight tracking-tight sm:text-3xl lg:text-4xl"
+            [ngClass]="{
+              'text-[#29243D]': pos !== 1,
+              'text-white':     pos === 1
+            }">
+            {{ sub.title }}
+          </h3>
+
+          <p
+            class="mt-4 max-w-xl text-xs leading-7 sm:text-sm"
+            [ngClass]="{
+              'text-[#646176]': pos !== 1,
+              'text-white/65':  pos === 1
+            }">
+            {{ sub.intro }}
           </p>
-          <h3 class="mt-2 text-2xl font-semibold tracking-tight text-ink">{{ sub.title }}</h3>
-          <p class="mt-2 text-sm leading-6 text-slate">{{ sub.intro }}</p>
 
-          <div class="mt-4 border-t border-ash">
-            @for (s of sub.services; track s) {
-              <div class="arrow-row">{{ s }}<span class="text-slate">→</span></div>
-            }
-          </div>
-        </section>
-      }
-    </div>
-  </div>
-</section>
+        </div>
 
+        <!-- Services -->
+        <div
+          class="mt-7 grid gap-2.5 sm:grid-cols-2"
+          [ngClass]="{
+            'lg:max-w-4xl': pos === 0 || pos === 3
+          }">
+
+          @for (service of sub.services; track service) {
+
+            <div
+              class="flex items-start gap-3 rounded-xl px-3.5 py-3 text-xs leading-5 transition-colors duration-300"
+              [ngClass]="{
+                'bg-white/50':           pos === 0 || pos === 2 || pos === 3,
+                'text-[#49465D]':        pos === 0 || pos === 2 || pos === 3,
+                'hover:bg-white/80':     pos === 0 || pos === 2 || pos === 3,
+                'bg-white/[0.09]':       pos === 1,
+                'text-white/90':         pos === 1,
+                'hover:bg-white/[0.15]': pos === 1
+              }">
+
+              <span
+                class="shrink-0 text-sm"
+                [ngClass]="{
+                  'text-[#8179AD]': pos !== 1,
+                  'text-[#C5BDE8]': pos === 1
+                }">
+                ↗
+              </span>
+
+              <span>{{ service }}</span>
+
+            </div>
+
+          }
+
+        </div>
+
+        <!-- Footer -->
+        <div class="mt-auto pt-8">
+
+          <a
+            routerLink="/contact"
+            [queryParams]="{
+              division: d.slug,
+              service: sub.id
+            }"
+            class="inline-flex items-center gap-3 border-b pb-2 text-xs font-semibold transition-all duration-300"
+            [ngClass]="{
+              'border-[#8179AD]/40':         pos !== 1,
+              'text-[#625B91]':              pos !== 1,
+              'hover:border-[#29243D]':      pos !== 1,
+              'hover:text-[#29243D]':        pos !== 1,
+              'border-white/30':             pos === 1,
+              'text-[#DCD6F5]':              pos === 1,
+              'hover:border-white':          pos === 1,
+              'hover:text-white':            pos === 1
+            }">
+
+            Enquire about this service
+
+            <span class="text-base transition-transform duration-300 group-hover:translate-x-1">
+              →
+            </span>
+
+          </a>
+
+        </div>
+
+      </div>
+
+    </article>
+
+  }
+
+</div>
+
+      </section>
+
+      <!-- Contact CTA -->
       <section class="wrap mt-20">
-        <h2 class="h-display text-3xl md:text-4xl">Related divisions</h2>
+        <div class="relative overflow-hidden rounded-2xl bg-ink px-7 py-12 text-white sm:px-12 md:flex md:items-center md:justify-between">
+
+          <div class="relative z-10 max-w-xl">
+            <span class="text-xs font-semibold uppercase tracking-[0.2em] text-white/60">
+              LET'S WORK TOGETHER
+            </span>
+
+            <h2 class="h-display mt-4 text-3xl leading-tight md:text-4xl">
+              Looking for the right solution?
+            </h2>
+
+            <p class="mt-4 text-sm leading-7 text-white/65">
+              Tell us what you need. Our team will help you explore
+              the services that best match your requirements.
+            </p>
+          </div>
+
+          <div class="relative z-10 mt-8 shrink-0 md:mt-0">
+            <a
+              routerLink="/contact"
+              class="inline-flex items-center gap-3 rounded-full bg-white px-6 py-3.5 text-sm font-semibold text-ink transition hover:bg-brand hover:text-white">
+              Talk to our team
+              <span>→</span>
+            </a>
+          </div>
+
+          <div class="pointer-events-none absolute -right-20 -top-24 size-72 rounded-full border border-white/10"></div>
+          <div class="pointer-events-none absolute -right-10 -top-14 size-52 rounded-full border border-white/10"></div>
+
+        </div>
+      </section>
+
+      <!-- Related divisions -->
+      <section class="wrap mt-20">
+        <div class="flex items-end justify-between">
+          <div>
+            <span class="text-xs font-semibold uppercase tracking-[0.2em] text-brand">
+              EXPLORE MORE
+            </span>
+            <h2 class="h-display mt-3 text-3xl md:text-4xl">
+              Related divisions
+            </h2>
+          </div>
+        </div>
+
         <div class="mt-8 grid gap-4 md:grid-cols-3">
           @for (r of related(); track r.slug) {
-            <a [routerLink]="['/divisions', r.slug]" class="rounded-lg border border-ash p-6 transition hover:shadow-xl"><span class="text-brand"><app-icon [name]="r.icon" /></span><h3 class="mt-3 text-xl font-semibold tracking-tight">{{ r.title }}</h3><p class="mt-2 text-sm text-slate">{{ r.short }}</p></a>
+            <a
+              [routerLink]="['/divisions', r.slug]"
+              class="group rounded-xl border border-ash bg-white p-6 transition-all hover:-translate-y-1 hover:border-brand/40 hover:shadow-lg">
+
+              <span class="text-brand">
+                <app-icon [name]="r.icon" />
+              </span>
+
+              <h3 class="mt-4 text-lg font-semibold tracking-tight text-ink">
+                {{ r.title }}
+              </h3>
+
+              <p class="mt-2 text-sm leading-6 text-slate">
+                {{ r.short }}
+              </p>
+
+              <span class="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-brand">
+                Explore division
+                <span class="transition-transform group-hover:translate-x-1">→</span>
+              </span>
+            </a>
           }
         </div>
       </section>
+
       <app-cta />
+
     } @else {
-      <section class="wrap py-32 text-center"><h1 class="h-display text-4xl">Division not found</h1><a routerLink="/divisions" class="btn mt-8">View all divisions</a></section>
+
+      <section class="wrap py-32 text-center">
+        <h1 class="h-display text-4xl">Division not found</h1>
+        <a routerLink="/divisions" class="btn mt-8">
+          View all divisions
+        </a>
+      </section>
+
     }
   `,
 })
 export class DivisionDetail {
   slug = input.required<string>();
-  media = MEDIA;
-  div = computed(() => DIVISIONS.find((d: any) => d.slug === this.slug()));
-  related = computed(() => DIVISIONS.filter((d: any) => d.slug !== this.slug()).slice(0, 3));
+
+  div = computed(() =>
+    DIVISIONS.find((d: any) => d.slug === this.slug())
+  );
+
+  related = computed(() =>
+    DIVISIONS.filter((d: any) => d.slug !== this.slug()).slice(0, 3)
+  );
+
+  getServiceCount(division: any): number {
+    return division.subsections.reduce(
+      (total: number, sub: any) => total + sub.services.length,
+      0
+    );
+  }
+
   scrollTo(id: string, event: Event): void {
     event.preventDefault();
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    document.getElementById(id)?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
   }
 }
+
 
 /* ───────────── SOLUTIONS ───────────── */
 /* ───────────── SOLUTIONS ───────────── */
