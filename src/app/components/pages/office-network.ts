@@ -35,6 +35,11 @@ type OfficeRing = {
   repeatPeriod: number;
 };
 
+// Shift the supplied day-map features west to align them with the office coordinates.
+const DAY_TEXTURE_LONGITUDE_OFFSET = 1 / 360; // 180 degrees in normalized texture coordinates (0-1)
+const DAY_OFFICE_LATITUDE_OFFSET = -12;
+
+
 @Component({
   selector: 'app-office-network',
   imports: [PercentPreloader],
@@ -48,7 +53,7 @@ type OfficeRing = {
       />
     }
 
-    <section class="office-network">
+    <section [class.office-network--day]="theme() === 'day'" class="office-network">
       <div class="network-backdrop" aria-hidden="true">
         <div class="network-glow network-glow--left"></div>
         <div class="network-glow network-glow--right"></div>
@@ -57,9 +62,13 @@ type OfficeRing = {
       </div>
 
       <header class="network-header">
-        <div class="network-eyebrow"><span></span> Our global footprint</div>
+        <!-- <div class="network-eyebrow"><span></span> Our global footprint</div> -->
         <h1>One world.<br class="sm:hidden"> <span>Seven local connections.</span></h1>
         <p>Explore the offices connecting our clients to opportunities across the GCC, Africa and the USA.</p>
+        <button type="button" class="theme-toggle" (click)="toggleTheme()" [attr.aria-pressed]="theme() === 'day'">
+          <span class="theme-toggle-icon">{{ theme() === 'day' ? '🌙' : '☀️' }}</span>
+          <span class="theme-toggle-label">{{ theme() === 'day' ? 'Night mode' : 'Day mode' }}</span>
+        </button>
         <div class="network-stats" aria-label="Network statistics">
           <div><strong>{{ offices.length }}</strong><span>Office locations</span></div>
           <i></i>
@@ -108,6 +117,10 @@ type OfficeRing = {
             <div class="globe-orbit globe-orbit--solid" aria-hidden="true"></div>
             <div class="globe-orbit globe-orbit--dashed" aria-hidden="true"></div>
             <div #globeCanvas class="globe-canvas"></div>
+            <div #officeImageCard class="globe-office-card" [attr.aria-label]="'Image of ' + selectedOffice().city">
+              <img [src]="selectedOffice().image" [alt]="selectedOffice().city" loading="lazy" />
+              <span>{{ selectedOffice().city }}</span>
+            </div>
             @if (globeError()) {
               <div class="globe-message globe-message--error" role="status">
                 The interactive globe could not be loaded. Office locations are still available in the list.
@@ -158,11 +171,13 @@ export class OfficeNetwork {
   offices = OFFICES;
   headquarters = OFFICES[0];
   selectedOffice = signal<Office>(this.headquarters);
+  theme = signal<'day' | 'night'>('night');
   showLoader = signal(true);
   globeLoading = signal(true);
   globeError = signal(false);
 
   private readonly globeCanvas = viewChild.required<ElementRef<HTMLDivElement>>('globeCanvas');
+  private readonly officeImageCard = viewChild.required<ElementRef<HTMLDivElement>>('officeImageCard');
   private readonly destroyRef = inject(DestroyRef);
   private globe?: ThreeGlobe;
   private renderer?: THREE.WebGLRenderer;
@@ -170,6 +185,7 @@ export class OfficeNetwork {
   private camera?: THREE.PerspectiveCamera;
   private controls?: OrbitControls;
   private resizeObserver?: ResizeObserver;
+  private appliedGlobeTexture?: THREE.Texture;
   private frameId?: number;
   private focusFrameId?: number;
   private destroyed = false;
@@ -177,8 +193,31 @@ export class OfficeNetwork {
   private focusing = false;
 
   constructor() {
+    this.theme.set(this.computeTheme());
     afterNextRender(() => void this.initializeGlobe());
     this.destroyRef.onDestroy(() => this.disposeGlobe());
+  }
+
+  private computeTheme(): 'day' | 'night' {
+    const hour = new Date().getHours();
+    return hour >= 6 && hour < 18 ? 'day' : 'night';
+  }
+
+  toggleTheme(): void {
+    this.theme.set(this.theme() === 'day' ? 'night' : 'day');
+    this.applyThemeToGlobe();
+  }
+
+  private applyThemeToGlobe(): void {
+    if (!this.globe) return;
+    const isDay = this.theme() === 'day';
+    this.globe
+      .globeImageUrl(isDay ? '/earth/earth-day.png' : '/earth/earth-night.jpg')
+      .showAtmosphere(isDay ? false : true)
+      .atmosphereColor(isDay ? '#9ec5fe' : '#22d3ee')
+      .atmosphereAltitude(isDay ? 0.12 : 0.18)
+      .arcStroke(isDay ? 1.2 : 0.45);
+    this.updateGlobeData();
   }
 
   countryCode(office: Office): string {
@@ -186,6 +225,10 @@ export class OfficeNetwork {
     if (office.key === 'Tanzania') return 'TZ';
     if (office.key === 'USA') return 'US';
     return office.key.slice(0, 2).toUpperCase();
+  }
+
+  private latitudeFor(office: Office): number {
+    return office.lat + (this.theme() === 'day' ? DAY_OFFICE_LATITUDE_OFFSET : 0);
   }
 
   selectOffice(office: Office): void {
@@ -224,11 +267,12 @@ export class OfficeNetwork {
       scene.add(new THREE.DirectionalLight(0xffffff, 0.6 * Math.PI));
 
       const camera = new THREE.PerspectiveCamera(45, bounds.width / bounds.height, 0.1, 2000);
+      const isDay = this.theme() === 'day';
       const globe = new Globe({ waitForGlobeReady: true, animateIn: true })
-        .globeImageUrl('/earth/earth-night.jpg')
-        .showAtmosphere(true)
-        .atmosphereColor('#22d3ee')
-        .atmosphereAltitude(0.18)
+        .globeImageUrl(isDay ? '/earth/earth-day.png' : '/earth/earth-night.jpg')
+        .showAtmosphere(isDay ? false : true)
+        .atmosphereColor(isDay ? '#9ec5fe' : '#22d3ee')
+        .atmosphereAltitude(isDay ? 0.12 : 0.18)
         .pointLat('lat')
         .pointLng('lng')
         .pointAltitude(0.025)
@@ -242,7 +286,7 @@ export class OfficeNetwork {
         .arcEndLng('endLng')
         .arcColor('color')
         .arcAltitudeAutoScale(0.45)
-        .arcStroke(0.45)
+        .arcStroke(isDay ? 1.2 : 0.45)
         .arcDashLength(0.35)
         .arcDashGap(0.8)
         .arcDashInitialGap(() => Math.random())
@@ -268,7 +312,7 @@ export class OfficeNetwork {
       this.renderer = renderer;
       this.scene = scene;
       this.camera = camera;
-      const view = globe.getCoords(this.headquarters.lat, this.headquarters.lng, 2.5);
+      const view = globe.getCoords(this.latitudeFor(this.headquarters), this.headquarters.lng, 2.5);
       camera.position.set(view.x, view.y, view.z).normalize().multiplyScalar(360);
 
       const controls = new OrbitControls(camera, renderer.domElement);
@@ -286,11 +330,50 @@ export class OfficeNetwork {
       this.resizeObserver = new ResizeObserver(() => this.resizeGlobe());
       this.resizeObserver.observe(container);
 
+      const officePosition = new THREE.Vector3();
+      const officeCard = this.officeImageCard().nativeElement;
       const render = () => {
         if (this.destroyed || !this.renderer || !this.scene || !this.camera || !this.controls || !this.globe) return;
         this.frameId = requestAnimationFrame(render);
         this.controls.update();
+        scene.updateMatrixWorld(true);
+        camera.updateMatrixWorld(true);
         this.globe.setPointOfView(this.camera);
+        const material = globe.globeMaterial();
+        if (material instanceof THREE.MeshPhongMaterial && material.map && material.map !== this.appliedGlobeTexture) {
+          material.map.wrapS = THREE.RepeatWrapping;
+          material.map.offset.x = this.theme() === 'day' ? DAY_TEXTURE_LONGITUDE_OFFSET : 0;
+
+          material.map.needsUpdate = true;
+          this.appliedGlobeTexture = material.map;
+        }
+
+        const office = this.selectedOffice();
+        const coords = globe.getCoords(this.latitudeFor(office), office.lng, 0.04);
+        officePosition
+          .set(coords.x, coords.y, coords.z)
+          .applyMatrix4(globe.matrixWorld);
+        const isFacingCamera = officePosition.dot(camera.position) > 0;
+        officePosition.project(camera);
+
+        const width = container.clientWidth;
+        const height = container.clientHeight;
+        const x = ((officePosition.x + 1) / 2) * width;
+        const y = ((1 - officePosition.y) / 2) * height;
+        const cardWidth = Math.min(160, width * 0.32);
+        const cardHeight = cardWidth * 0.625 + 34;
+        const isVisible =
+          isFacingCamera &&
+          officePosition.z >= -1 &&
+          officePosition.z <= 1 &&
+          x >= cardWidth / 2 + 8 &&
+          x <= width - cardWidth / 2 - 8 &&
+          y >= cardHeight + 14 &&
+          y <= height;
+        officeCard.style.left = `${x}px`;
+        officeCard.style.top = `${y}px`;
+        officeCard.style.visibility = isVisible ? 'visible' : 'hidden';
+
         this.renderer.render(this.scene, this.camera);
       };
       render();
@@ -304,36 +387,48 @@ export class OfficeNetwork {
 
   private getPoints(): GlobeOffice[] {
     const activeKey = this.selectedOffice().key;
+    const isDay = this.theme() === 'day';
     return this.offices.map((office) => ({
       ...office,
-      size: office.key === activeKey ? 1.4 : 0.55,
-      color: office.key === activeKey ? '#22d3ee' : '#34d399',
+      lat: this.latitudeFor(office),
+      size: office.key === activeKey
+        ? (isDay ? 1.8 : 1.4)
+        : (isDay ? 0.9 : 0.55),
+      color: office.key === activeKey
+        ? (isDay ? '#fff200' : '#22d3ee')
+        : (isDay ? '#fff200' : '#34d399'),
       abbreviation: this.countryCode(office),
     }));
   }
 
   private getArcs(): OfficeArc[] {
     const activeKey = this.selectedOffice().key;
+    const isDay = this.theme() === 'day';
     return this.offices
       .filter((office) => office.key !== this.headquarters.key)
       .map((office) => ({
-        startLat: this.headquarters.lat,
+        startLat: this.latitudeFor(this.headquarters),
         startLng: this.headquarters.lng,
-        endLat: office.lat,
+        endLat: this.latitudeFor(office),
         endLng: office.lng,
         color: office.key === activeKey
-          ? ['#22d3ee', '#ffffff']
-          : ['rgba(52,211,153,0.75)', 'rgba(34,211,238,0.15)'],
+          ? (isDay ? ['#fff200', '#fff200'] : ['#22d3ee', '#ffffff'])
+          : (isDay
+            ? ['#fff200', '#fff200']
+            : ['rgba(52,211,153,0.75)', 'rgba(34,211,238,0.15)']),
       }));
   }
 
   private getRings(): OfficeRing[] {
     const activeKey = this.selectedOffice().key;
+    const isDay = this.theme() === 'day';
     return this.offices.map((office) => ({
-      lat: office.lat,
+      lat: this.latitudeFor(office),
       lng: office.lng,
-      color: office.key === activeKey ? '#22d3ee' : '#34d399',
-      maxR: office.key === activeKey ? 4 : 2.2,
+      color: office.key === activeKey
+        ? (isDay ? '#fff200' : '#22d3ee')
+        : (isDay ? '#fff200' : '#34d399'),
+      maxR: office.key === activeKey ? (isDay ? 5 : 4) : (isDay ? 3 : 2.2),
       propagationSpeed: 2,
       repeatPeriod: office.key === activeKey ? 900 : 1800,
     }));
@@ -346,8 +441,11 @@ export class OfficeNetwork {
       .ringsData(this.getRings())
       .labelsData(this.offices.map((office) => ({
         ...office,
+        lat: this.latitudeFor(office),
         abbreviation: this.countryCode(office),
-        labelColor: office.key === this.selectedOffice().key ? '#ffffff' : 'rgba(255,255,255,0.65)',
+        labelColor: this.theme() === 'day'
+          ? (office.key === this.selectedOffice().key ? '#080808' : 'rgba(8,8,8,0.65)')
+          : (office.key === this.selectedOffice().key ? '#ffffff' : 'rgba(255,255,255,0.65)'),
       })));
   }
 
@@ -355,7 +453,7 @@ export class OfficeNetwork {
     if (!this.globe || !this.camera || !this.controls) return;
     if (this.focusFrameId !== undefined) cancelAnimationFrame(this.focusFrameId);
 
-    const coords = this.globe.getCoords(office.lat, office.lng, 2.5);
+    const coords = this.globe.getCoords(this.latitudeFor(office), office.lng, 2.5);
     const destination = this.camera.position
       .clone()
       .set(coords.x, coords.y, coords.z)

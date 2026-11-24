@@ -183,9 +183,7 @@ export class HeroScroll {
 
   /** Phrases that light up one after another. Edit freely. */
   protected readonly statement = [
-    'Cross-border business is complex.',
-    'ADHMISK brings the people, partners and paperwork',
-    'together under one accountable team.',
+    'Cross-border business is complex. ADHMISK brings the people, partners and paperwork together under one accountable team.',
   ];
 
   /** Division cards shown on the right (straight from your DIVISIONS data). */
