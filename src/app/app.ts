@@ -86,6 +86,7 @@ import { COMPANY, DIVISIONS, OFFICES } from './content';
       </div>
 
       <a routerLink="/about" routerLinkActive="text-brand" class="whitespace-nowrap transition-colors hover:text-brand">About</a>
+      <a routerLink="/offices" routerLinkActive="text-brand" class="hidden whitespace-nowrap transition-colors hover:text-brand xl:inline-flex">Offices</a>
       <a routerLink="/leadership" routerLinkActive="text-brand" class="whitespace-nowrap transition-colors hover:text-brand">Leadership</a>
       <a routerLink="/solutions" routerLinkActive="text-brand" class="whitespace-nowrap transition-colors hover:text-brand">Solutions</a>
       <a routerLink="/vision-2030" routerLinkActive="text-brand" class="whitespace-nowrap transition-colors hover:text-brand">Vision 2030</a>
@@ -384,7 +385,7 @@ export class App {
   showAllOffices = signal(false);
   officePreviewCount = 4; 
   links = [
-    { to: '/divisions', label: 'Divisions' }, { to: '/about', label: 'About' }, { to: '/leadership', label: 'Leadership' }, { to: '/solutions', label: 'Solutions' },
+    { to: '/divisions', label: 'Divisions' }, { to: '/about', label: 'About' }, { to: '/offices', label: 'Offices' }, { to: '/leadership', label: 'Leadership' }, { to: '/solutions', label: 'Solutions' },
     { to: '/vision-2030', label: 'Vision 2030' }, { to: '/why-admisk', label: 'Why ADMISK' }, { to: '/roadmap', label: 'Roadmap' }, { to: '/contact', label: 'Contact' },
   ];
   company_links = this.links.filter((l) => l.to !== '/divisions' && l.to !== '/contact');

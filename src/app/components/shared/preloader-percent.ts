@@ -24,7 +24,8 @@ import {
  * is solid white while the rest stays outlined — exactly like the reference.
  *
  * Behaviour (matches the video preloader):
- *   - Shown once per session (sessionStorage). Returning visitors skip it.
+ *   - Shown once per session by default (sessionStorage). This can be disabled
+ *     for screens whose own assets need to finish loading on every visit.
  *   - Only shown when images are NOT already loaded. If assetsReady() is true
  *     from the start, the loader never mounts.
  *   - Minimum 1.5s so the animation reads; maximum 8s so slow loads never trap.
@@ -108,6 +109,8 @@ export class Preloader {
   readonly duration = input(4000);
   /** Becomes true when all page image assets have loaded. */
   readonly imagesReady = input(false);
+  /** Skip persistence when the loader is needed on every visit. */
+  readonly oncePerSession = input(true);
   /** Emits once the counter reaches 100% and the fade-out is done. */
   readonly completed = output<void>();
 
@@ -129,12 +132,14 @@ export class Preloader {
     // Emitting synchronously in the constructor loses the event, leaving the
     // parent-visible loader mounted at its initial 0% for the whole session.
     afterNextRender(() => {
-      try {
-        if (sessionStorage.getItem(SEEN_KEY) === '1') {
-          this.completed.emit();
-          return;
-        }
-      } catch { /* storage blocked: just show it */ }
+      if (this.oncePerSession()) {
+        try {
+          if (sessionStorage.getItem(SEEN_KEY) === '1') {
+            this.completed.emit();
+            return;
+          }
+        } catch { /* storage blocked: just show it */ }
+      }
 
       this.animate();
     });
@@ -173,7 +178,9 @@ export class Preloader {
 
   private finish(): void {
     this.progress.set(100);
-    try { sessionStorage.setItem(SEEN_KEY, '1'); } catch { /* ignore */ }
+    if (this.oncePerSession()) {
+      try { sessionStorage.setItem(SEEN_KEY, '1'); } catch { /* ignore */ }
+    }
     this.timers.push(setTimeout(() => this.fading.set(true), 250));
     this.timers.push(setTimeout(() => this.completed.emit(), 250 + 700));
   }

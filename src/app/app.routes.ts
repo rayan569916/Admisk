@@ -62,6 +62,12 @@ export const routes: Routes = [
     title: 'Contact – Admisk inc',
   },
   {
+    path: 'offices',
+    loadComponent: () =>
+      import('./components/pages/office-network').then((m) => m.OfficeNetwork),
+    title: 'Global Offices – Admisk inc',
+  },
+  {
     path: '**',
     redirectTo: '',
   },
